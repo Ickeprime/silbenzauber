@@ -18,7 +18,7 @@
 
 ## Pädagogisch und visuell verbindlich
 1. Große, ruhige, **grüne** Maschine; **Druckschrift** mit klaren Buchstaben; keine Deko-Sterne außerhalb der Walzen.
-2. **2 bis 5 Walzen**, jede zeigt ganze offene Silben. Walze 1: `Ma` (Großbuchstabe am Anfang), niemals Stern. Walze 2 ff.: `ma` (klein), Sterne optional.
+2. **2 bis 5 Walzen**, jede zeigt ganze offene Silben. Walze 1 bleibt sternfrei. Die Standardschreibweise ist dort `Ma`; Standard für Walze 2 ff. ist `ma`. Lehrkräfte können jede Walze unabhängig auch auf `ma` oder `MA` umstellen. Sterne sind ab Walze 2 optional.
 3. Nur bewusst von Lehrkräften gewählte Silben dürfen erscheinen.
 4. Erstlesen statt Gamification: kein Punktedruck, keine Werbung, keine unnötigen Reize.
 5. Deutschsprachig und gut bedienbar auf Tablets, Smartphones und interaktiven Tafeln.

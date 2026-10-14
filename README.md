@@ -5,12 +5,17 @@ Der **Silbenzauber** ist eine einfache Web-App, in der Kinder durch Drehen von W
 ## Funktionen
 
 - 2–5 Walzen mit vollständigen offenen Silben nach dem Muster *Konsonant + Vokal*
-- Erste Walze: **großer Anfangsbuchstabe**, nie ein Stern
-- Alle weiteren Walzen: **kleine Buchstaben**, Sterne optional
+- Standard: erste Walze mit großem Anfangsbuchstaben, alle weiteren klein
+- Sterne sind ab Walze 2 optional; Walze 1 bleibt immer sternfrei
+- Schreibweise jeder Walze unabhängig: Anfangsbuchstabe groß, alles klein oder alles groß
+- Bei erlaubten Sternen erscheint nach höchstens vier Drehungen mindestens eine Lesepause
 - Frei wählbare Vokale (A E I O U Ä Ö Ü) und Konsonanten (B C D F G H J K L M N P Q R S T V W X Y Z)
 - Pro Walze eine eigene Silbenauswahl
-- Großes Bedienfeld, ruhige grüne Maschine, Druckschrift, einstellbare Bewegung und Ton
+- Vertikale Walzenanimation, dezente Web-Audio-Geräusche und Zauberstab-Zeiger für Mausgeräte
+- Große Bedienflächen, ruhige grüne Maschine, Druckschrift und einstellbare Bewegung
 - Einstellungen bleiben im jeweiligen Browser gespeichert
+
+Details zu Version 0.3 stehen in [DESIGN_UPDATE.md](DESIGN_UPDATE.md).
 
 > Aktueller Funktionsumfang: zweibuchstabige offene Silben (CV). Mehrbuchstabige Laute wie `sch`, `ch`, `au`, `ei` und `eu` oder geschlossene Silben sind noch nicht Teil dieser Version.
 

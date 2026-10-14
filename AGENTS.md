@@ -6,11 +6,11 @@ Erstleserinnen und Erstleser in Klasse 1, Lehrkräfte, Tablets und Smartboards.
 
 ## Unveränderliche Spielregeln
 
-1. Walze 1 zeigt **nie** einen Stern und formatiert jede Silbe mit **Großbuchstaben am Anfang** (z. B. `Ma`).
-2. Walzen 2–5 zeigen die Silben **kleingeschrieben** (`ma`).
+1. Walze 1 zeigt **nie** einen Stern. Die Standardschreibweise ist mit **Großbuchstaben am Anfang** (z. B. `Ma`).
+2. Jede Walze kann unabhängig auf Großbuchstaben am Anfang, alles klein oder alles groß gestellt werden. Standard sind Walze 2–5 in Kleinbuchstaben (`ma`).
 3. Ganze Silben pro Walze; keine Aufteilung in Einzelbuchstaben ohne neue Produktanforderung.
 4. Sterne als optionale Lesepause nur ab Walze 2.
-5. Lehrkräfte konfigurieren Buchstaben, mögliche Silben und Sternoptionen pro Walze.
+5. Lehrkräfte konfigurieren Buchstaben, mögliche Silben, Schreibweise und Sternoptionen pro Walze.
 6. Nicht ausgewählte Silben dürfen nicht zufällig erscheinen.
 7. Es muss immer mindestens eine vorlesbare Silbe pro Walze verfügbar sein.
 
