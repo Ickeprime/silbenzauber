@@ -16,26 +16,26 @@ Der **Silbenzauber** ist eine einfache Web-App, in der Kinder durch Drehen von W
 
 ## Projektaufbau
 
-```text
+\`\`\`text
 Silbenzauber/
-├── public/
-│   ├── index.html
-│   ├── styles.css
-│   ├── logic.js
-│   └── app.js
+├── index.html
+├── styles.css
+├── logic.js
+├── app.js
 ├── tests/
 │   └── logic.test.js
 ├── README.md
 ├── AGENTS.md
+├── CODEX_HANDOFF.md
 └── VEROEFFENTLICHUNG.md
-```
+\`\`\`
 
 ## Lokal ausführen
 
-Doppelklick auf `public/index.html` oder im Projektordner mit Python:
+Doppelklick auf `index.html` oder im Projektordner mit Python:
 
 ```bash
-python -m http.server 8000 --directory public
+python -m http.server 8000
 ```
 
 Danach im Browser `http://localhost:8000` öffnen. Wenn lokale Dateizugriffe blockiert werden, bitte die Servervariante verwenden.
@@ -51,7 +51,7 @@ node --test tests/logic.test.js
 - Framework: **None**
 - Production branch: **main**
 - Build command: **exit 0** (oder leer lassen)
-- Build output directory: **public**
+- Build output directory: **.** (Repository-Stammverzeichnis)
 - Root directory: **Repository-Stammverzeichnis** (Standard)
 - Keine Umgebungsvariablen erforderlich
 
@@ -59,7 +59,7 @@ Detaillierte Klick-für-Klick-Anleitung: [VEROEFFENTLICHUNG.md](VEROEFFENTLICHUN
 
 ## Änderungen in Codex
 
-Codex kann dieses Repository zur Weiterentwicklung öffnen. Die Projektregeln sind in [AGENTS.md](AGENTS.md) notiert. Bitte Änderungen über Pull Requests prüfen und erst danach in `main` übernehmen.
+Codex kann dieses Repository zur Weiterentwicklung öffnen. Die Projektregeln sind in [AGENTS.md](AGENTS.md) notiert. Die aktuelle Übergabe und nächste Aufgabe stehen in [CODEX_HANDOFF.md](CODEX_HANDOFF.md). Bitte Änderungen über Pull Requests prüfen und erst danach in `main` übernehmen.
 
 ## Datenschutz
 
