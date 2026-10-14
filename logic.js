@@ -13,6 +13,7 @@
     vowels: ['A', 'E', 'I', 'O', 'U'],
     consonants: ['L', 'M', 'S', 'T'],
     reelStars: [false, false, true],
+    reelCases: ['initial', 'lower', 'lower'],
     reelSelections: [],
     soundEnabled: false,
     reducedMotion: false
@@ -25,12 +26,17 @@
       vowels: [...(config.vowels || [])],
       consonants: [...(config.consonants || [])],
       reelStars: [...(config.reelStars || [])],
+      reelCases: [...(config.reelCases || [])],
       reelSelections: Array.isArray(config.reelSelections) ? config.reelSelections.map(items => [...items]) : []
     };
   }
 
   function defaultStarState(reelCount) {
     return Array.from({ length: reelCount }, (_, index) => index !== 0 && index === reelCount - 1);
+  }
+
+  function defaultCaseForReel(index) {
+    return index === 0 ? 'initial' : 'lower';
   }
 
   function sanitizeLetters(source, allowed) {
@@ -60,6 +66,12 @@
       return defaultStarState(reelCount)[index];
     });
 
+    const allowedCases = ['initial', 'lower', 'upper'];
+    const reelCases = Array.from({ length: reelCount }, (_, index) => {
+      const value = Array.isArray(raw.reelCases) ? raw.reelCases[index] : null;
+      return allowedCases.includes(value) ? value : defaultCaseForReel(index);
+    });
+
     const reelSelections = Array.from({ length: reelCount }, (_, index) => {
       const candidate = Array.isArray(raw.reelSelections) && Array.isArray(raw.reelSelections[index])
         ? raw.reelSelections[index].filter(syllable => availableSyllables.includes(syllable))
@@ -68,14 +80,14 @@
       return candidate.length ? [...new Set(candidate)] : [...availableSyllables];
     });
 
-    return { reelCount, vowels, consonants, reelStars, reelSelections, soundEnabled, reducedMotion };
+    return { reelCount, vowels, consonants, reelStars, reelCases, reelSelections, soundEnabled, reducedMotion };
   }
 
   function pick(items, random = Math.random) {
     return items[Math.floor(random() * items.length) % items.length];
   }
 
-  function drawResult(config, previous = null, random = Math.random) {
+  function drawResult(config, previous = null, random = Math.random, spinsWithoutStar = 0) {
     const normalized = normalizeConfig(config);
     const allSyllables = generateSyllables(normalized);
     if (!allSyllables.length) throw new Error('Mindestens eine Silbe erforderlich.');
@@ -100,8 +112,23 @@
       else if (slot !== 0 && normalized.reelStars[slot] && result[slot] !== '★') result[slot] = '★';
     }
 
+    const starReels = normalized.reelStars
+      .map((allowed, index) => allowed && index > 0 ? index : -1)
+      .filter(index => index >= 0);
+    const starIsDue = starReels.length > 0 && Number(spinsWithoutStar) >= 3;
+    if (starIsDue && !result.includes('★')) {
+      result[pick(starReels, random)] = '★';
+    }
+
     if (result[0] === '★') result[0] = normalized.reelSelections[0][0] || allSyllables[0];
     return result;
+  }
+
+  function nextStarStreak(config, result, current = 0) {
+    const normalized = normalizeConfig(config);
+    const canShowStar = normalized.reelStars.some((allowed, index) => allowed && index > 0);
+    if (!canShowStar || result.includes('★')) return 0;
+    return Math.max(0, Number(current) || 0) + 1;
   }
 
   function resultInstruction(result) {
@@ -114,10 +141,12 @@
     return `${names[stars] || `${stars} Sterne sind`} dabei! ${instruction}`;
   }
 
-  function formatForReel(symbol, reelIndex) {
+  function formatForReel(symbol, reelIndex, caseStyle) {
     if (symbol === '★') return symbol;
     const normalized = String(symbol).toLowerCase();
-    if (reelIndex === 0) return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+    const style = ['initial', 'lower', 'upper'].includes(caseStyle) ? caseStyle : defaultCaseForReel(reelIndex);
+    if (style === 'upper') return normalized.toUpperCase();
+    if (style === 'initial') return normalized.charAt(0).toUpperCase() + normalized.slice(1);
     return normalized;
   }
 
@@ -128,9 +157,11 @@
     STORAGE_KEY,
     copyConfig,
     defaultStarState,
+    defaultCaseForReel,
     normalizeConfig,
     generateSyllables,
     drawResult,
+    nextStarStreak,
     resultInstruction,
     formatForReel
   };

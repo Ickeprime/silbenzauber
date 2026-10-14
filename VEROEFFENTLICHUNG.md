@@ -8,7 +8,7 @@ Diese Anleitung beschreibt die Einrichtung sowie spätere Wartung des bereits ve
 
 1. Bei https://github.com anmelden.
 2. Oben rechts auf **+ → New repository** gehen oder https://github.com/new öffnen.
-3. Als Namen `silbenzauber` eintragen. Beschreibung optional: `Leseautomat für Klasse 1`.
+3. Als Namen `silbenzauber` eintragen. Beschreibung optional: `Lese-Automat für die Grundschule`.
 4. Für eine öffentliche Lern-App ist `Public` möglich. Quellcode ist dann für andere sichtbar. Keine Geheimnisse darin speichern.
 5. `Create repository` klicken. Ein automatisch erstelltes README ist nicht notwendig, da dieses Projekt bereits eines enthält.
 6. Das ZIP `Silbenzauber_GitHub_Cloudflare.zip` **auf dem eigenen Gerät entpacken**.

@@ -4,11 +4,13 @@
   const Logic = window.SilbenzauberLogic;
   const $ = selector => document.querySelector(selector);
   const defaultConfig = Logic.normalizeConfig(Logic.copyConfig(Logic.DEFAULT_CONFIG));
+  const STAR_STREAK_STORAGE_KEY = `${Logic.STORAGE_KEY}:star-streak`;
 
   let config = readConfig();
   let pendingConfig = Logic.copyConfig(config);
   let symbols = [];
   let previousResult = null;
+  let spinsWithoutStar = readStarStreak(config);
   let spinning = false;
   let audioCtx = null;
 
@@ -35,7 +37,25 @@
     }
   }
 
-  function sound(frequency, duration = 0.08, delay = 0, loudness = 0.03) {
+  function readStarStreak(currentConfig) {
+    if (!currentConfig.reelStars.some((allowed, index) => allowed && index > 0)) return 0;
+    try {
+      const saved = Number(localStorage.getItem(STAR_STREAK_STORAGE_KEY));
+      return Number.isFinite(saved) ? Math.min(3, Math.max(0, Math.floor(saved))) : 0;
+    } catch (_) {
+      return 0;
+    }
+  }
+
+  function saveStarStreak() {
+    try {
+      localStorage.setItem(STAR_STREAK_STORAGE_KEY, String(spinsWithoutStar));
+    } catch (_) {
+      /* the game remains usable if storage is unavailable */
+    }
+  }
+
+  function sound(frequency, duration = 0.08, delay = 0, loudness = 0.012, type = 'sine', endFrequency = frequency) {
     if (!config.soundEnabled) return;
     try {
       const AudioClass = window.AudioContext || window.webkitAudioContext;
@@ -45,8 +65,9 @@
       const oscillator = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
       const when = audioCtx.currentTime + delay;
-      oscillator.type = 'sine';
+      oscillator.type = type;
       oscillator.frequency.setValueAtTime(frequency, when);
+      oscillator.frequency.linearRampToValueAtTime(endFrequency, when + duration);
       gain.gain.setValueAtTime(0.0001, when);
       gain.gain.linearRampToValueAtTime(loudness, when + 0.015);
       gain.gain.exponentialRampToValueAtTime(0.0001, when + duration);
@@ -59,18 +80,25 @@
     }
   }
 
+  function createSymbolElement(index, value) {
+    const symbol = document.createElement('span');
+    symbol.className = `reel-symbol ${value === '★' ? 'symbol-star' : ''}`;
+    symbol.textContent = Logic.formatForReel(value, index, config.reelCases[index]);
+    symbol.setAttribute('aria-hidden', 'true');
+    return symbol;
+  }
+
+  function updateReelLabel(reel, index, value) {
+    const label = value === '★' ? 'Stern' : Logic.formatForReel(value, index, config.reelCases[index]);
+    reel.setAttribute('aria-label', `Walze ${index + 1}: ${label}`);
+  }
+
   function createReelElement(index, value) {
     const reel = document.createElement('div');
     reel.className = 'reel';
     reel.dataset.reel = String(index);
-    reel.setAttribute('aria-label', `Walze ${index + 1}: ${value === '★' ? 'Stern' : Logic.formatForReel(value, index)}`);
-
-    const symbol = document.createElement('span');
-    symbol.className = `reel-symbol ${value === '★' ? 'symbol-star' : ''}`;
-    symbol.textContent = Logic.formatForReel(value, index);
-    symbol.setAttribute('aria-hidden', 'true');
-
-    reel.appendChild(symbol);
+    updateReelLabel(reel, index, value);
+    reel.appendChild(createSymbolElement(index, value));
     return reel;
   }
 
@@ -86,10 +114,31 @@
     symbols[index] = value;
     const reel = reelsElement.children[index];
     if (!reel) return;
-    reel.setAttribute('aria-label', `Walze ${index + 1}: ${value === '★' ? 'Stern' : Logic.formatForReel(value, index)}`);
-    const symbol = reel.querySelector('.reel-symbol');
-    symbol.textContent = Logic.formatForReel(value, index);
-    symbol.classList.toggle('symbol-star', value === '★');
+    updateReelLabel(reel, index, value);
+    reel.replaceChildren(createSymbolElement(index, value));
+  }
+
+  function startReelRoll(reel, index, pool, target, duration) {
+    const itemCount = 14 + index * 3;
+    const sequence = [target, ...Array.from(
+      { length: itemCount - 1 },
+      () => pool[Math.floor(Math.random() * pool.length)] || pool[0],
+    )];
+
+    const track = document.createElement('div');
+    track.className = 'reel-track';
+    const cellHeight = Math.max(1, reel.clientHeight);
+    track.style.setProperty('--reel-cell-height', `${cellHeight}px`);
+    sequence.forEach(value => track.appendChild(createSymbolElement(index, value)));
+
+    reel.setAttribute('aria-busy', 'true');
+    track.style.transform = `translateY(-${cellHeight * (sequence.length - 1)}px)`;
+    reel.replaceChildren(track);
+    void track.offsetHeight;
+    window.requestAnimationFrame(() => {
+      track.style.transitionDuration = `${duration}ms`;
+      track.style.transform = 'translateY(0)';
+    });
   }
 
   function renderSummary() {
@@ -138,47 +187,53 @@
     spinButtonText.textContent = 'DREHT …';
     instructionElement.textContent = 'Die Walzen drehen sich …';
 
-    const target = Logic.drawResult(config, previousResult);
+    const target = Logic.drawResult(config, previousResult, Math.random, spinsWithoutStar);
     const reduced = config.reducedMotion || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const baseDuration = reduced ? 120 : 900;
-    const stagger = reduced ? 80 : 260;
+    const baseDuration = reduced ? 120 : 1050;
+    const stagger = reduced ? 80 : 280;
     let finished = 0;
-    sound(330, 0.10);
+    sound(370, 0.09, 0, 0.012, 'triangle', 480);
+    sound(520, 0.10, 0.07, 0.01, 'sine', 590);
+    const rollSoundTimer = config.soundEnabled && !reduced
+      ? window.setInterval(() => sound(165, 0.045, 0, 0.004, 'triangle', 205), 230)
+      : null;
 
     Array.from(reelsElement.children).forEach((reel, index) => {
-      reel.classList.add('rolling');
       const localPool = [ ...(config.reelSelections[index] || pool) ];
       if (config.reelStars[index] && index !== 0) localPool.push('★');
       const duration = baseDuration + index * stagger;
 
       if (!reduced) {
-        const timer = window.setInterval(() => {
-          const sample = localPool[Math.floor(Math.random() * localPool.length)] || pool[0];
-          setSymbol(index, sample);
-        }, 90 + index * 12);
+        reel.classList.add('rolling');
+        startReelRoll(reel, index, localPool, target[index], duration);
         window.setTimeout(() => {
-          window.clearInterval(timer);
           settle();
-        }, duration);
+        }, duration + 90);
       } else {
         window.setTimeout(settle, duration);
       }
 
       function settle() {
         setSymbol(index, target[index]);
+        reel.removeAttribute('aria-busy');
         reel.classList.remove('rolling');
         reel.classList.add('landed');
         window.setTimeout(() => reel.classList.remove('landed'), 320);
-        sound(440 + index * 85, 0.09);
+        sound(470 + index * 38, 0.06, 0, 0.014, 'triangle', 410 + index * 38);
         finished += 1;
         if (finished === config.reelCount) {
           previousResult = target;
+          spinsWithoutStar = Logic.nextStarStreak(config, target, spinsWithoutStar);
+          saveStarStreak();
           spinning = false;
+          if (rollSoundTimer !== null) window.clearInterval(rollSoundTimer);
           spinButton.disabled = false;
           $('#settingsOpen').disabled = false;
           spinButton.classList.remove('is-spinning');
           spinButtonText.textContent = 'NOCH MAL!';
           instructionElement.textContent = Logic.resultInstruction(target);
+          sound(520, 0.10, 0.03, 0.01);
+          sound(660, 0.13, 0.13, 0.01);
         }
       }
     });
@@ -216,8 +271,8 @@
       title.textContent = `Walze ${index + 1}`;
       const subtitle = document.createElement('p');
       subtitle.textContent = index === 0
-        ? 'Großer Anfangsbuchstabe · kein Stern'
-        : 'Kleine Silben · Stern optional';
+        ? 'Kein Stern auf dieser Walze'
+        : 'Stern optional';
       titleWrap.append(title, subtitle);
 
       const actions = document.createElement('div');
@@ -236,6 +291,31 @@
       noneButton.textContent = 'Keine';
       actions.append(allButton, noneButton);
       header.append(titleWrap, actions);
+
+      const caseSetting = document.createElement('fieldset');
+      caseSetting.className = 'case-setting';
+      const caseLegend = document.createElement('legend');
+      caseLegend.textContent = 'Schreibweise';
+      const caseOptions = document.createElement('div');
+      caseOptions.className = 'case-options';
+      caseOptions.setAttribute('aria-label', `Schreibweise für Walze ${index + 1}`);
+      [
+        { value: 'initial', label: 'Ma', title: 'Anfangsbuchstabe groß' },
+        { value: 'lower', label: 'ma', title: 'Alles klein' },
+        { value: 'upper', label: 'MA', title: 'Alles groß' }
+      ].forEach(option => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'case-option';
+        button.dataset.caseStyle = option.value;
+        button.dataset.reelIndex = String(index);
+        button.textContent = option.label;
+        button.title = option.title;
+        button.setAttribute('aria-label', option.title);
+        button.setAttribute('aria-pressed', String(pendingConfig.reelCases[index] === option.value));
+        caseOptions.appendChild(button);
+      });
+      caseSetting.append(caseLegend, caseOptions);
 
       const toggleRow = document.createElement('label');
       toggleRow.className = 'toggle-row reel-toggle';
@@ -272,12 +352,12 @@
           button.dataset.reelIndex = String(index);
           const active = (pendingConfig.reelSelections[index] || []).includes(syllable);
           button.setAttribute('aria-pressed', String(active));
-          button.textContent = Logic.formatForReel(syllable, index);
+          button.textContent = Logic.formatForReel(syllable, index, pendingConfig.reelCases[index]);
           chips.appendChild(button);
         });
       }
 
-      card.append(header, toggleRow, info, chips);
+      card.append(header, caseSetting, toggleRow, info, chips);
       container.appendChild(card);
     }
   }
@@ -397,6 +477,9 @@
     pendingConfig.reelSelections = Array.from({ length: nextCount }, (_, index) =>
       pendingConfig.reelSelections[index] ? [...pendingConfig.reelSelections[index]] : [...available]
     );
+    pendingConfig.reelCases = Array.from({ length: nextCount }, (_, index) =>
+      pendingConfig.reelCases[index] || Logic.defaultCaseForReel(index)
+    );
     pendingConfig.reelCount = nextCount;
     renderSettings();
   });
@@ -415,6 +498,13 @@
     const syllableButton = event.target.closest('button[data-syllable]');
     if (syllableButton) {
       toggleSyllable(Number(syllableButton.dataset.reelIndex), syllableButton.dataset.syllable);
+      return;
+    }
+    const caseButton = event.target.closest('button[data-case-style]');
+    if (caseButton) {
+      const reelIndex = Number(caseButton.dataset.reelIndex);
+      pendingConfig.reelCases[reelIndex] = caseButton.dataset.caseStyle;
+      renderSettings();
       return;
     }
     const actionButton = event.target.closest('button[data-action]');
@@ -453,6 +543,8 @@
     if (!valid) return;
     config = Logic.normalizeConfig(pendingConfig);
     saveConfig();
+    spinsWithoutStar = 0;
+    saveStarStreak();
     refreshGame();
     closeSettings();
   });

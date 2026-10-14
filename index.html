@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#e9f7ef" />
-  <meta name="description" content="Silbenzauber: eine kindgerechte Web-App zum Lesenlernen in der Schulanfangsphase." />
+  <meta name="description" content="Silbenzauber: ein kindgerechter Lese-Automat für die Grundschule." />
   <title>Silbenzauber – Lesen mit Silben</title>
   <link rel="stylesheet" href="styles.css" />
   <script src="logic.js" defer></script>
@@ -20,7 +20,7 @@
           <span class="brand-caption">LESEN MIT SILBEN</span>
         </span>
       </a>
-      <button id="settingsOpen" class="settings-open button-outline" type="button" aria-haspopup="dialog">
+      <button id="settingsOpen" class="settings-open button-outline" type="button" aria-label="Einstellungen öffnen" aria-haspopup="dialog">
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.86l.07.07-2.12 2.12-.07-.07a1.7 1.7 0 0 0-1.86-.34 1.7 1.7 0 0 0-1.04 1.56V21h-3v-.8A1.7 1.7 0 0 0 10.7 18.6a1.7 1.7 0 0 0-1.86.34l-.07.07-2.12-2.12.07-.07A1.7 1.7 0 0 0 7.06 15a1.7 1.7 0 0 0-1.56-1.04H5v-3h.5a1.7 1.7 0 0 0 1.56-1.04 1.7 1.7 0 0 0-.34-1.86l-.07-.07 2.12-2.12.07.07a1.7 1.7 0 0 0 1.86.34A1.7 1.7 0 0 0 11.74 4.7V4h3v.7A1.7 1.7 0 0 0 15.78 6.3a1.7 1.7 0 0 0 1.86-.34l.07-.07 2.12 2.12-.07.07a1.7 1.7 0 0 0-.34 1.86 1.7 1.7 0 0 0 1.56 1.04H21v3h-.02A1.7 1.7 0 0 0 19.4 15Z"/></svg>
         <span>Einstellungen</span>
       </button>
@@ -28,7 +28,7 @@
 
     <main id="hauptinhalt">
       <div class="intro">
-        <div class="eyebrow">Dein Lese-Automat für die erste Klasse</div>
+        <div class="eyebrow">Dein Lese-Automat für die Grundschule</div>
         <h1>Drehen. Lesen. <span>Staunen.</span></h1>
         <p>Drücke auf <strong>START</strong> und lies die Silben, die erscheinen.</p>
       </div>
@@ -59,11 +59,11 @@
 
       <aside class="learning-hint" aria-label="So geht es">
         <div class="hint-icon" aria-hidden="true">Aa</div>
-        <p><strong>So geht’s:</strong> Die erste Walze zeigt immer einen großen Anfangsbuchstaben. Sterne sind kleine Lesepausen und können nur auf den anderen Walzen erscheinen.</p>
+        <p><strong>So geht’s:</strong> Lies die Silben von links nach rechts. Die Schreibweise lässt sich für jede Walze einstellen. Sterne sind kleine Lesepausen und erscheinen nur auf Walzen ab Nummer 2.</p>
       </aside>
     </main>
 
-    <footer class="site-footer"><span>Mit Freude lesen lernen</span><span aria-hidden="true">·</span><span>Ohne Anmeldung und Werbung</span><span aria-hidden="true">·</span><span>Version 0.2</span></footer>
+    <footer class="site-footer"><span>Mit Freude lesen lernen</span><span aria-hidden="true">·</span><span>Ohne Anmeldung und Werbung</span><span aria-hidden="true">·</span><span>Version 0.3</span></footer>
   </div>
 
   <dialog id="settingsDialog" class="settings-dialog" aria-labelledby="settingsTitle">
@@ -72,7 +72,7 @@
         <div>
           <span class="modal-kicker">FÜR LEHRKRÄFTE</span>
           <h2 id="settingsTitle">Einstellungen</h2>
-          <p>Lege Buchstaben, Silben und Sternfelder für jede Walze fest.</p>
+          <p>Lege Schreibweise, Silben und Sternfelder für jede Walze fest.</p>
         </div>
         <button id="settingsClose" class="close-button" type="button" aria-label="Einstellungen schließen">×</button>
       </div>
