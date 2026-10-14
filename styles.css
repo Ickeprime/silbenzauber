@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'Druckschrift BY WOK';
+  src: url('./fonts/Druckschrift_BY_WOK.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 :root {
   --page: #f5fbf6;
   --panel: #ffffff;
@@ -213,10 +221,11 @@ button:focus-visible, input:focus-visible {
 .reel::before { top: 9px; }
 .reel::after { bottom: 9px; transform: scaleY(-1); }
 .reel-symbol {
+  font-family: 'Druckschrift BY WOK', Arial, Helvetica, sans-serif;
   font-size: clamp(2.6rem, 8vw, 4.7rem);
-  font-weight: 900;
+  font-weight: 400;
   color: #1f5736;
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
   text-transform: none;
 }
 .reels[data-count='4'] .reel-symbol { font-size: clamp(2rem, 6vw, 3.5rem); }
@@ -224,6 +233,7 @@ button:focus-visible, input:focus-visible {
 .reel-symbol.symbol-star {
   font-size: clamp(2.4rem, 7vw, 4rem);
   font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
   color: #de9f2f;
 }
 .reel-track {
@@ -565,7 +575,8 @@ button:focus-visible, input:focus-visible {
   background: #fff;
   color: #334d3b;
   font-size: 1rem;
-  font-weight: 900;
+  font-family: 'Druckschrift BY WOK', Arial, Helvetica, sans-serif;
+  font-weight: 400;
 }
 .case-option[aria-pressed='true'] {
   border-color: var(--green-4);
@@ -646,6 +657,8 @@ button:focus-visible, input:focus-visible {
   min-height: 44px;
   min-width: 58px;
   padding: 6px 11px;
+  font-family: 'Druckschrift BY WOK', Arial, Helvetica, sans-serif;
+  font-weight: 400;
   font-size: 1rem;
 }
 .preview-section {
@@ -673,7 +686,8 @@ button:focus-visible, input:focus-visible {
   color: #3b4f41;
   border: 1px solid #d7e6da;
   border-radius: 9px;
-  font-weight: 700;
+  font-family: 'Druckschrift BY WOK', Arial, Helvetica, sans-serif;
+  font-weight: 400;
   padding: 6px 10px;
 }
 .preview-extra {
