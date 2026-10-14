@@ -93,7 +93,6 @@
   }
 
   function renderSummary() {
-    const allSyllables = Logic.generateSyllables(config);
     const summary = $('#selectionSummary');
     const reelInfo = config.reelSelections.map((items, index) => `W${index + 1}: ${items.length}`).join(' · ');
     summary.innerHTML = '';
@@ -101,15 +100,10 @@
     dot.className = 'selection-dot';
     dot.setAttribute('aria-hidden', 'true');
     const label = document.createElement('span');
-    label.textContent = 'Aktive Silben: ';
+    label.textContent = 'Silben pro Walze: ';
     const strong = document.createElement('strong');
-    strong.textContent = allSyllables.length <= 8
-      ? allSyllables.map((value, index) => Logic.formatForReel(value, index === 0 ? 0 : 1)).join(' · ')
-      : `${allSyllables.slice(0, 8).map((value, index) => Logic.formatForReel(value, index === 0 ? 0 : 1)).join(' · ')} … (${allSyllables.length})`;
-    const meta = document.createElement('span');
-    meta.className = 'selection-meta';
-    meta.textContent = `Walzenauswahl: ${reelInfo}`;
-    summary.append(dot, label, strong, meta);
+    strong.textContent = reelInfo;
+    summary.append(dot, label, strong);
     updateSoundButton();
   }
 
