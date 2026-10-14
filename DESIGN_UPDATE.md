@@ -16,7 +16,7 @@ Die Walzen zeigen beim Drehen mehrere Silben in einem vertikalen Laufband. Die B
 
 Das Gehäuse, die vertieften Walzenfenster und die große Startfläche wurden in ruhigen Grüntönen plastischer gestaltet. Auf Geräten mit Maus zeigt ein kleiner, selbst gezeichneter Zauberstab-Cursor die ganze Seite; Textfelder behalten den Textcursor. Touchgeräte erhalten keine Cursoränderung. Es gibt keine dekorativen Sterne außerhalb der Walzen und kein Punktesystem.
 
-`Druckschrift_BY_WOK.ttf` liegt nicht im Checkout. Laut Nutzerangabe weist die Originaldatei in ihren Metadaten die SIL Open Font License 1.1, Copyright Wolfram Esser (2008) und einen reservierten Fontnamen aus. Da die Originaldatei und ihr Lizenztext hier nicht vorliegen, bleibt die gut lesbare serifenlose Systemschrift Arial/Helvetica aktiv; die Datei wurde weder rekonstruiert noch eingebunden. Das Sternsymbol nutzt explizit Arial/Helvetica als Fallback.
+Der Nutzer meldet die Originalschrift unter `fonts/Druckschrift_BY_WOK.ttf`; im aktuellen Checkout fehlt der Ordner `fonts/` und die Datei konnte auch im Projektverzeichnis nicht gefunden werden. Deshalb wurden weder Schriftdatei noch Metadaten unabhängig geprüft. Laut Nutzerangabe enthält die Originaldatei SIL Open Font License 1.1, Copyright Wolfram Esser (2008) und Reserved Font Name `Druckschrift_BY_WOK`. Die Schrift wurde nicht rekonstruiert oder eingebunden; Arial/Helvetica bleibt aktiv. Das Sternsymbol verwendet explizit Arial/Helvetica als Fallback. Die Integration und vollständige OFL-Datei sind offen, bis das unveränderte Original samt Lizenzkopf im Checkout liegt. Offizieller Lizenztext: [SIL Open Font License 1.1](https://openfontlicense.org/open-font-license-official-text/).
 
 ## Qualitätssicherung
 
