@@ -2,7 +2,7 @@
 
 ## Zielgruppe
 
-Erstleserinnen und Erstleser in Klasse 1, Lehrkräfte, Tablets und Smartboards.
+Kinder in der Grundschule, besonders beim Lesenlernen, Lehrkräfte, Tablets und Smartboards.
 
 ## Unveränderliche Spielregeln
 
