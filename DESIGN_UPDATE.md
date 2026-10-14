@@ -14,9 +14,9 @@ Die Walzen zeigen beim Drehen mehrere Silben in einem vertikalen Laufband. Die B
 
 ## Gestaltung und Bedienung
 
-Das Gehäuse, die vertieften Walzenfenster und die große Startfläche wurden in ruhigen Grüntönen plastischer gestaltet. Auf Geräten mit Maus zeigt ein kleiner, selbst gezeichneter Zauberstab-Cursor die interaktiven Flächen; Touchgeräte behalten den normalen Systemzeiger. Es gibt keine dekorativen Sterne außerhalb der Walzen und kein Punktesystem.
+Das Gehäuse, die vertieften Walzenfenster und die große Startfläche wurden in ruhigen Grüntönen plastischer gestaltet. Auf Geräten mit Maus zeigt ein kleiner, selbst gezeichneter Zauberstab-Cursor die ganze Seite; Textfelder behalten den Textcursor. Touchgeräte erhalten keine Cursoränderung. Es gibt keine dekorativen Sterne außerhalb der Walzen und kein Punktesystem.
 
-`Druckschrift_BY_WOK.ttf` liegt nicht im Repository; eine zugehörige Lizenzdatei ist ebenfalls nicht vorhanden. Deshalb bleibt die gut lesbare serifenlose Systemschrift Arial/Helvetica aktiv. Es wurde keine Schriftdatei ohne Lizenznachweis eingebunden.
+`Druckschrift_BY_WOK.ttf` liegt nicht im Checkout. Laut Nutzerangabe weist die Originaldatei in ihren Metadaten die SIL Open Font License 1.1, Copyright Wolfram Esser (2008) und einen reservierten Fontnamen aus. Da die Originaldatei und ihr Lizenztext hier nicht vorliegen, bleibt die gut lesbare serifenlose Systemschrift Arial/Helvetica aktiv; die Datei wurde weder rekonstruiert noch eingebunden. Das Sternsymbol nutzt explizit Arial/Helvetica als Fallback.
 
 ## Qualitätssicherung
 

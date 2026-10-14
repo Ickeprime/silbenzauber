@@ -7,6 +7,7 @@ Prüfung der Oberfläche mit Blick auf Smartphones im Hochformat, Tablets im Hoc
 | Bereich | Problem | Änderung |
 | --- | --- | --- |
 | Smartphone, schmale Ansicht mit fünf Walzen | Die feste Schriftgröße konnte die Silbe der ersten Walze (`Ma`) in einer schmalen Zelle abschneiden. | Schriftgröße für vier und fünf Walzen skaliert jetzt auch an schmalen Ansichten mit der verfügbaren Breite. Die ganze Silbe bleibt die Anzeigeeinheit. |
+| Sehr schmales Smartphone, 320 CSS-Pixel | Der Text im Einstellungsbutton verbreiterte den Kopfbereich über den Bildschirmrand. | Bei höchstens 375 CSS-Pixeln bleibt das Zahnradsymbol als kompakter, mindestens 44 Pixel großer Button sichtbar; `aria-label` erhält den zugänglichen Namen. |
 | Alle Geräte | Die weiße Statusanweisung auf halbtransparentem Grün hatte zu wenig Kontrast. | Die Anweisung hat nun einen hellen, deckenden Hintergrund mit dunkler grüner Schrift. |
 | Touchbedienung | Schließen-Schaltfläche und „Alle/Keine“-Aktionen unterschritten knapp die angestrebte 44-Pixel-Touchfläche. | Schließen-Schaltfläche und Aktionsschaltflächen sind mindestens 44–48 Pixel groß; die Aktionen der Silbenauswahl behalten gut nutzbare Abstände. |
 | Individuelle Auswahl | Die Zusammenfassung zeigte alle aus Buchstaben erzeugbaren Silben als „aktive“ Silben, auch wenn Lehrkräfte einzelne davon abgewählt hatten. | Sie zeigt jetzt nur die Anzahl der gewählten Silben pro Walze und suggeriert nicht, dass abgewählte Silben im Spiel vorkommen. |
@@ -14,6 +15,8 @@ Prüfung der Oberfläche mit Blick auf Smartphones im Hochformat, Tablets im Hoc
 | Schreibweise | Die Schreibweise war an die Walzennummer gebunden und ließ sich nicht an unterschiedliche Leseziele anpassen. | Jede Walze kann unabhängig auf Anfangsbuchstabe groß, Kleinbuchstaben oder Großbuchstaben eingestellt werden; die Klassenstufen-Standards bleiben voreingestellt. |
 | Lesepausen | Bei dauerhaftem Zufall konnten erlaubte Sterne lange ausbleiben. | Bei mindestens einer aktiven Sternoption ab Walze 2 wird spätestens nach drei sternlosen Ergebnissen eine Lesepause gezeigt. Walze 1 bleibt sternfrei. |
 | Dreh-Feedback | Die bisherige Drehung wechselte Symbole sprunghaft, statt die Walzenbewegung sichtbar zu machen. | Vertikale Silben-Laufbänder stoppen zeitversetzt. „Wenig Bewegung“ überspringt die Animation; Töne lassen sich abschalten. |
+| Mauszeiger | Der Zauberstab war nur über Bedienelementen sichtbar, nicht auf freien Flächen oder der Maschine. | Auf Geräten mit Maus und Hover gilt er jetzt seitenweit. Texteingaben behalten den Textcursor; Touchgeräte erhalten keine Cursoränderung. |
+| Druckschrift-Datei | `Druckschrift_BY_WOK.ttf` liegt im Checkout nicht vor. | Keine Schriftdatei erstellt oder eingebunden. Laut Nutzerangabe tragen die Metadaten der Originaldatei die SIL Open Font License 1.1 und den Copyrightvermerk Wolfram Esser (2008); der reservierte Fontname kann ohne Datei nicht geprüft werden. Die Systemschrift bleibt aktiv; das Sternsymbol ist ausdrücklich Arial/Helvetica zugewiesen. Originaldatei und dazugehöriger Lizenztext müssen gemeinsam bereitgestellt werden, bevor die Schrift eingebunden wird. |
 
 ## Gerätegrößen
 
@@ -23,6 +26,6 @@ Prüfung der Oberfläche mit Blick auf Smartphones im Hochformat, Tablets im Hoc
 
 ## Prüfung
 
-`node --test tests/logic.test.js` besteht mit 11 Tests. Zusätzlich wurden `node --check app.js`, `node --check logic.js` und `git diff --check` ausgeführt.
+`node --test tests/logic.test.js` besteht mit 11 Tests. Der Gesamtlauf `node --test` besteht mit 18 Tests (einschließlich der älteren Tests im Repository-Stamm). Zusätzlich wurden `node --check app.js`, `node --check logic.js` und `git diff --check` ausgeführt.
 
-Im lokalen Browser (Viewport 1265 × 720 CSS-Pixel) wurden Speichern und Wiederherstellen der Schreibweise, 2–5 Walzen, laufende und reduzierte Bewegung, Ton-Einstellung sowie die Rückkehr zu den Standardwerten geprüft. Die responsive CSS-Regeln und Touch-Zielgrößen für Smartphone, Tablet und Tafel wurden im Quellcode geprüft. Eine visuelle Prüfung mit schmalem Smartphone-Viewport konnte diese Browsersteuerung nicht ausführen; diese Gerätegrößen sind deshalb nicht als physisch oder emuliert bestätigt dokumentiert.
+Im lokalen Browser (Viewport 1265 × 720 CSS-Pixel) wurden Speichern und Wiederherstellen der Schreibweise, 2–5 Walzen, laufende und reduzierte Bewegung, Ton-Einstellung sowie die Rückkehr zu den Standardwerten geprüft. Die responsive CSS-Regeln und Touch-Zielgrößen für Smartphone, Tablet und Tafel wurden im Quellcode geprüft. Zusätzlich wurden vier und fünf Walzen bei 320 × 800 und 375 × 812 CSS-Pixeln visuell im Browser geprüft. Bei allen vier Größen blieb die Dokumentbreite innerhalb des Viewports; die Silben `La` und `la` passten in die Walzen. Für beide Walzenzahlen wurde die vertikale Animation im Lauf geprüft: Zwischen-Silben blieben im Walzenfenster begrenzt, und jede Drehung wurde beendet. Das war eine Viewport-Emulation im Desktop-Browser, kein Test auf physischen Mobilgeräten.
