@@ -1,4 +1,4 @@
-# Silbenzauber – Web-App für die Schulanfangsphase
+# Silbenzauber – Lese-Automat für die Grundschule
 
 Der **Silbenzauber** ist eine einfache Web-App, in der Kinder durch Drehen von Walzen Silben lesen üben. Lehrkräfte können Buchstaben, Silben und Sternfelder pro Walze auswählen.
 
