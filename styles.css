@@ -245,9 +245,9 @@ button:focus-visible, input:focus-visible {
 .reel.rolling .reel-symbol { filter: blur(.55px); opacity: .9; }
 .reel.landed { animation: reel-lock .2s ease-out; }
 @keyframes reel-lock {
-  0% { transform: translateY(0); }
-  48% { transform: translateY(-3px) scale(.99); }
-  100% { transform: translateY(0); }
+  0% { transform: scaleY(1); }
+  48% { transform: scaleY(.985); }
+  100% { transform: scaleY(1); }
 }
 .machine-controls { margin-top: 22px; }
 .spin-button {

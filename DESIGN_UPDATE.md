@@ -10,7 +10,7 @@ Wenn Sterne auf mindestens einer Walze ab Walze 2 freigegeben sind, erzwingt die
 
 ## Animation und Geräusche
 
-Die Walzen zeigen beim Drehen mehrere Silben in einem vertikalen Laufband. Die Bewegung stoppt mit einer sanften Verzögerung nacheinander je Walze; ein kurzes Einrasten markiert jeden Stopp. Bei reduzierter Bewegung wird das Laufband übersprungen. Start-, Lauf-, Stopp- und Endtöne werden synthetisch mit der Web Audio API erzeugt, leise begrenzt und nur nach Bedienung durch das Kind abgespielt. Die Tonoption bleibt abschaltbar.
+Die Walzen zeigen beim Drehen mehrere Silben in einem vertikalen Laufband, das von oben nach unten durch die Fenster läuft. Die Trackfolge beginnt mit der Zielsilbe; der Track startet am unteren Ende der Folge und fährt mit auslaufender Übergangskurve nach oben auf Position null. Dadurch steht die Zielsilbe am Ende bereits an ihrer endgültigen Position. Die Walzen stoppen weiterhin zeitversetzt; ein kurzes vertikales Zusammendrücken markiert den mechanischen Stopp, ohne den Track sichtbar zurückzubewegen. Bei reduzierter Bewegung wird das Laufband übersprungen. Start-, Lauf-, Stopp- und Endtöne werden synthetisch mit der Web Audio API erzeugt, leise begrenzt und nur nach Bedienung durch das Kind abgespielt. Die Tonoption bleibt abschaltbar.
 
 ## Gestaltung und Bedienung
 
@@ -25,5 +25,6 @@ Der Nutzer meldet die Originalschrift unter `fonts/Druckschrift_BY_WOK.ttf`; im 
 - `node --check logic.js`
 - `git diff --check`
 - Unit-Tests decken Schreibweisen je Walze, Migration alter Einstellungen, Sternverbot auf Walze 1 und die Vier-Drehungen-Regel ab.
+- Für die Richtungsänderung: `node --test` (18 Tests), `node --check app.js` und `node --check logic.js` bestanden. Die Bewegung ist im Code geometrisch von einem negativen Y-Versatz nach `translateY(0)` angelegt; ein visueller Browserlauf mit 2–5 Walzen bei 320/375 Pixeln war in dieser Sitzung wegen nicht erreichbarer lokaler Browser-Vorschau nicht möglich. Frühere Mobile-Viewport-Aufnahmen stammen von vor dieser Richtungsänderung und gelten nicht als Animationstest für diese Änderung.
 
 Die Spiel- und Einstellungslogik bleibt ohne Build-Abhängigkeiten in `logic.js`; Darstellung und Audio-Orchestrierung liegen in `app.js` und `styles.css`. Die Einstellungen für Walzenzahl, Buchstaben, individuelle Silben, Sterne, Ton und reduzierte Bewegung bleiben erhalten.

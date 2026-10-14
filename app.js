@@ -120,8 +120,10 @@
 
   function startReelRoll(reel, index, pool, target, duration) {
     const itemCount = 14 + index * 3;
-    const sequence = Array.from({ length: itemCount - 1 }, () => pool[Math.floor(Math.random() * pool.length)] || pool[0]);
-    sequence.push(target);
+    const sequence = [target, ...Array.from(
+      { length: itemCount - 1 },
+      () => pool[Math.floor(Math.random() * pool.length)] || pool[0],
+    )];
 
     const track = document.createElement('div');
     track.className = 'reel-track';
@@ -130,12 +132,12 @@
     sequence.forEach(value => track.appendChild(createSymbolElement(index, value)));
 
     reel.setAttribute('aria-busy', 'true');
+    track.style.transform = `translateY(-${cellHeight * (sequence.length - 1)}px)`;
     reel.replaceChildren(track);
-    track.style.transform = 'translateY(0)';
     void track.offsetHeight;
     window.requestAnimationFrame(() => {
       track.style.transitionDuration = `${duration}ms`;
-      track.style.transform = `translateY(-${cellHeight * (sequence.length - 1)}px)`;
+      track.style.transform = 'translateY(0)';
     });
   }
 
