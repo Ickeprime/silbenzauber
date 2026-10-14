@@ -1,7 +1,7 @@
 # Codex-Übergabe – Silbenzauber (Stand: 14.10.2026)
 
 ## Projekt
-**Silbenzauber** ist eine kostenfreie, browserbasierte Lese-Übungsmaschine für die Schulanfangsphase / Klasse 1. Kinder drücken „START“ und lesen die angezeigten Silben. Lehrkräfte können Walzenzahl, Vokale, Konsonanten, Silbenauswahl je Walze, Sterne, Ton und reduzierte Bewegung festlegen.
+**Silbenzauber** ist eine kostenfreie, browserbasierte Lese-Übungsmaschine für den Grundschulunterricht, besonders für das Lesenlernen. Kinder drücken „START“ und lesen die angezeigten Silben. Lehrkräfte können Walzenzahl, Vokale, Konsonanten, Silbenauswahl je Walze, Sterne, Ton und reduzierte Bewegung festlegen.
 
 ## Aktuelle Adressen
 - Repository: https://github.com/Ickeprime/silbenzauber
