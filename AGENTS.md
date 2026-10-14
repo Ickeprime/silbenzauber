@@ -27,12 +27,18 @@ Erstleserinnen und Erstleser in Klasse 1, Lehrkräfte, Tablets und Smartboards.
 ## Code und Veröffentlichung
 
 - Statische HTML-, CSS- und JavaScript-Anwendung ohne erforderliche Build-Abhängigkeiten.
-- Öffentlich ausgelieferter Inhalt in `public/`.
-- Cloudflare Pages: Build `exit 0`, Output `public`, Hauptbranch `main`.
-- Reine Spiellogik in `public/logic.js`; UI in `public/app.js`.
+- Die veröffentlichten HTML-, CSS- und JS-Dateien liegen im Repository-Stammverzeichnis: `index.html`, `styles.css`, `app.js`, `logic.js` (kein `public/`-Ordner).
+- Cloudflare Pages: Build `exit 0`, Output `.`, Hauptbranch `main`. `main` wird bei Änderungen automatisch erneut veröffentlicht.
+- Reine Spiellogik in `logic.js`; UI in `app.js`.
 - Vor einem Pull Request die Node-Tests ausführen: `node --test tests/logic.test.js`.
 - Bei neuen Spielfunktionen Tests ergänzen.
 - Keine Tokens, Passwörter, API-Schlüssel oder personenbezogenen Lerndaten ins Git-Repository aufnehmen.
+
+## Sicherer Entwicklungsablauf
+
+- Lies zu Beginn auch `CODEX_HANDOFF.md` für aktuellen Projektstand, Deployment und erste Aufgaben.
+- Änderungen vorzugsweise auf einem Feature-Branch durchführen und als Pull Request zur Prüfung vorlegen; keine direkte Veröffentlichung ohne Freigabe.
+- Cloudflare-/checkdomain-DNS, Zertifikate, Domains und Berechtigungen nicht eigenmächtig verändern.
 
 ## Geplante, aber noch nicht vorhandene Funktionen
 
