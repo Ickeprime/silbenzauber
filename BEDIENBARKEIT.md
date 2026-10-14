@@ -1,6 +1,6 @@
 # Bedienbarkeitsprüfung
 
-Prüfung der Oberfläche mit Blick auf Smartphones im Hochformat, Tablets im Hoch- und Querformat sowie interaktive Tafeln. Die Projektvorgaben für Klasse 1 bleiben maßgeblich: grüne Maschine, serifenlose Druckschrift, Walze 1 ohne Stern, ganze Silben, einzeln auswählbare Silben und voreingestellte Schreibweise `Ma` auf Walze 1 sowie `ma` auf den weiteren Walzen. Lehrkräfte können die Schreibweise jetzt pro Walze auf `Ma`, `ma` oder `MA` stellen.
+Prüfung der Oberfläche mit Blick auf Smartphones im Hochformat, Tablets im Hoch- und Querformat sowie interaktive Tafeln. Die Projektvorgaben für den Grundschulunterricht bleiben maßgeblich: grüne Maschine, serifenlose Druckschrift, Walze 1 ohne Stern, ganze Silben, einzeln auswählbare Silben und voreingestellte Schreibweise `Ma` auf Walze 1 sowie `ma` auf den weiteren Walzen. Lehrkräfte können die Schreibweise jetzt pro Walze auf `Ma`, `ma` oder `MA` stellen.
 
 ## Gefundene Probleme und Änderungen
 
