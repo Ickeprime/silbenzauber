@@ -1,6 +1,8 @@
+> **Aktueller Stand (14.10.2026):** GitHub und Cloudflare Pages sind bereits eingerichtet; der Quellcode liegt direkt im Repository-Stammverzeichnis (nicht in `public/`). Das produktive Pages-Projekt nutzt Build-Ausgabe `.` und ist auf https://silbenzauber.pages.dev veröffentlicht. Die Anleitung unten wurde auf diesen Stand angepasst. Die Wunschdomain `silbenzauber.lessqq.de` wird separat eingerichtet; nicht ohne Bestätigung DNS ändern.
+
 # Silbenzauber veröffentlichen – GitHub, Cloudflare, checkdomain
 
-Diese Anleitung ist für die Projektdateien in diesem ZIP geschrieben. Vor einer Veröffentlichung müssen die ZIP-Dateien entpackt werden: **GitHub kann eine hochgeladene ZIP-Datei nicht automatisch als Website entpacken.**
+Diese Anleitung beschreibt die Einrichtung sowie spätere Wartung des bereits veröffentlichten Projekts.
 
 ## A. GitHub-Repository erstellen
 
@@ -11,9 +13,9 @@ Diese Anleitung ist für die Projektdateien in diesem ZIP geschrieben. Vor einer
 5. `Create repository` klicken. Ein automatisch erstelltes README ist nicht notwendig, da dieses Projekt bereits eines enthält.
 6. Das ZIP `Silbenzauber_GitHub_Cloudflare.zip` **auf dem eigenen Gerät entpacken**.
 7. Im GitHub-Repository **Add file → Upload files** öffnen; bei einem komplett leeren Repository stattdessen auf **uploading an existing file** klicken.
-8. **Den Inhalt des entpackten Ordners** hochladen: Verzeichnisse `public/`, `tests/` und Dateien `README.md`, `AGENTS.md`, `VEROEFFENTLICHUNG.md`. Keinen zusätzlichen obersten Ordner anlegen.
+8. **Den Inhalt des entpackten Ordners** hochladen: Verzeichnis `tests/` und die Webdateien `index.html`, `styles.css`, `logic.js`, `app.js` sowie `README.md`, `AGENTS.md`, `CODEX_HANDOFF.md`, `VEROEFFENTLICHUNG.md`. Keinen zusätzlichen obersten Ordner anlegen.
 9. Als Commit-Nachricht `Silbenzauber – Veröffentlichung vorbereiten` eintragen und auf den Hauptbranch committen.
-10. Prüfen: `public/index.html` muss genau dort liegen; es darf nicht `Silbenzauber_GitHub_Cloudflare/public/index.html` heißen.
+10. Prüfen: `index.html` muss direkt im Stammverzeichnis liegen.
 
 ## B. Cloudflare Pages mit GitHub verbinden
 
@@ -28,7 +30,7 @@ Diese Anleitung ist für die Projektdateien in diesem ZIP geschrieben. Vor einer
    | Framework | None / Kein Framework |
    | Production branch | `main` |
    | Build command | `exit 0` (oder leer) |
-   | Build output directory | `public` |
+   | Build output directory | `.` |
    | Root directory | Standard / Repository-Stamm |
 
 6. **Save and Deploy** klicken.
@@ -72,13 +74,13 @@ Optionen:
 2. Codex auf https://chatgpt.com/codex oder über den Codex-Bereich in ChatGPT öffnen, sofern verfügbar.
 3. GitHub verbinden/den Zugriff auf das neue Repository erlauben.
 4. Das Repository `silbenzauber` als Projekt/Umgebung auswählen.
-5. Den Inhalt von `AGENTS.md` als Entwicklungsregeln verwenden. Erste Aufgabe: `Prüfe die Web-App auf Fehler, führe alle Tests aus und schlage einen Pull Request mit Verbesserungen vor. Erhalte unbedingt die Regeln für Walze 1.`
+5. `AGENTS.md` und `CODEX_HANDOFF.md` als Entwicklungsregeln und Projektübergabe verwenden. Erste Aufgabe: `Prüfe die Web-App auf Fehler, führe alle Tests aus und schlage einen Pull Request mit Verbesserungen vor. Erhalte unbedingt die Regeln für Walze 1.`
 6. Änderungen vor der Übernahme in `main` ansehen und prüfen. Cloudflare veröffentlicht nach Übernahme automatisch neu.
 
 ## F. Häufige Fehler
 
-- **404 auf pages.dev** → Wahrscheinlich falscher Output-Pfad oder `public/index.html` fehlt.
-- **CSS/JavaScript fehlen** → Achte darauf, dass alle vier Dateien gemeinsam in `public/` liegen.
+- **404 auf pages.dev** → Wahrscheinlich falscher Output-Pfad oder `index.html` im Stammverzeichnis fehlt.
+- **CSS/JavaScript fehlen** → Achte darauf, dass alle vier Dateien gemeinsam im Stammverzeichnis liegen.
 - **Custom Domain funktioniert nicht** → Domain zuerst in Cloudflare unter *Custom domains* hinzufügen und erst dann passenden CNAME beim autoritativen DNS-Anbieter setzen.
 - **Checkdomain-DNS wird nicht übernommen** → Prüfen, welche Nameserver tatsächlich für die Domain aktiv sind.
 - **Website nach Änderung noch alt** → GitHub-Commit auf `main`, Cloudflare-Deploymentstatus und Browsercache überprüfen.
