@@ -12,9 +12,11 @@
     happy: "assets/monkey-celebrating.webp",
     encouraging: "assets/monkey-encouraging.webp"
   };
+  const monkeySpriteCache = new Map();
   // Decode both response illustrations before a child can reach the answer screen.
   Object.values(monkeySprites).filter((src, i, all) => all.indexOf(src) === i).forEach(src => {
     const image = new Image();
+    monkeySpriteCache.set(src,image);
     image.src = src;
     if (image.decode) image.decode().catch(() => {});
   });

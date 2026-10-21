@@ -111,7 +111,10 @@ async function main() {
     assert.equal((await page.locator("#again").textContent()).trim(),"Nochmal");
     assert.equal(await page.locator("#monkey.celebrating").count(),1);
     assert.match(await page.locator("#monkeyDrawing").getAttribute("src"),/monkey-celebrating\.webp$/);
-    assert.equal(await page.locator("#monkeyDrawing").evaluate(img=>img.complete && img.naturalWidth>0),true);
+    await page.waitForFunction(() => {
+      const image=document.querySelector("#monkeyDrawing");
+      return image.complete && image.naturalWidth>0;
+    });
     assert.equal(await page.locator(".board-feedback").count(),1);
     assert.equal(await page.locator("#again").evaluate(el => document.activeElement === el),true);
     await page.waitForTimeout(400); // Feedback-Einblendung vor dem Screenshot vollständig anzeigen.
@@ -150,7 +153,10 @@ async function main() {
     assert.match(await page.locator(".feedback h2").textContent(),/Noch nicht richtig|Leider falsch/);
     assert.equal(await page.locator("#monkey.encouraging").count(),1);
     assert.match(await page.locator("#monkeyDrawing").getAttribute("src"),/monkey-encouraging\.webp$/);
-    assert.equal(await page.locator("#monkeyDrawing").evaluate(img=>img.complete && img.naturalWidth>0),true);
+    await page.waitForFunction(() => {
+      const image=document.querySelector("#monkeyDrawing");
+      return image.complete && image.naturalWidth>0;
+    });
     assert.equal(await page.locator("#monkey img").count(),1);
     assert.equal(await page.locator("#monkeyExpression").count(),0);
     await page.waitForTimeout(400);
