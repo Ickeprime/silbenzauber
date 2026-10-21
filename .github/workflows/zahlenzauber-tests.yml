@@ -1,0 +1,24 @@
+name: Zahlenzauber – Prüfungen
+on:
+  push:
+    paths:
+      - 'zahlenzauber/**'
+      - '.github/workflows/zahlenzauber-tests.yml'
+  pull_request:
+    paths:
+      - 'zahlenzauber/**'
+      - '.github/workflows/zahlenzauber-tests.yml'
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript-Syntax prüfen
+        run: |
+          node --check zahlenzauber/logic.js
+          node --check zahlenzauber/app.js
+      - name: Mathe-Spielregeln testen
+        run: node --test zahlenzauber/tests/logic.test.js

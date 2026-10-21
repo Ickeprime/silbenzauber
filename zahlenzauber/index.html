@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#9bd851">
+  <meta name="description" content="Zahlenzauber – Affenwurf: drei Bälle werfen, Zahlen addieren und die richtige Antwort finden.">
+  <title>Zahlenzauber – Affenwurf</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="logic.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+<main class="scene" id="hauptinhalt">
+  <nav class="top-nav" aria-label="Lernspiele">
+    <a href="../" class="nav-link">🏠 Silbenzauber</a>
+    <button id="openConfig" type="button" class="teacher-button" aria-haspopup="dialog">⚙️ Lehrkraft</button>
+  </nav>
+  <header class="wood-title">
+    <h1>Zahlen<span>zauber</span></h1>
+    <p>Wirf die Bälle und rechne zusammen!</p>
+  </header>
+  <div id="instruction" class="instruction" role="status" aria-live="polite">Klick auf den Affen zum Werfen!</div>
+  <section class="play-area" aria-label="Affenwurf">
+    <div class="monkey-area">
+      <button type="button" id="monkey" class="monkey-button" aria-label="Affe anklicken, um einen Ball zu werfen">
+        <svg id="monkeyDrawing" class="monkey-drawing" viewBox="0 0 170 230" aria-hidden="true">
+          <path d="M41 160 C-12 165 3 210 31 202 C45 198 44 181 31 182" stroke="#7f3a16" stroke-width="13" fill="none" stroke-linecap="round"/>
+          <ellipse cx="91" cy="167" rx="47" ry="51" fill="#934417" stroke="#5c2b10" stroke-width="5"/>
+          <ellipse cx="94" cy="167" rx="29" ry="36" fill="#eab276"/>
+          <path d="M58 171 Q34 178 24 145 M120 169 Q145 150 155 125" fill="none" stroke="#813e15" stroke-width="19" stroke-linecap="round"/>
+          <circle cx="23" cy="144" r="12" fill="#bc723e" stroke="#74340f" stroke-width="4"/>
+          <circle cx="155" cy="126" r="12" fill="#bc723e" stroke="#74340f" stroke-width="4"/>
+          <path d="M67 206 L60 217 M118 205 L124 216" fill="none" stroke="#803b12" stroke-width="19" stroke-linecap="round"/>
+          <ellipse cx="91" cy="85" rx="66" ry="65" fill="#9b491d" stroke="#63300d" stroke-width="5"/>
+          <ellipse cx="32" cy="85" rx="24" ry="30" fill="#ac582d" stroke="#69320f" stroke-width="5"/>
+          <ellipse cx="149" cy="85" rx="23" ry="30" fill="#ac582d" stroke="#69320f" stroke-width="5"/>
+          <ellipse cx="31" cy="85" rx="12" ry="16" fill="#efae7a"/><ellipse cx="149" cy="85" rx="12" ry="16" fill="#efae7a"/>
+          <path d="M38 85 Q39 38 75 45 Q92 49 88 68 Q106 38 131 62 Q155 99 133 125 Q93 156 53 125 Q34 113 38 85Z" fill="#ffd09a"/>
+          <ellipse cx="71" cy="82" rx="16" ry="22" fill="white"/><ellipse cx="111" cy="82" rx="16" ry="22" fill="white"/>
+          <ellipse cx="76" cy="87" rx="8" ry="13" fill="#352118"/><ellipse cx="106" cy="87" rx="8" ry="13" fill="#352118"/>
+          <circle cx="79" cy="82" r="3" fill="white"/><circle cx="109" cy="82" r="3" fill="white"/>
+          <ellipse cx="91" cy="110" rx="13" ry="10" fill="#b86740"/>
+          <path d="M65 125 Q90 155 119 123" fill="none" stroke="#6f2a20" stroke-width="6" stroke-linecap="round"/>
+          <ellipse cx="55" cy="109" rx="10" ry="5" fill="#f3a58b" opacity=".8"/><ellipse cx="126" cy="109" rx="10" ry="5" fill="#f3a58b" opacity=".8"/>
+          <path d="M70 28 Q66 9 87 14 Q104 5 102 26" stroke="#663310" stroke-width="8" fill="none" stroke-linecap="round"/>
+        </svg>
+        <span id="monkeyExpression" class="monkey-expression" aria-hidden="true" hidden>🙈</span>
+      </button>
+      <p id="monkeyMessage" class="wood-sign">Klick mich<br>zum Werfen!</p>
+    </div>
+    <div class="target-stand">
+      <svg id="target" class="target" viewBox="0 0 500 520" role="img" aria-label="Zielscheibe mit Zahlenfeldern und geworfenen Bällen"></svg>
+      <div class="stand-foot" aria-hidden="true"></div>
+    </div>
+  </section>
+  <section id="playBoard" class="game-board" aria-label="Bälle und Rechenaufgabe" aria-live="polite"></section>
+  <footer class="page-foot">Drei Würfe. Drei Zahlen. Eine richtige Antwort. <span>Eine App der Silbenzauber-Serie.</span></footer>
+</main>
+<dialog id="settingsDialog" class="settings-dialog" aria-labelledby="settingsTitle">
+  <form id="configForm" novalidate>
+    <div class="dialog-title">
+      <h2 id="settingsTitle">⚙️ Lehrkraft-Einstellungen</h2>
+      <button id="closeConfig" type="button" class="close-dialog" aria-label="Einstellungen schließen">✕</button>
+    </div>
+    <p class="dialog-intro">Passe Zahlen und Würfe an den Rechenraum deiner Klasse an.</p>
+    <fieldset class="form-section">
+      <legend>1 · Welche Zahlen?</legend>
+      <div class="radio-row">
+        <label class="choice-label"><input type="radio" name="mode" value="tens" checked> Zehnerzahlen</label>
+        <label class="choice-label"><input type="radio" name="mode" value="mixed"> Gemischte Zahlen</label>
+      </div>
+      <p class="field-hint">Zehner: 10, 20, 30 … · Gemischt: auch 7, 23, 45 …</p>
+    </fieldset>
+    <div class="settings-columns">
+      <label class="form-section input-section">2 · Höchste normale Feldzahl
+        <input id="maxField" type="number" min="10" max="1000" value="100" step="10" inputmode="numeric" required>
+        <span class="field-hint">Die Mitte mit 100 ist ein eigenes Sonderfeld.</span>
+      </label>
+      <label class="form-section input-section">3 · Höchste Gesamtsumme
+        <input id="maxTotal" type="number" min="30" max="3000" value="100" step="10" inputmode="numeric" required>
+        <span class="field-hint">Die Summe aller drei Würfe überschreitet diesen Wert nie.</span>
+      </label>
+    </div>
+    <fieldset class="form-section">
+      <legend>4 · Was darf die Mitte (100)?</legend>
+      <div class="center-options">
+        <label class="choice-label"><input type="radio" name="centerMode" value="normal"> Normal treffen</label>
+        <label class="choice-label"><input type="radio" name="centerMode" value="never"> Nie treffen</label>
+        <label class="choice-label"><input type="radio" name="centerMode" value="afterTwoMisses" checked> Erst nach zwei Nieten möglich</label>
+      </div>
+      <p class="field-hint">Eine Mitte zählt 100 Punkte. Sie wird nur getroffen, wenn auch die Höchstsumme passt.</p>
+    </fieldset>
+    <label class="form-section miss-checkbox">
+      <input type="checkbox" id="allowMisses" checked>
+      <span><strong>Fehlwürfe / Nieten erlauben</strong><small>Ein Ball fliegt vorbei und zählt 0 Punkte.</small></span>
+    </label>
+    <div id="settingsHint" class="settings-hint" aria-live="polite"></div>
+    <p class="form-error" id="configError" role="alert" hidden></p>
+    <div class="dialog-actions">
+      <button type="button" id="resetConfig" class="reset-button">Zurücksetzen</button>
+      <button type="button" id="cancelConfig" class="cancel-button">Abbrechen</button>
+      <button type="submit" class="save-button">✓ Speichern</button>
+    </div>
+    <p id="saveStatus" class="storage-note"></p>
+  </form>
+</dialog>
+</body>
+</html>
