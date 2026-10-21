@@ -5,6 +5,19 @@
   const $ = id => document.getElementById(id);
   const svgNS = "http://www.w3.org/2000/svg";
   const board = $("playBoard"), target = $("target"), monkey = $("monkey");
+  const monkeyImage = $("monkeyDrawing");
+  const monkeySprites = {
+    normal: "assets/monkey-mascot.webp",
+    throw: "assets/monkey-mascot.webp",
+    happy: "assets/monkey-celebrating.webp",
+    encouraging: "assets/monkey-encouraging.webp"
+  };
+  // Decode both response illustrations before a child can reach the answer screen.
+  Object.values(monkeySprites).filter((src, i, all) => all.indexOf(src) === i).forEach(src => {
+    const image = new Image();
+    image.src = src;
+    if (image.decode) image.decode().catch(() => {});
+  });
   const storageKey = "zahlenzauber-settings-v1";
   const soundKey = "zahlenzauber-sound-v1";
   let soundEnabled = false, audioContext = null, toastTimer = null;
@@ -186,10 +199,13 @@
     target.setAttribute("aria-label","Zielscheibe; " + (descriptions.join("; ") || "noch kein Ball geworfen"));
   }
   function setMonkeyEmotion(type) {
+    const state = Object.prototype.hasOwnProperty.call(monkeySprites,type) ? type : "normal";
+    const nextSource = monkeySprites[state];
+    if (monkeyImage.getAttribute("src") !== nextSource) monkeyImage.setAttribute("src",nextSource);
     monkey.classList.remove("throwing","celebrating","encouraging");
-    if (type === "throw") monkey.classList.add("throwing");
-    if (type === "happy") monkey.classList.add("celebrating");
-    if (type === "encouraging") monkey.classList.add("encouraging");
+    monkey.classList.toggle("throwing",state === "throw");
+    monkey.classList.toggle("celebrating",state === "happy");
+    monkey.classList.toggle("encouraging",state === "encouraging");
   }
   function equationHTML() {
     return throws.map((h) => {

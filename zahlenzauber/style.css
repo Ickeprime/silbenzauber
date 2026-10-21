@@ -98,6 +98,8 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 4px solid 
 .wood-title::before { left: 12px; }
 .wood-title::after { right: 12px; }
 .wood-title h1 {
+  position: relative;
+  display: inline-block;
   margin: 0;
   color: #ffcf32;
   background: linear-gradient(180deg, #fff6a4 1%, #ffe33f 26%, #ffb20e 59%, #e86c04 84%, #b54808 100%);
@@ -109,9 +111,55 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 4px solid 
   font-weight: 1000;
   line-height: .98;
   letter-spacing: -.065em;
-  text-shadow: 0 1px 0 #fff5a6, 0 3px 0 #e98e0c, 0 5px 0 #a84b0c, 0 8px 0 #62300e, 0 12px 13px #35200d99;
+  text-shadow: 0 1px 0 #fffbd2, 0 2px 0 #fff1a0, 0 3px 0 #e98e0c, 0 5px 0 #d16a08, 0 7px 0 #a84b0c, 0 9px 0 #7c390e, 0 12px 0 #62300e, 0 16px 16px #35200dcc;
 }
 .wood-title h1 span { color: inherit; -webkit-text-fill-color: transparent; }
+.wood-title h1 .title-word { white-space: nowrap; }
+.wood-title h1 .title-word > span {
+  display: inline-block;
+  transform-origin: 50% 90%;
+  animation: title-letter-arrive .58s cubic-bezier(.18,.78,.24,1.22) both;
+  animation-delay: calc(var(--letter-index, 0) * 36ms);
+}
+.wood-title h1 .title-word:first-child > span:nth-child(1) { --letter-index: 0; }
+.wood-title h1 .title-word:first-child > span:nth-child(2) { --letter-index: 1; }
+.wood-title h1 .title-word:first-child > span:nth-child(3) { --letter-index: 2; }
+.wood-title h1 .title-word:first-child > span:nth-child(4) { --letter-index: 3; }
+.wood-title h1 .title-word:first-child > span:nth-child(5) { --letter-index: 4; }
+.wood-title h1 .title-word:first-child > span:nth-child(6) { --letter-index: 5; }
+.wood-title h1 .title-word-second > span:nth-child(1) { --letter-index: 6; }
+.wood-title h1 .title-word-second > span:nth-child(2) { --letter-index: 7; }
+.wood-title h1 .title-word-second > span:nth-child(3) { --letter-index: 8; }
+.wood-title h1 .title-word-second > span:nth-child(4) { --letter-index: 9; }
+.wood-title h1 .title-word-second > span:nth-child(5) { --letter-index: 10; }
+.wood-title h1 .title-word-second > span:nth-child(6) { --letter-index: 11; }
+.wood-title h1::after {
+  content: attr(data-title);
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  background: linear-gradient(108deg, transparent 33%, #fff9cf 44%, #fff 49%, #ffe98a 53%, transparent 64%);
+  background-size: 240% 100%;
+  background-position: 125% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 0 transparent;
+  text-shadow: none;
+  opacity: 0;
+  pointer-events: none;
+  animation: title-gloss .95s ease-out .64s both;
+}
+@keyframes title-letter-arrive {
+  0% { opacity: 0; transform: translateY(20px) scale(.82) rotate(-7deg); }
+  75% { opacity: 1; transform: translateY(-4px) scale(1.04) rotate(1.2deg); }
+  100% { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+}
+@keyframes title-gloss {
+  0% { opacity: 0; background-position: 125% 0; }
+  18% { opacity: .95; }
+  100% { opacity: 0; background-position: -80% 0; }
+}
 .wood-title p {
   display: inline-block;
   margin: 13px 0 0;
@@ -192,7 +240,6 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 4px solid 
 .monkey-button:disabled { cursor: default; opacity: 1; }
 .monkey-button.throwing .monkey-drawing { animation: monkey-toss .42s ease-in-out; }
 .monkey-button.celebrating { animation: happy .58s ease-in-out 2; }
-.monkey-button.celebrating .monkey-drawing { filter: brightness(1.08) saturate(1.05); }
 .monkey-drawing { display: block; width: 100%; height: auto; max-height: 320px; object-fit: contain; transition: transform .35s ease; }
 .wood-sign {
   position: relative; z-index: 1;
@@ -621,9 +668,12 @@ input[type="radio"], input[type="checkbox"] { width: 19px; height: 19px; flex: n
 }
 @media (prefers-reduced-motion: reduce) {
   .target .hit-marker.new,
+  .wood-title h1 .title-word > span,
+  .wood-title h1::after,
   .monkey-button.throwing .monkey-drawing,
   .monkey-button.celebrating,
   .monkey-button.encouraging .monkey-drawing,
   .monkey-area:has(.celebrating)::after,
   .feedback.success .feedback-stars { animation: none !important; }
+  .wood-title h1 .title-word > span { opacity: 1; transform: none; }
 }

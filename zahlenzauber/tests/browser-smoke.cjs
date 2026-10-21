@@ -43,9 +43,17 @@ async function main() {
       await page.waitForTimeout(100);
       await page.screenshot({path:screenshotPath,fullPage:true});
     };
+    const waitForTitle=()=>page.waitForFunction(()=>
+      [...document.querySelectorAll(".wood-title h1 .title-word > span")]
+        .every(letter=>getComputedStyle(letter).opacity==="1"));
     page.on("pageerror",err=>failures.push(err.message));
     await page.goto(origin+"/zahlenzauber/");
     await page.locator("#monkey").waitFor();
+    await waitForTitle();
+    assert.equal(await page.locator(".wood-title h1").getAttribute("aria-label"),"Zahlenzauber");
+    assert.equal(await page.locator(".wood-title h1 .title-word > span").count(),12);
+    assert.match(await page.locator("#monkeyDrawing").getAttribute("src"),/monkey-mascot\.webp$/);
+    assert.equal(await page.locator("#monkeyDrawing").evaluate(img=>img.complete && img.naturalWidth>0),true);
     assert.equal(await page.locator(".ball-slot.available").count(),3);
     assert.equal(await page.locator(".board-throws").count(),1);
     assert.equal(await page.locator("#target .score-tag").count(),0);
@@ -83,6 +91,8 @@ async function main() {
     assert.equal(await page.locator("#soundButton").getAttribute("aria-pressed"),"true");
     for(let index=1;index<=3;index++) {
       await page.locator("#monkey").click();
+      assert.equal(await page.locator("#monkey.throwing").count(),1);
+      assert.match(await page.locator("#monkeyDrawing").getAttribute("src"),/monkey-mascot\.webp$/);
       await page.waitForFunction(count => document.querySelectorAll(".hit-marker").length === count,index);
       assert.equal(await page.locator("#target .score-tag").count(),index);
       if (index<3) assert.equal(await page.locator(".ball-slot.available").count(),3-index);
@@ -99,12 +109,15 @@ async function main() {
     assert.match(await page.locator(".feedback h2").textContent(),/Richtig/);
     assert.equal((await page.locator("#again").textContent()).trim(),"Nochmal");
     assert.equal(await page.locator("#monkey.celebrating").count(),1);
+    assert.match(await page.locator("#monkeyDrawing").getAttribute("src"),/monkey-celebrating\.webp$/);
+    assert.equal(await page.locator("#monkeyDrawing").evaluate(img=>img.complete && img.naturalWidth>0),true);
     assert.equal(await page.locator(".board-feedback").count(),1);
     assert.equal(await page.locator("#again").evaluate(el => document.activeElement === el),true);
     await page.waitForTimeout(400); // Feedback-Einblendung vor dem Screenshot vollständig anzeigen.
     await capture("zahlenzauber/tests/screenshots/mobile-correct.png");
     await page.locator("#again").click();
     assert.equal(await page.locator(".ball-slot.available").count(),3);
+    assert.match(await page.locator("#monkeyDrawing").getAttribute("src"),/monkey-mascot\.webp$/);
     assert.equal(await page.locator("#monkey").evaluate(el => document.activeElement === el),true);
 
     // Typische Gerätebreiten plus schmale Telefonansicht:
@@ -135,14 +148,19 @@ async function main() {
     await page.locator('.answer-button[data-answer="'+wrongAnswer+'"]').click();
     assert.match(await page.locator(".feedback h2").textContent(),/Noch nicht richtig|Leider falsch/);
     assert.equal(await page.locator("#monkey.encouraging").count(),1);
+    assert.match(await page.locator("#monkeyDrawing").getAttribute("src"),/monkey-encouraging\.webp$/);
+    assert.equal(await page.locator("#monkeyDrawing").evaluate(img=>img.complete && img.naturalWidth>0),true);
     assert.equal(await page.locator("#monkey img").count(),1);
     assert.equal(await page.locator("#monkeyExpression").count(),0);
     await page.waitForTimeout(400);
     await capture("zahlenzauber/tests/screenshots/mobile-wrong.png");
+    await page.locator("#again").click();
+    assert.match(await page.locator("#monkeyDrawing").getAttribute("src"),/monkey-mascot\.webp$/);
 
     // Tablet/Desktop: Dialog erreichbar und beide Lernspiele verlinkt.
     await page.reload();
     await page.setViewportSize({width:1280,height:800});
+    await waitForTitle();
     await capture("zahlenzauber/tests/screenshots/desktop-start.png");
     await page.locator("#openConfig").click();
     await capture("zahlenzauber/tests/screenshots/desktop-settings.png");
