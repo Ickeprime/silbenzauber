@@ -4,7 +4,20 @@
   const L = window.ZahlenzauberLogic;
   const $ = id => document.getElementById(id);
   const svgNS = "http://www.w3.org/2000/svg";
-  const board = $("playBoard"), target = $("target"), monkey = $("monkey"), monkeyFace = $("monkeyExpression");
+  const board = $("playBoard"), target = $("target"), monkey = $("monkey");
+  const monkeyImage = $("monkeyDrawing");
+  const monkeySprites = {
+    normal: "assets/monkey-mascot.webp",
+    throw: "assets/monkey-mascot.webp",
+    happy: "assets/monkey-celebrating.webp",
+    encouraging: "assets/monkey-encouraging.webp"
+  };
+  // Decode both response illustrations before a child can reach the answer screen.
+  Object.values(monkeySprites).filter((src, i, all) => all.indexOf(src) === i).forEach(src => {
+    const image = new Image();
+    image.src = src;
+    if (image.decode) image.decode().catch(() => {});
+  });
   const storageKey = "zahlenzauber-settings-v1";
   const soundKey = "zahlenzauber-sound-v1";
   let soundEnabled = false, audioContext = null, toastTimer = null;
@@ -110,29 +123,55 @@
       b.x + " " + b.y + " L " + c.x + " " + c.y + " A " + inner + " " + inner +
       " 0 0 0 " + d.x + " " + d.y + " Z";
   }
-  function addBall(parent, x, y, latest) {
-    const g = svg("g",{"class":"hit-marker" + (latest ? " new" : "")});
-    g.appendChild(svg("circle",{cx:x,cy:y,r:17,fill:"url(#zz-ball-shine)",stroke:"#fff","stroke-width":2.7}));
-    g.appendChild(svg("path",{d:"M " + (x-12) + " " + (y-12) + " Q " + (x+5) + " " + (y-5) + " " + (x+11) + " " + (y+13),fill:"none",stroke:"#fff","stroke-width":7}));
-    g.appendChild(svg("path",{d:"M " + (x-10) + " " + (y-5) + " Q " + x + " " + (y+9) + " " + (x+12) + " " + (y+7),fill:"none",stroke:"#fff0dd","stroke-width":3}));
+  function addBall(parent, x, y, latest, points) {
+    // Der Zahlenwert bleibt auch dann lesbar, wenn der Ball das Zahlenfeld verdeckt.
+    const g = svg("g",{"class":"hit-marker" + (latest ? " new" : ""), "aria-hidden":"true"});
+    g.appendChild(svg("ellipse",{cx:x+3,cy:y+16,rx:20,ry:7,fill:"#171716","fill-opacity":".35"}));
+    g.appendChild(svg("circle",{cx:x,cy:y,r:20,fill:"url(#zz-ball-shine)",stroke:"#fff8eb","stroke-width":2.4}));
+    g.appendChild(svg("path",{d:"M " + (x-16) + " " + (y-10) + " Q " + (x-3) + " " + (y-6) +
+      " " + (x+12) + " " + (y+15),fill:"none",stroke:"#fffdf6","stroke-width":9,"stroke-linecap":"round"}));
+    g.appendChild(svg("path",{d:"M " + (x-10) + " " + (y-16) + " Q " + (x+5) + " " + (y-4) +
+      " " + (x+17) + " " + (y+5),fill:"none",stroke:"#ffeee5","stroke-width":4,"stroke-linecap":"round"}));
+    g.appendChild(svg("ellipse",{cx:x-7,cy:y-10,rx:6,ry:3,fill:"#fff","fill-opacity":".75",transform:"rotate(-30 "+(x-7)+" "+(y-10)+")"}));
+    // Kleine Punktetafel gehört zum Ball, nicht zur Zielscheibe; sie ist gut erkennbar.
+    const labelX = x + (x > 395 ? -35 : 18), labelY = y + (y > 425 ? -33 : 17);
+    const text = String(points), width = Math.max(30, 15 + text.length * 9);
+    g.appendChild(svg("rect",{x:labelX-width/2,y:labelY-13,width,height:25,rx:12,
+      fill:"#fff2c7",stroke:"#62421e","stroke-width":2}));
+    g.appendChild(svg("text",{x:labelX,y:labelY+1,"class":"score-tag",fill:"#543016","font-size":15,
+      "font-weight":900,"text-anchor":"middle","dominant-baseline":"central"},text));
     parent.appendChild(g);
   }
   function renderTarget() {
     target.replaceChildren();
     const defs = svg("defs");
-    const gradient = svg("radialGradient",{id:"zz-ball-shine",cx:"28%",cy:"22%",r:"76%"});
-    for (const [stop,color] of [["0%","#ffb69c"],["42%","#ed2935"],["100%","#971628"]])
+    const gradient = svg("radialGradient",{id:"zz-ball-shine",cx:"23%",cy:"18%",r:"82%"});
+    for (const [stop,color] of [["0%","#ffe0c7"],["28%","#ff6760"],["62%","#ec2635"],["100%","#841225"]])
       gradient.appendChild(svg("stop",{offset:stop,"stop-color":color}));
     defs.appendChild(gradient);
     const wood = svg("linearGradient",{id:"zz-wood-rim",x1:"0",x2:"1",y1:"0",y2:"1"});
-    for (const [stop,color] of [["0%","#f0b35e"],["45%","#915024"],["100%","#472513"]])
+    for (const [stop,color] of [["0%","#f8cf81"],["18%","#bd7638"],["48%","#783d1e"],["72%","#cf8c47"],["100%","#4b2917"]])
       wood.appendChild(svg("stop",{offset:stop,"stop-color":color}));
     defs.appendChild(wood);
+    const grain = svg("pattern",{id:"zz-woodgrain",width:42,height:32,patternUnits:"userSpaceOnUse"});
+    grain.appendChild(svg("path",{d:"M -4 8 C 7 3 19 14 46 7 M -7 23 C 8 17 22 28 49 20 M 8 32 C 16 26 23 31 36 29",fill:"none",stroke:"#ffe0a0","stroke-width":2,opacity:.32}));
+    grain.appendChild(svg("path",{d:"M 3 12 C 15 9 21 16 37 13 M 14 27 C 22 23 30 28 42 25",fill:"none",stroke:"#4c2613","stroke-width":1.5,opacity:.22}));
+    defs.appendChild(grain);
     target.appendChild(defs);
-    target.appendChild(svg("rect",{x:219,y:448,width:60,height:44,rx:5,fill:"#915223",stroke:"#6c3517","stroke-width":5}));
-    target.appendChild(svg("circle",{cx:250,cy:250,r:240,fill:"url(#zz-wood-rim)",stroke:"#3b2213","stroke-width":6}));
-    target.appendChild(svg("circle",{cx:250,cy:250,r:234,fill:"#39271f",stroke:"#211d1b","stroke-width":4}));
-    target.appendChild(svg("circle",{cx:250,cy:250,r:230,fill:"#fff"}));
+    target.appendChild(svg("rect",{x:211,y:446,width:78,height:48,rx:6,fill:"url(#zz-wood-rim)",stroke:"#4c2916","stroke-width":7}));
+    target.appendChild(svg("rect",{x:216,y:449,width:68,height:10,rx:3,fill:"#fff1c3",opacity:.24}));
+    target.appendChild(svg("circle",{cx:250,cy:250,r:241,fill:"url(#zz-wood-rim)",stroke:"#482715","stroke-width":8}));
+    target.appendChild(svg("circle",{cx:250,cy:250,r:237,fill:"url(#zz-woodgrain)",stroke:"#f3c47b","stroke-width":2.5,opacity:.94}));
+    target.appendChild(svg("circle",{cx:250,cy:250,r:229,fill:"#382216",stroke:"#542b17","stroke-width":5}));
+    target.appendChild(svg("circle",{cx:250,cy:250,r:223,fill:"#fffdf4",stroke:"#f2d19a","stroke-width":3}));
+    // Bevel und eingeritzte Linien machen den Ring erkennbar dreidimensional.
+    target.appendChild(svg("circle",{cx:250,cy:250,r:232,fill:"none",stroke:"#fbe2a0","stroke-width":3,"stroke-opacity":".85"}));
+    target.appendChild(svg("circle",{cx:250,cy:250,r:225,fill:"none",stroke:"#fff8d5","stroke-width":2,"stroke-opacity":".7"}));
+    for (const deg of [-90,0,90,180]) {
+      const p = polar(237,deg);
+      target.appendChild(svg("circle",{cx:p.x,cy:p.y,r:3.6,fill:"#efc780",stroke:"#4a2b18","stroke-width":1.7}));
+      target.appendChild(svg("circle",{cx:p.x-1,cy:p.y-1,r:1,fill:"#fffcdb"}));
+    }
     const bounds = [[228,174],[174,113],[113,42]];
     for (const c of cells) {
       if (c.kind !== "field") continue;
@@ -141,6 +180,8 @@
         fill:c.color,"class":"field"}));
     }
     target.appendChild(svg("circle",{cx:250,cy:250,r:41,fill:"#c20a63",stroke:"#fff","stroke-width":5}));
+    target.appendChild(svg("circle",{cx:250,cy:250,r:36,fill:"none",stroke:"#ffbed9","stroke-opacity":".55","stroke-width":3}));
+    target.appendChild(svg("circle",{cx:237,cy:234,r:7,fill:"#fff","fill-opacity":".11"}));
     target.appendChild(svg("path",{d:"M 91 104 A 212 212 0 0 1 189 46",fill:"none",stroke:"#ffffff","stroke-opacity":".22","stroke-width":"8","stroke-linecap":"round"}));
     for (const c of cells) {
       const n = String(c.value).length;
@@ -151,22 +192,20 @@
     throws.forEach((h,i) => {
       if (h.kind === "miss") {
         const missIndex = throws.slice(0,i).filter(x => x.kind === "miss").length;
-        addBall(target,112 + missIndex * 56,494,i === throws.length - 1);
-      } else addBall(target,h.ballX,h.ballY,i === throws.length - 1);
+        addBall(target,112 + missIndex * 56,494,i === throws.length - 1,0);
+      } else addBall(target,h.ballX,h.ballY,i === throws.length - 1,h.value);
     });
     const descriptions = throws.map((h,i) => (i+1) + ". Wurf: " + (h.kind === "miss" ? "vorbei, 0 Punkte" : h.value + " Punkte"));
     target.setAttribute("aria-label","Zielscheibe; " + (descriptions.join("; ") || "noch kein Ball geworfen"));
   }
   function setMonkeyEmotion(type) {
-    monkey.classList.remove("throwing","celebrating","sad");
-    monkeyFace.hidden = true;
-    if (type === "throw") monkey.classList.add("throwing");
-    if (type === "happy") monkey.classList.add("celebrating");
-    if (type === "sad") {
-      monkey.classList.add("sad");
-      monkeyFace.hidden = false;
-      monkeyFace.textContent = "🙈";
-    }
+    const state = Object.prototype.hasOwnProperty.call(monkeySprites,type) ? type : "normal";
+    const nextSource = monkeySprites[state];
+    if (monkeyImage.getAttribute("src") !== nextSource) monkeyImage.setAttribute("src",nextSource);
+    monkey.classList.remove("throwing","celebrating","encouraging");
+    monkey.classList.toggle("throwing",state === "throw");
+    monkey.classList.toggle("celebrating",state === "happy");
+    monkey.classList.toggle("encouraging",state === "encouraging");
   }
   function equationHTML() {
     return throws.map((h) => {
@@ -180,6 +219,7 @@
       const balls = Array.from({length:3},(_,i) =>
         '<span class="ball-slot ' + (i < remaining ? "available" : "used") +
         '" role="img" aria-label="' + (i < remaining ? "Ball verfügbar" : "Ball verbraucht") + '"></span>').join("");
+      board.className = "game-board board-throws";
       board.innerHTML = '<h2 class="board-heading">' + remaining + ' ' +
         (remaining === 1 ? "Ball hast du noch" : "Bälle hast du noch") +
         '</h2><div class="ball-slots">' + balls + '</div>';
@@ -197,6 +237,7 @@
     }
     monkey.disabled = true;
     if (phase === "answer") {
+      board.className = "game-board board-math";
       $("instruction").textContent = "Rechne die drei Zahlen zusammen!";
       $("monkeyMessage").textContent = "Jetzt rechnen!";
       setMonkeyEmotion("");
@@ -206,18 +247,22 @@
           '" aria-label="Antwort ' + String.fromCharCode(65+i) + ': ' + v + '">' + v + '</button>').join("") + '</div>';
       return;
     }
+    board.className = "game-board board-feedback";
     const right = chosenAnswer === sum();
-    $("instruction").textContent = right ? "Super gemacht!" : "Das üben wir einfach nochmal!";
-    $("monkeyMessage").textContent = right ? "Juhu!" : "Nicht aufgeben!";
-    setMonkeyEmotion(right ? "happy" : "sad");
-    board.innerHTML = '<div class="feedback"><h2 class="' + (right ? "" : "wrong") + '">' +
-      (right ? "Richtig! ⭐" : "Leider falsch! 🙈") + '</h2><p>' +
-      (right ? "Super! Du hast richtig gerechnet!" : "Schau dir die richtige Summe an.") +
+    $("instruction").textContent = right ? "Super gemacht!" : "Das ist nicht schlimm – versuch es nochmal!";
+    $("monkeyMessage").textContent = right ? "Juhu!" : "Du schaffst das!";
+    setMonkeyEmotion(right ? "happy" : "encouraging");
+    board.innerHTML = '<div class="feedback ' + (right ? "success" : "retry") + '">' +
+      '<span class="feedback-stars" aria-hidden="true">' + (right ? "✦ ★ ✦" : "✿ · ✿") + '</span>' +
+      '<h2 class="' + (right ? "" : "wrong") + '">' +
+      (right ? "Richtig! ⭐" : "Noch nicht richtig – du schaffst das!") + '</h2><p>' +
+      (right ? "Super! Du hast richtig gerechnet!" : "Schau dir die Zahlen an, dann klappt es bestimmt.") +
       '</p><div class="result-line">' + throws.map(h => h.value).join(" + ") + " = " + sum() +
-      '</div><button type="button" class="again-button" id="again">Nochmal ▶</button></div>';
+      '</div><button type="button" class="again-button" id="again">Nochmal</button></div>';
   }
   function startRound() {
     roundVersion++;
+    document.body.classList.remove("round-success","round-retry");
     if (throwTimer) clearTimeout(throwTimer);
     throws = []; busy = false; chosenAnswer = null; answerOptions = [];
     phase = "throw"; cells = L.makeCells(settings,rand);
@@ -333,8 +378,14 @@
       chosenAnswer = Number(button.dataset.answer);
       playSound(chosenAnswer === sum() ? "correct" : "wrong");
       phase = "feedback";
+      document.body.classList.add(chosenAnswer === sum() ? "round-success" : "round-retry");
       renderBoard();
-    } else if (event.target.closest("#again")) startRound();
+      // Tastatur- und Screenreader-Nutzung: Nach dem Prüfen ist „Nochmal“ erreichbar.
+      $("again").focus({preventScroll:true});
+    } else if (event.target.closest("#again")) {
+      startRound();
+      monkey.focus({preventScroll:true});
+    }
   });
   $("openConfig").addEventListener("click",openConfig);
   $("closeConfig").addEventListener("click",closeConfig);

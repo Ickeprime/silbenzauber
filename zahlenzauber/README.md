@@ -11,9 +11,9 @@ Pfad: \`/zahlenzauber/\`. Vom Silbenzauber-Startbildschirm führt der Link **�
 3. Nach dem ersten Wurf sind unten **2 rote Bälle + 1 grauer Platzhalter**, nach dem zweiten **1 roter Ball + 2 graue** zu sehen.
 4. Getroffene Bälle **bleiben auf der sichtbaren Scheibe**. Bei einem erlaubten Fehlwurf liegt der Ball **außerhalb der Scheibe**; er zählt **0 Punkte**.
 5. Nach dem dritten Wurf wird das Ballbrett **am selben Ort zum Rechenbrett**. Drei Zahlen und **drei Antwortmöglichkeiten** erscheinen, genau eine ist richtig.
-6. **Richtig:** jubelnder Affe und Stern. **Falsch:** Augen-zuhaltender Affe 🙈 und Anzeige des Ergebnisses. In beiden Fällen startet **„Nochmal“** die nächste Runde.
+6. **Richtig:** jubelnder Affe und Stern. **Falsch:** freundlicher, ermutigender Affe ohne Emoji-Overlay und Anzeige des Ergebnisses. In beiden Fällen startet **„Nochmal“** die nächste Runde.
 
-Die Zielscheibe ist SVG-basiert, die bunte Dschungel-/Holzoptik wird mit CSS und einer einfachen Affen-Zeichnung umgesetzt. Sie ist eine nachgebaute Spieloberfläche, **kein pixelgenaues Exportbild** des ursprünglichen Design-Mockups.
+Die Zielscheibe und die Würfe bleiben SVG-basiert. Die Dschungelkulisse und der Affe sind lokale WebP-Illustrationen; Schilder, Holzrahmen, Bälle und Bedienflächen werden separat mit CSS gestaltet. Die bereitgestellte Referenz dient als Gestaltungsrichtung; Texte, Treffer, Bedienelemente und Spielflächen bleiben interaktiv.
 
 ## Lehrkraft-Einstellungen
 
@@ -49,8 +49,9 @@ Die **Nieten-Wahrscheinlichkeit** ist eine spielerische Gewichtung, keine feinmo
 ## Technisches
 
 Reine statische Webanwendung, kein Backend, keine Anmeldung, keine fremden Skripte. Dateien:
-- \`index.html\` – HTML-Seite, Affen-Zeichnung, Lehrkraft-Dialog
-- \`style.css\` – responsive Dschungel-/Holzoberfläche
+- \`index.html\` – HTML-Seite, Affe, Lehrkraft-Dialog
+- \`style.css\` – responsive Dschungel-/Holzoberfläche und Animationen
+- \`assets/jungle-clearing-cartoon.webp\`, \`assets/monkey-mascot.webp\` – lokale Spielillustrationen
 - \`logic.js\` – testbarer Zufallsgenerator, Regeln, Antworterstellung
 - \`app.js\` – Animationen, Zustandswechsel, Anzeige, Speicher
 - \`tests/logic.test.js\` – Grenzfalltests
@@ -75,7 +76,7 @@ Optional: passwortgeschütztes Lehrkraft-Menü, bessere Zeichenillustrationen (A
 - Die unvereinbare Kombination **„Nieten ausschalten“ + „100 erst nach zwei Nieten“** wird direkt aufgelöst: Beim Ausschalten der Nieten wird die Mitte auf **nie treffen** gesetzt. Wird die Spezialregel gewählt, werden Nieten wieder aktiviert. Ein Hinweis erklärt die Anpassung.
 - Fehlerhafte Zahleneingaben werden im Dialog erklärt; die Fehlermeldung wird in den sichtbaren Bereich gebracht.
 - Über **🔊 Ton an / 🔇 Ton aus** lassen sich Wurf-, Treffer-, Fehlwurf- und Jubelgeräusche aktivieren. Der Ton startet **standardmäßig ausgeschaltet**, die Auswahl wird lokal gespeichert. Die Klänge entstehen direkt über die Web-Audio-API; es werden keine fremden Audiodateien geladen.
-- Holztafeln, Affe, bunte Zielscheibe, Bälle, Dschungelhintergrund, Schatten und Feedback sind gestalterisch überarbeitet. Die Oberfläche bleibt mit CSS/SVG gebaut, ohne externe Grafiken.
+- Holztafeln, Affe, bunte Zielscheibe, Bälle, Dschungelhintergrund, Schatten und Feedback sind gestalterisch überarbeitet. Die Illustrationen liegen lokal im App-Unterordner; beim Spielen werden keine externen Grafiken geladen.
 - Die bisherige Silbenzauber-App bleibt unverändert.
 
 ### Browser-Smoke-Test
@@ -87,3 +88,28 @@ npm install --no-save playwright@1.56.1
 npx playwright install chromium
 node zahlenzauber/tests/browser-smoke.cjs
 \`\`\`
+
+
+## Design-Freigabe in vier Blöcken – Stand PR #5
+
+**Block 1 (vom Projektinhaber freigegeben):** Dschungel-/Wasserfallkulisse, Haupttitel, Bild-Affe und neue Holzschaltflächen. Diese Gestaltung wurde in Blöcken 2–4 nicht ausgetauscht.
+
+**Block 2 – Zielscheibe und Rechenbrett:**
+- Mehrstufiger Holzrahmen, Lichtkanten und dezente Nieten am Zielscheibenrand.
+- Glänzende, rot-weiße Trefferbälle mit kleinem Zahlenetikett: Punkte bleiben lesbar, auch wenn ein Ball die aufgedruckte Zahl verdeckt.
+- Drei noch verfügbare Bälle rot, verbrauchte Bälle grau; der bestehende Wechsel auf das Rechenbrett **erst nach Wurf 3** bleibt erhalten.
+- Gemeinsame Holzfläche für Bälle, Gleichung und drei große Antwortknöpfe mit kleinen Buchstaben A/B/C.
+
+**Block 3 – Affe und Feedback:**
+- Deutlichere Wurf- und Jubelbewegung, sanfte Ermutigungsbewegung bei Fehlern und Sterne bei Erfolg.
+- Bei falschen Antworten bleibt die originale Affenillustration klar und freundlich sichtbar; es gibt kein überlagertes Emoji und keinen Abdunklungsfilter. Der Affe motiviert mit „Du schaffst das!“ und die richtige Summe wird gezeigt.
+- Neustartbutton heißt weiterhin exakt **„Nochmal“**.
+- Tastaturfokus wandert nach Auswertung zu „Nochmal“ und beim Neustart zurück zum Affen.
+
+**Block 4 – Feinschliff und Tests:**
+- Zusätzliche Regeln für 320/350/390/700-Pixel-Smartphones, kontrastreichere Spieltafeln und zugängliche Fokusmarkierungen.
+- Animationen werden bei aktivierter Systemeinstellung „Bewegung reduzieren“ deaktiviert.
+- Der automatisierte Chromium-Test kontrolliert die neue Punkteanzeige, den Zustand des Rechenbretts, Tastaturfokus und horizontale Überläufe bei sechs Bildschirmbreiten.
+- Lehrkraft-Speicherung, Sounds, alle drei Würfe und Summenbegrenzung sind unveränderte Spielfunktionen.
+
+**Noch nicht veröffentlicht:** Diese Änderungen liegen ausschließlich auf dem Feature-Branch und in PR #5. Die Veröffentlichung benötigt eine separate Freigabe.
