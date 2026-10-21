@@ -108,3 +108,119 @@ input[type=radio],input[type=checkbox]{width:19px;height:19px;accent-color:#0b79
 @media(prefers-reduced-motion:reduce){
  *,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
+
+/* Version 0.2 – Spielwelt und bessere Einstellungs-Rückmeldungen */
+.scene{
+  background:
+    radial-gradient(ellipse 220px 80px at 29% 24%,#ffffff66 0%,#ffffff00 73%),
+    radial-gradient(ellipse 250px 65px at 72% 19%,#fff6d477 0%,#ffffff00 77%),
+    radial-gradient(circle 165px at 4% 43%,#7cca46ad,#ffffff00 100%),
+    radial-gradient(circle 200px at 100% 48%,#4eaa4b9e,#ffffff00 100%),
+    linear-gradient(170deg,#5db8f7 0%,#b9ebff 40%,#bcdda1 42%,#61b65e 100%);
+}
+.scene:before{filter:drop-shadow(0 8px 0 #225f2499)}
+.scene:after{box-shadow:0 -36px 0 -24px #add34f,0 -50px 50px #436c2b77}
+.top-nav{flex-wrap:wrap}
+.nav-right{display:flex;align-items:center;gap:12px}
+.sound-button{
+  color:white;font-size:1.02rem;font-weight:950;padding:10px 15px;
+  border:3px solid #fff;border-radius:18px;
+  background:linear-gradient(#718ba7,#466481);
+  box-shadow:0 5px 0 #34495c,0 7px 13px #113c5277;
+  white-space:nowrap;
+}
+.sound-button[aria-pressed="true"]{
+  background:linear-gradient(#4ac6f3,#067db7);
+  box-shadow:0 5px 0 #195575,0 7px 13px #113c5277;
+}
+.sound-button:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.wood-title{
+  background:
+    radial-gradient(ellipse at 40% -10%,#fff0b28c,transparent 55%),
+    repeating-linear-gradient(0deg,#b77539 0 20px,#8a4c25 21px 23px,#e2a15d 24px 47px);
+  outline:2px solid #f9c882;
+  outline-offset:-13px;
+}
+.wood-title h1{filter:drop-shadow(0 2px 0 #f6b544)}
+.wood-title h1 span{filter:drop-shadow(0 2px 0 #d4f7ff)}
+.wood-title p{border:2px solid #d39d59;box-shadow:0 3px 0 #9c642f,0 6px 5px #40271855}
+.instruction{
+  color:#463014;
+  background:linear-gradient(#fff1bc,#edc784);
+  border-color:#9c602d;
+  box-shadow:inset 0 2px 0 #fff3d8,0 6px 0 #6c381b,0 10px 15px #122c2055;
+}
+.active-settings{
+  display:table;text-align:center;margin:12px auto 3px;
+  padding:8px 18px;max-width:95%;
+  background:#ffffffd9;border:2px solid #effbd6;border-radius:999px;
+  box-shadow:0 4px 0 #43863f55;
+  color:#225a37;font-size:clamp(.75rem,1.8vw,.94rem);
+  font-weight:900;line-height:1.4;
+}
+.save-toast{
+  position:fixed;z-index:11;top:18px;left:50%;
+  width:max-content;max-width:min(92vw,750px);
+  transform:translateX(-50%);
+  border-radius:16px;border:3px solid #257740;
+  padding:15px 24px;background:#eaffdf;
+  color:#1e6234;font-weight:950;text-align:center;line-height:1.4;
+  box-shadow:0 8px 0 #387b4255,0 15px 35px #142f1566;
+}
+.save-toast[hidden]{display:none}
+.target-stand{filter:drop-shadow(0 13px 7px #1a3b1855)}
+.target{filter:drop-shadow(0 4px 0 #513b22) drop-shadow(0 8px 5px #16260e66)}
+.target-stand:before,.target-stand:after{
+  content:"";position:absolute;pointer-events:none;z-index:-1;
+  background:linear-gradient(115deg,#d79244,#734020);
+  border:4px solid #613517;border-radius:6px;
+  width:20px;height:68px;bottom:-13px;
+}
+.target-stand:before{left:18%}.target-stand:after{right:18%}
+.monkey-area{filter:drop-shadow(0 7px 7px #1b281a55)}
+.monkey-button{border-radius:38%}
+.monkey-button:hover:not(:disabled) .monkey-drawing{filter:drop-shadow(0 0 12px #fff29dcc)}
+.monkey-area:has(.celebrating):after{
+  content:"✨ ⭐ ✨";position:absolute;left:4%;top:8%;
+  color:#ffe335;font-size:clamp(1.5rem,3.2vw,2.1rem);
+  animation:happy .6s ease infinite;pointer-events:none;
+}
+.game-board{
+  background:
+    radial-gradient(ellipse at 50% -30%,#ffe4a7b8,transparent 65%),
+    repeating-linear-gradient(0deg,#ce8144 0 20px,#a15b2b 21px 24px,#e8aa63 25px 45px);
+  outline:2px solid #eaba78;outline-offset:-11px;
+  box-shadow:inset 0 4px 0 #fff5cc66,0 7px 0 #593117,0 12px 22px #35402466;
+}
+.answer-button,.again-button,.teacher-button,.nav-link,.save-button{transition:transform .12s,filter .12s}
+.answer-button:active,.again-button:active{transform:translateY(4px)}
+.answer-button:hover,.again-button:hover,.save-button:hover{filter:brightness(1.09)}
+.board-heading{color:#49260f;text-shadow:0 1px #ffeab0}
+.number-chip{box-shadow:inset -5px -5px #0002,inset 4px 5px #fff4,0 4px 2px #0003}
+.feedback{background:radial-gradient(ellipse at 50% -15%,#fff,#ffe0a9 90%);box-shadow:inset 0 4px 0 white,0 4px 5px #42261144}
+.feedback h2{text-shadow:0 2px #d4eeb2}
+.rule-notice{
+  min-height:0;margin:10px 0 0;
+  color:#206334;font-size:.83rem;font-weight:800;line-height:1.4;
+}
+.rule-notice:empty{display:none}
+.settings-dialog{
+  background:repeating-linear-gradient(0deg,#fff1d1 0 26px,#fae4bc 27px 28px);
+  box-shadow:inset 0 0 0 4px #f6c67b,0 12px 0 #4e2e1a,0 30px 75px #1c22299e;
+}
+.form-section{background:linear-gradient(#fffefa,#fff3dd)}
+.choice-label{transition:background .1s,border-color .1s;cursor:pointer}
+.choice-label:hover{background:#e8f6ff}
+.dialog-title{box-shadow:inset 0 2px 0 #ffe9b4,0 4px 0 #88502e}
+.save-button{min-width:150px;box-shadow:0 4px 0 #267530}
+.storage-note{line-height:1.4}
+@media(max-width:590px){
+ .nav-right{gap:6px}
+ .sound-button{font-size:.9rem;padding:8px}
+ .sound-button span{display:none}
+ .active-settings{border-radius:14px}
+ .save-toast{top:9px;padding:12px 16px;font-size:.9rem}
+}
+@media(prefers-reduced-motion:reduce){
+ .monkey-area:has(.celebrating):after{animation:none}
+}
