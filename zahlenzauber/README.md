@@ -11,7 +11,7 @@ Pfad: \`/zahlenzauber/\`. Vom Silbenzauber-Startbildschirm führt der Link **�
 3. Nach dem ersten Wurf sind unten **2 rote Bälle + 1 grauer Platzhalter**, nach dem zweiten **1 roter Ball + 2 graue** zu sehen.
 4. Getroffene Bälle **bleiben auf der sichtbaren Scheibe**. Bei einem erlaubten Fehlwurf liegt der Ball **außerhalb der Scheibe**; er zählt **0 Punkte**.
 5. Nach dem dritten Wurf wird das Ballbrett **am selben Ort zum Rechenbrett**. Drei Zahlen und **drei Antwortmöglichkeiten** erscheinen, genau eine ist richtig.
-6. **Richtig:** jubelnder Affe und Stern. **Falsch:** Augen-zuhaltender Affe 🙈 und Anzeige des Ergebnisses. In beiden Fällen startet **„Nochmal“** die nächste Runde.
+6. **Richtig:** jubelnder Affe und Stern. **Falsch:** freundlicher, ermutigender Affe ohne Emoji-Overlay und Anzeige des Ergebnisses. In beiden Fällen startet **„Nochmal“** die nächste Runde.
 
 Die Zielscheibe und die Würfe bleiben SVG-basiert. Die Dschungelkulisse und der Affe sind lokale WebP-Illustrationen; Schilder, Holzrahmen, Bälle und Bedienflächen werden separat mit CSS gestaltet. Die bereitgestellte Referenz dient als Gestaltungsrichtung; Texte, Treffer, Bedienelemente und Spielflächen bleiben interaktiv.
 
@@ -101,8 +101,8 @@ node zahlenzauber/tests/browser-smoke.cjs
 - Gemeinsame Holzfläche für Bälle, Gleichung und drei große Antwortknöpfe mit kleinen Buchstaben A/B/C.
 
 **Block 3 – Affe und Feedback:**
-- Deutlichere Wurf- und Jubelbewegung, freundliche Reaktion bei Fehlern (🙈) und Sterne bei Erfolg.
-- Für falsche Antworten ermutigendes „Noch nicht richtig!“ statt einer abwertenden Formulierung; die richtige Summe wird gezeigt.
+- Deutlichere Wurf- und Jubelbewegung, sanfte Ermutigungsbewegung bei Fehlern und Sterne bei Erfolg.
+- Bei falschen Antworten bleibt die originale Affenillustration klar und freundlich sichtbar; es gibt kein überlagertes Emoji und keinen Abdunklungsfilter. Der Affe motiviert mit „Du schaffst das!“ und die richtige Summe wird gezeigt.
 - Neustartbutton heißt weiterhin exakt **„Nochmal“**.
 - Tastaturfokus wandert nach Auswertung zu „Nochmal“ und beim Neustart zurück zum Affen.
 

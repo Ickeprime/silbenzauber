@@ -4,7 +4,7 @@
   const L = window.ZahlenzauberLogic;
   const $ = id => document.getElementById(id);
   const svgNS = "http://www.w3.org/2000/svg";
-  const board = $("playBoard"), target = $("target"), monkey = $("monkey"), monkeyFace = $("monkeyExpression");
+  const board = $("playBoard"), target = $("target"), monkey = $("monkey");
   const storageKey = "zahlenzauber-settings-v1";
   const soundKey = "zahlenzauber-sound-v1";
   let soundEnabled = false, audioContext = null, toastTimer = null;
@@ -186,15 +186,10 @@
     target.setAttribute("aria-label","Zielscheibe; " + (descriptions.join("; ") || "noch kein Ball geworfen"));
   }
   function setMonkeyEmotion(type) {
-    monkey.classList.remove("throwing","celebrating","sad");
-    monkeyFace.hidden = true;
+    monkey.classList.remove("throwing","celebrating","encouraging");
     if (type === "throw") monkey.classList.add("throwing");
     if (type === "happy") monkey.classList.add("celebrating");
-    if (type === "sad") {
-      monkey.classList.add("sad");
-      monkeyFace.hidden = false;
-      monkeyFace.textContent = "🙈";
-    }
+    if (type === "encouraging") monkey.classList.add("encouraging");
   }
   function equationHTML() {
     return throws.map((h) => {
@@ -238,14 +233,14 @@
     }
     board.className = "game-board board-feedback";
     const right = chosenAnswer === sum();
-    $("instruction").textContent = right ? "Super gemacht!" : "Das probieren wir nochmal!";
-    $("monkeyMessage").textContent = right ? "Juhu!" : "Nicht aufgeben!";
-    setMonkeyEmotion(right ? "happy" : "sad");
+    $("instruction").textContent = right ? "Super gemacht!" : "Das ist nicht schlimm – versuch es nochmal!";
+    $("monkeyMessage").textContent = right ? "Juhu!" : "Du schaffst das!";
+    setMonkeyEmotion(right ? "happy" : "encouraging");
     board.innerHTML = '<div class="feedback ' + (right ? "success" : "retry") + '">' +
       '<span class="feedback-stars" aria-hidden="true">' + (right ? "✦ ★ ✦" : "✿ · ✿") + '</span>' +
       '<h2 class="' + (right ? "" : "wrong") + '">' +
-      (right ? "Richtig! ⭐" : "Noch nicht richtig! 🙈") + '</h2><p>' +
-      (right ? "Super! Du hast richtig gerechnet!" : "Schau dir die drei Zahlen noch einmal an.") +
+      (right ? "Richtig! ⭐" : "Noch nicht richtig – du schaffst das!") + '</h2><p>' +
+      (right ? "Super! Du hast richtig gerechnet!" : "Schau dir die Zahlen an, dann klappt es bestimmt.") +
       '</p><div class="result-line">' + throws.map(h => h.value).join(" + ") + " = " + sum() +
       '</div><button type="button" class="again-button" id="again">Nochmal</button></div>';
   }

@@ -193,10 +193,7 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 4px solid 
 .monkey-button.throwing .monkey-drawing { animation: monkey-toss .42s ease-in-out; }
 .monkey-button.celebrating { animation: happy .58s ease-in-out 2; }
 .monkey-button.celebrating .monkey-drawing { filter: brightness(1.08) saturate(1.05); }
-.monkey-button.sad .monkey-drawing { filter: saturate(.78) brightness(.95); }
 .monkey-drawing { display: block; width: 100%; height: auto; max-height: 320px; object-fit: contain; transition: transform .35s ease; }
-.monkey-expression { position: absolute; inset: 12% 5% auto; text-align: center; font-size: clamp(46px, 8vw, 82px); line-height: 1.2; filter: drop-shadow(0 5px 3px #0005); }
-.monkey-expression[hidden] { display: none; }
 .wood-sign {
   position: relative; z-index: 1;
   width: min(100%, 220px); min-width: 0; margin: -5px 0 0; padding: 9px 13px;
@@ -520,28 +517,15 @@ input[type="radio"], input[type="checkbox"] { width: 19px; height: 19px; flex: n
   56% { transform: translateY(-4px) rotate(7deg); }
   80% { transform: translateY(-15px) rotate(-5deg); }
 }
-.monkey-button.sad .monkey-drawing {
-  animation: monkey-soft-shake .7s ease-in-out;
+.monkey-button.encouraging .monkey-drawing {
+  animation: monkey-reassure .85s cubic-bezier(.2,.75,.3,1) both;
+  filter: none;
 }
-@keyframes monkey-soft-shake {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-4deg); }
-  55% { transform: rotate(4deg); }
-  78% { transform: rotate(-2deg); }
-}
-.monkey-expression {
-  display: grid;
-  place-items: center;
-  inset: 12% 5% auto;
-  min-height: 74px;
-  text-shadow: 0 5px 8px #42281277;
-  animation: emoji-pop .45s ease both;
-}
-.monkey-expression[hidden] { display: none; }
-@keyframes emoji-pop {
-  0% { opacity: 0; transform: scale(.55) rotate(-20deg); }
-  70% { opacity: 1; transform: scale(1.13) rotate(6deg); }
-  100% { transform: scale(1) rotate(0deg); }
+@keyframes monkey-reassure {
+  0% { transform: translateY(0) rotate(0); }
+  32% { transform: translateY(-7px) rotate(-2deg); }
+  62% { transform: translateY(0) rotate(1.5deg); }
+  100% { transform: translateY(0) rotate(0); }
 }
 .monkey-area:has(.celebrating)::after {
   content: "✦ ★ ✦";
@@ -639,8 +623,7 @@ input[type="radio"], input[type="checkbox"] { width: 19px; height: 19px; flex: n
   .target .hit-marker.new,
   .monkey-button.throwing .monkey-drawing,
   .monkey-button.celebrating,
-  .monkey-button.sad .monkey-drawing,
-  .monkey-expression,
+  .monkey-button.encouraging .monkey-drawing,
   .monkey-area:has(.celebrating)::after,
   .feedback.success .feedback-stars { animation: none !important; }
 }
