@@ -22,3 +22,16 @@ jobs:
           node --check zahlenzauber/app.js
       - name: Mathe-Spielregeln testen
         run: node --test zahlenzauber/tests/logic.test.js
+      - name: Playwright Chromium installieren
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Echtes Browserspiel prüfen
+        run: node zahlenzauber/tests/browser-smoke.cjs
+      - name: Screenshots speichern
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zahlenzauber-browser-screenshots
+          path: zahlenzauber/tests/screenshots/
+          if-no-files-found: ignore
