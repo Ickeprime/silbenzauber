@@ -25,7 +25,11 @@ async function main() {
   let browser;
   const failures=[];
   try {
-    browser = await chromium.launch({headless:true});
+    const launchOptions = {headless:true};
+    if (process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE) {
+      launchOptions.executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE;
+    }
+    browser = await chromium.launch(launchOptions);
     const ctx=await browser.newContext({viewport:{width:390,height:844}});
     const page=await ctx.newPage();
     page.on("pageerror",err=>failures.push(err.message));
@@ -78,6 +82,7 @@ async function main() {
     assert.ok(values.includes(score));
     await page.locator('.answer-button[data-answer="'+score+'"]').click();
     assert.match(await page.locator(".feedback h2").textContent(),/Richtig/);
+    await page.waitForTimeout(400); // Feedback-Einblendung vor dem Screenshot vollständig anzeigen.
     await page.screenshot({path:"zahlenzauber/tests/screenshots/mobile-feedback.png",fullPage:true});
     await page.locator("#again").click();
     assert.equal(await page.locator(".ball-slot.available").count(),3);

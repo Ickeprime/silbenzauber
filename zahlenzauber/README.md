@@ -13,7 +13,7 @@ Pfad: \`/zahlenzauber/\`. Vom Silbenzauber-Startbildschirm führt der Link **�
 5. Nach dem dritten Wurf wird das Ballbrett **am selben Ort zum Rechenbrett**. Drei Zahlen und **drei Antwortmöglichkeiten** erscheinen, genau eine ist richtig.
 6. **Richtig:** jubelnder Affe und Stern. **Falsch:** Augen-zuhaltender Affe 🙈 und Anzeige des Ergebnisses. In beiden Fällen startet **„Nochmal“** die nächste Runde.
 
-Die Zielscheibe ist SVG-basiert, die bunte Dschungel-/Holzoptik wird mit CSS und einer einfachen Affen-Zeichnung umgesetzt. Sie ist eine nachgebaute Spieloberfläche, **kein pixelgenaues Exportbild** des ursprünglichen Design-Mockups.
+Die Zielscheibe und die Würfe bleiben SVG-basiert. Die Dschungelkulisse und der Affe sind lokale WebP-Illustrationen; Schilder, Holzrahmen, Bälle und Bedienflächen werden mit CSS gestaltet. Die Spieloberfläche folgt der beschriebenen Dschungel- und Holzrichtung, ist aber **kein pixelgenaues Exportbild** des ursprünglichen Design-Mockups.
 
 ## Lehrkraft-Einstellungen
 
@@ -49,8 +49,9 @@ Die **Nieten-Wahrscheinlichkeit** ist eine spielerische Gewichtung, keine feinmo
 ## Technisches
 
 Reine statische Webanwendung, kein Backend, keine Anmeldung, keine fremden Skripte. Dateien:
-- \`index.html\` – HTML-Seite, Affen-Zeichnung, Lehrkraft-Dialog
-- \`style.css\` – responsive Dschungel-/Holzoberfläche
+- \`index.html\` – HTML-Seite, Affe, Lehrkraft-Dialog
+- \`style.css\` – responsive Dschungel-/Holzoberfläche und Animationen
+- \`assets/jungle-clearing.webp\`, \`assets/monkey-mascot.webp\` – lokale Spielillustrationen
 - \`logic.js\` – testbarer Zufallsgenerator, Regeln, Antworterstellung
 - \`app.js\` – Animationen, Zustandswechsel, Anzeige, Speicher
 - \`tests/logic.test.js\` – Grenzfalltests
@@ -75,7 +76,7 @@ Optional: passwortgeschütztes Lehrkraft-Menü, bessere Zeichenillustrationen (A
 - Die unvereinbare Kombination **„Nieten ausschalten“ + „100 erst nach zwei Nieten“** wird direkt aufgelöst: Beim Ausschalten der Nieten wird die Mitte auf **nie treffen** gesetzt. Wird die Spezialregel gewählt, werden Nieten wieder aktiviert. Ein Hinweis erklärt die Anpassung.
 - Fehlerhafte Zahleneingaben werden im Dialog erklärt; die Fehlermeldung wird in den sichtbaren Bereich gebracht.
 - Über **🔊 Ton an / 🔇 Ton aus** lassen sich Wurf-, Treffer-, Fehlwurf- und Jubelgeräusche aktivieren. Der Ton startet **standardmäßig ausgeschaltet**, die Auswahl wird lokal gespeichert. Die Klänge entstehen direkt über die Web-Audio-API; es werden keine fremden Audiodateien geladen.
-- Holztafeln, Affe, bunte Zielscheibe, Bälle, Dschungelhintergrund, Schatten und Feedback sind gestalterisch überarbeitet. Die Oberfläche bleibt mit CSS/SVG gebaut, ohne externe Grafiken.
+- Holztafeln, Affe, bunte Zielscheibe, Bälle, Dschungelhintergrund, Schatten und Feedback sind gestalterisch überarbeitet. Die Illustrationen liegen lokal im App-Unterordner; beim Spielen werden keine externen Grafiken geladen.
 - Die bisherige Silbenzauber-App bleibt unverändert.
 
 ### Browser-Smoke-Test

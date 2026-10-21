@@ -214,7 +214,7 @@
       (right ? "Richtig! ⭐" : "Leider falsch! 🙈") + '</h2><p>' +
       (right ? "Super! Du hast richtig gerechnet!" : "Schau dir die richtige Summe an.") +
       '</p><div class="result-line">' + throws.map(h => h.value).join(" + ") + " = " + sum() +
-      '</div><button type="button" class="again-button" id="again">Nochmal ▶</button></div>';
+      '</div><button type="button" class="again-button" id="again">Nochmal</button></div>';
   }
   function startRound() {
     roundVersion++;
