@@ -50,3 +50,7 @@ Für die Layoutkorrektur wurde die lokale Vorschau im Browser bei 1365, 1024, 76
 ## Redesign der Lernspielserie
 
 Der Titel, die Holztasten und die räumlichen Schatten folgen nun der in Zahlenzauber sichtbaren Seriengestaltung. Die Silbenzauber-Identität bleibt eine türkis-grüne Lagune mit eigenständigem Flamingo-Maskottchen. Der Hintergrund (`assets/lagoon-background.webp`, ca. 230 KB) und das freigestellte Maskottchen (`assets/flamingo-mascot.webp`, ca. 184 KB) werden lokal ausgeliefert. `DESIGN_SYSTEM.md` beschreibt gemeinsame Regeln und Erweiterungspunkte für weitere Lernspiele. Zahlenzaubers HTML, CSS und Spiellogik wurden nicht verändert.
+
+### Desktop-Nachmessung der Flamingo-Spalte
+
+Nach dem Live-Deployment wurde zusätzlich bei 1280 px geprüft. Die vergrößerte Grafik ragte dort links aus ihrem zu schmalen Grid-Feld. Die drei Desktop-Spalten teilen die verfügbare Breite jetzt so auf, dass Flamingo und Sprechtafel genügend Raum erhalten und die Automatenbox mittig flexibel schrumpft. Browsermessungen bei 1280 px bestätigen: Grafik und Tafel bleiben vollständig sichtbar, die Grafik steht links der Maschine und es gibt keinen horizontalen Seitenüberlauf.
