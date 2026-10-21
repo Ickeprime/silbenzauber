@@ -1,0 +1,68 @@
+# Zahlenzauber – Affenwurf
+
+**Eigenständige Mathe-Unterseite der Silbenzauber-Serie für die Grundschule.**
+
+Pfad: \`/zahlenzauber/\`. Vom Silbenzauber-Startbildschirm führt der Link **🎯 Zahlenzauber** hierher; der Link **🏠 Silbenzauber** führt zurück. Die bestehende Lese-App wird nicht umgebaut.
+
+## Kinderansicht
+
+1. **Drei rote Bälle** liegen auf dem geraden Holzbrett.
+2. Ein Klick auf den **Affen** löst einen zufälligen Wurf aus. Kein Zielen nötig.
+3. Nach dem ersten Wurf sind unten **2 rote Bälle + 1 grauer Platzhalter**, nach dem zweiten **1 roter Ball + 2 graue** zu sehen.
+4. Getroffene Bälle **bleiben auf der sichtbaren Scheibe**. Bei einem erlaubten Fehlwurf liegt der Ball **außerhalb der Scheibe**; er zählt **0 Punkte**.
+5. Nach dem dritten Wurf wird das Ballbrett **am selben Ort zum Rechenbrett**. Drei Zahlen und **drei Antwortmöglichkeiten** erscheinen, genau eine ist richtig.
+6. **Richtig:** jubelnder Affe und Stern. **Falsch:** Augen-zuhaltender Affe 🙈 und Anzeige des Ergebnisses. In beiden Fällen startet **„Nochmal“** die nächste Runde.
+
+Die Zielscheibe ist SVG-basiert, die bunte Dschungel-/Holzoptik wird mit CSS und einer einfachen Affen-Zeichnung umgesetzt. Sie ist eine nachgebaute Spieloberfläche, **kein pixelgenaues Exportbild** des ursprünglichen Design-Mockups.
+
+## Lehrkraft-Einstellungen
+
+Über **⚙️ Lehrkraft** erreichbar:
+
+| Feld | Wirkung |
+| --- | --- |
+| Zahlenart | Nur Zehnerzahlen oder gemischte positive Zahlen |
+| Höchste normale Feldzahl | Obergrenze für die **äußeren und inneren normalen Zahlenfelder** (1–1000, im Zehnermodus in Zehnerschritten) |
+| Höchste Gesamtsumme | Obergrenze der **Summe der drei Wurfwerte** (bis 3000) |
+| Mitte (100) | **Normal treffen**, **nie treffen**, **erst nach zwei Nieten möglich** |
+| Fehlwürfe / Nieten | Ein Wurf kann die Scheibe verfehlen und zählt dann **0** |
+
+Die **100 bleibt in der Scheibenmitte sichtbar** und ist ein *Sonderfeld*: Sie zählt nicht zum Feld-Maximum der normalen Felder. Ob sie getroffen werden darf, bestimmt die Mitte-Regel **und zusätzlich die maximale Gesamtsumme**. Beispiel: Ohne Fehlwürfe und mit Maximalsumme 100 ist ein 100er-Treffer rechnerisch unmöglich. Bei **zwei Nieten (0 + 0)** kann der dritte Wurf die 100 treffen, wenn dies in den Einstellungen zugelassen ist. Ein möglicher Treffer wird **nicht garantiert**.
+
+**Speichern** schreibt die Konfiguration in den \`localStorage\` dieses Browsers/Geräts (Schlüssel \`zahlenzauber-settings-v1\`) und startet eine neue Runde. **Abbrechen** verwirft die Änderungen; **Zurücksetzen** füllt Standardwerte ins Formular, die anschließend gespeichert werden können. Bei gesperrtem Browserspeicher gilt eine Änderung nur für die aktuelle Sitzung. Eine Synchronisation zwischen Geräten findet nicht statt.
+
+**Standardeinstellung:** Zehnerzahlen, Feldmaximum 100, Summe maximal 100, Mitte erst nach zwei Nieten möglich, Nieten erlaubt.
+
+## Treffer- und Rechenregeln
+
+- Die Normalfelder sind beim Beginn einer Runde mit gültigen Zahlen beschriftet und ändern sich **während der drei Würfe nicht**.
+- Ein Treffer nutzt **genau ein existierendes Feld** und zeigt dessen Wert; dasselbe konkrete Feld kann in einer Runde nicht zweimal gewählt werden.
+- Ein Wurf darf nur gewählt werden, wenn die bisherige Summe, die Trefferzahl und **alle restlichen Würfe** die Höchstsumme noch einhalten können.
+- Ohne Nieten werden mindestens **10 Punkte (Zehnerzahlen)** bzw. **1 Punkt (gemischt)** pro restlichem Wurf reserviert.
+- Mit Nieten darf die Reserve für einen künftigen Wurf **0** sein.
+- Ein 100er-Mittentreffer ist nur dann ein Kandidat, wenn er die Gesamtsumme nicht überschreitet und der Mitte-Modus ihn erlaubt.
+- Bei „erst nach zwei Nieten“ gilt: nur **Wurf 3**, und nur wenn **Wurf 1 und Wurf 2 Nieten** waren.
+- Drei Antwortfelder werden aus dem erlaubten Zahlenraum generiert, mit **genau einer korrekten Antwort**.
+
+Die **Nieten-Wahrscheinlichkeit** ist eine spielerische Gewichtung, keine feinmotorische Treffer-Simulation. Die Lehrkraft steuert den *erlaubten* Zahlenraum; genaue Trefferquoten sind in dieser Version nicht getrennt einstellbar.
+
+## Technisches
+
+Reine statische Webanwendung, kein Backend, keine Anmeldung, keine fremden Skripte. Dateien:
+- \`index.html\` – HTML-Seite, Affen-Zeichnung, Lehrkraft-Dialog
+- \`style.css\` – responsive Dschungel-/Holzoberfläche
+- \`logic.js\` – testbarer Zufallsgenerator, Regeln, Antworterstellung
+- \`app.js\` – Animationen, Zustandswechsel, Anzeige, Speicher
+- \`tests/logic.test.js\` – Grenzfalltests
+
+### Tests
+
+\`\`\`sh
+node --test zahlenzauber/tests/logic.test.js
+node --check zahlenzauber/logic.js
+node --check zahlenzauber/app.js
+\`\`\`
+
+## Ausblick
+
+Optional: passwortgeschütztes Lehrkraft-Menü, bessere Zeichenillustrationen (Affen-PNG/SVG), Klang-Effekte, Schwierigkeitsprofile, visuelle Zugänglichkeitsprüfung auf realen Touchgeräten. Diese Punkte sind nicht Teil dieser ersten spielbaren Version.
