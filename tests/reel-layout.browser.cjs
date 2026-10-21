@@ -25,7 +25,7 @@ async function run(){
  const errors=[];page.on("pageerror",e=>errors.push(e.message));
  const bounds=async()=>page.evaluate(()=>{
   const x=document.querySelector(".machine-frame").getBoundingClientRect();
-  return {x:x.x,y:x.y,width:x.width,height:x.height,scroll:document.documentElement.scrollWidth,client:document.documentElement.clientWidth};
+  return {x:x.left+window.scrollX,y:x.top+window.scrollY,width:x.width,height:x.height,scroll:document.documentElement.scrollWidth,client:document.documentElement.clientWidth};
  });
  const equal=(before,after,info)=>{
   for(const field of ["x","y","width","height"]) assert.ok(Math.abs(before[field]-after[field])<=1,
