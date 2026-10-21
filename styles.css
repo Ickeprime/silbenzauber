@@ -176,21 +176,6 @@ button:focus-visible, input:focus-visible {
   border-radius: 27px;
   pointer-events: none;
 }
-.machine-topline {
-  min-height: 44px;
-  border-radius: 18px;
-  background: linear-gradient(180deg, #e3f5e7 0%, #cee9d6 100%);
-  border: 3px solid #b8d6c0;
-  color: var(--green-5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-size: 0.84rem;
-  font-weight: 900;
-  letter-spacing: 0.18em;
-  margin-bottom: 18px;
-}
 .reels {
   --reel-count: 3;
   display: grid;
@@ -237,10 +222,14 @@ button:focus-visible, input:focus-visible {
   color: #de9f2f;
 }
 .reel-track {
+  /* Die Animationsspur darf die Grid-Zeilen und Automatenmaße nicht verändern. */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  align-self: start;
-  width: 100%;
   will-change: transform;
   transition-property: transform;
   transition-timing-function: cubic-bezier(.08, .76, .12, 1);
@@ -779,8 +768,7 @@ button:focus-visible, input:focus-visible {
   .settings-open { gap: 6px; font-size: 0.76rem; padding: 9px 9px; border-radius: 12px; }
   .machine-frame { padding: 15px 11px 12px; border-width: 5px; border-radius: 23px; }
   .machine-frame::before { inset: 5px; border-radius: 15px; }
-  .machine-topline { font-size: 0.66rem; letter-spacing: 0.12em; min-height: 38px; }
-  .reels { gap: 7px; }
+    .reels { gap: 7px; }
   .reel { border-width: 3px; height: 112px; border-radius: 13px; }
   .reel-symbol { font-size: 2.6rem; }
   .reels[data-count='4'] .reel-symbol { font-size: clamp(1.35rem, 7vw, 2rem); }
@@ -1033,14 +1021,6 @@ body::after {
   box-shadow: inset 0 3px 0 #d5fff480, inset 0 -6px 0 #124c3eaa, 0 5px 0 #113f35, 0 11px 0 #49351f, 0 19px 27px #12352980;
 }
 .machine-frame::before { inset: 6px; border: 2px solid #ffe4a46b; border-radius: 18px; }
-.machine-topline {
-  border: 3px solid #85512c;
-  border-radius: 10px;
-  color: #fff4cf;
-  background: repeating-linear-gradient(0deg, #a76230 0 8px, #8c4d26 9px 11px, #bf7940 12px 19px);
-  box-shadow: inset 0 2px 0 #fff0bd70, 0 3px 0 #57331e;
-  text-shadow: 0 2px 2px #542d18;
-}
 .reels { gap: clamp(4px, 1vw, 10px); }
 .reel {
   border: 5px solid #85512c;
@@ -1201,7 +1181,6 @@ body::after {
   .mascot-speech { font-size: .8rem; }
   .machine-frame { padding: 13px 9px 12px; border-width: 5px; border-radius: 20px; }
   .machine-frame::before { inset: 4px; border-radius: 13px; }
-  .machine-topline { min-height: 34px; margin-bottom: 12px; font-size: .61rem; letter-spacing: .1em; }
   .reels { gap: 4px; }
   .reel { height: 108px; border-width: 3px; border-radius: 10px; }
   .reel::before, .reel::after { left: 4px; right: 4px; height: 8px; }
@@ -1251,7 +1230,6 @@ body::after {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
 }
-.machine-topline,
 .reels,
 .machine-controls,
 .machine-foot {
@@ -1278,4 +1256,43 @@ body::after {
     height: clamp(124px, 36vw, 164px);
   }
   .reels[data-count='1'] .reel-symbol { font-size: clamp(3.4rem, 16vw, 4.6rem); }
+}
+
+/* Stabiler Leseautomat – fixe Geometrie während der Walzenanimation.
+   Sowohl die absolute Animationsspur als auch der Textbereich behalten
+   ihre Außenmaße, wenn START zu DREHT / NOCH MAL wechselt. */
+.machine-frame {
+  min-width: 0;
+  grid-template-rows: auto auto auto;
+}
+.reel {
+  box-sizing: border-box;
+  contain: layout paint;
+}
+.reel-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  margin: 0;
+}
+.machine-controls .instruction {
+  box-sizing: border-box;
+  width: min(100%, 560px);
+  height: 5rem;
+  min-height: 5rem;
+  margin-inline: auto;
+  padding: 7px 12px;
+  line-height: 1.25;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 480px) {
+  .machine-controls .instruction {
+    height: 5.5rem;
+    min-height: 5.5rem;
+    padding: 6px 8px;
+    line-height: 1.25;
+  }
 }
