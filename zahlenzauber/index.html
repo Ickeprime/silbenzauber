@@ -14,13 +14,18 @@
 <main class="scene" id="hauptinhalt">
   <nav class="top-nav" aria-label="Lernspiele">
     <a href="../" class="nav-link">🏠 Silbenzauber</a>
-    <button id="openConfig" type="button" class="teacher-button" aria-haspopup="dialog">⚙️ Lehrkraft</button>
+    <div class="nav-right">
+      <button id="soundButton" type="button" class="sound-button" aria-label="Geräusche einschalten" aria-pressed="false" title="Geräusche ein- oder ausschalten">🔇 <span id="soundLabel">Ton aus</span></button>
+      <button id="openConfig" type="button" class="teacher-button" aria-haspopup="dialog">⚙️ Lehrkraft</button>
+    </div>
   </nav>
   <header class="wood-title">
     <h1>Zahlen<span>zauber</span></h1>
     <p>Wirf die Bälle und rechne zusammen!</p>
   </header>
   <div id="instruction" class="instruction" role="status" aria-live="polite">Klick auf den Affen zum Werfen!</div>
+  <div id="activeSettings" class="active-settings" aria-label="Aktuelle Recheneinstellungen"></div>
+  <div id="saveToast" class="save-toast" role="status" aria-live="polite" hidden></div>
   <section class="play-area" aria-label="Affenwurf">
     <div class="monkey-area">
       <button type="button" id="monkey" class="monkey-button" aria-label="Affe anklicken, um einen Ball zu werfen">
@@ -83,13 +88,14 @@
       </label>
     </div>
     <fieldset class="form-section">
-      <legend>4 · Was darf die Mitte (100)?</legend>
+      <legend>4 · Wann darf die Mitte (100) getroffen werden?</legend>
       <div class="center-options">
         <label class="choice-label"><input type="radio" name="centerMode" value="normal"> Normal treffen</label>
         <label class="choice-label"><input type="radio" name="centerMode" value="never"> Nie treffen</label>
         <label class="choice-label"><input type="radio" name="centerMode" value="afterTwoMisses" checked> Erst nach zwei Nieten möglich</label>
       </div>
-      <p class="field-hint">Eine Mitte zählt 100 Punkte. Sie wird nur getroffen, wenn auch die Höchstsumme passt.</p>
+      <p class="field-hint">Das mittlere Feld bleibt immer sichtbar. Beim Werfen gelten die gewählte Regel und die maximale Gesamtsumme.</p>
+      <div id="ruleNotice" class="rule-notice" role="status" aria-live="polite"></div>
     </fieldset>
     <label class="form-section miss-checkbox">
       <input type="checkbox" id="allowMisses" checked>
@@ -102,7 +108,7 @@
       <button type="button" id="cancelConfig" class="cancel-button">Abbrechen</button>
       <button type="submit" class="save-button">✓ Speichern</button>
     </div>
-    <p id="saveStatus" class="storage-note"></p>
+    <p id="saveStatus" class="storage-note">Die Einstellungen bleiben nach dem Speichern auf diesem Gerät erhalten.</p>
   </form>
 </dialog>
 </body>
