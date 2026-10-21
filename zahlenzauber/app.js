@@ -6,6 +6,84 @@
   const svgNS = "http://www.w3.org/2000/svg";
   const board = $("playBoard"), target = $("target"), monkey = $("monkey"), monkeyFace = $("monkeyExpression");
   const storageKey = "zahlenzauber-settings-v1";
+  const soundKey = "zahlenzauber-sound-v1";
+  let soundEnabled = false, audioContext = null, toastTimer = null;
+  try { soundEnabled = localStorage.getItem(soundKey) === "1"; } catch (_) {}
+
+  // Alle Klänge werden vor Ort mit Web Audio erzeugt – keine Audiodateien/Downloads.
+  function playSound(kind) {
+    if (!soundEnabled) return;
+    const AudioClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioClass) return;
+    try {
+      if (!audioContext) audioContext = new AudioClass();
+      const ctx = audioContext;
+      if (ctx.state === "suspended") ctx.resume().catch(() => {});
+      const start = ctx.currentTime + 0.015;
+      function chirp(from, to, duration, delay, loudness, shape) {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        const t = start + delay;
+        osc.type = shape || "sine";
+        osc.frequency.setValueAtTime(from,t);
+        osc.frequency.exponentialRampToValueAtTime(Math.max(to,30),t+duration);
+        gain.gain.setValueAtTime(0.0001,t);
+        gain.gain.exponentialRampToValueAtTime(loudness,t+0.012);
+        gain.gain.exponentialRampToValueAtTime(0.0001,t+duration);
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.start(t);osc.stop(t+duration+0.02);
+      }
+      if (kind === "throw") {
+        const length = Math.floor(ctx.sampleRate * .24);
+        const buffer = ctx.createBuffer(1,length,ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i=0;i<length;i++) data[i]=(Math.random()*2-1)*(1-i/length);
+        const source = ctx.createBufferSource(), lowpass=ctx.createBiquadFilter(), gain=ctx.createGain();
+        source.buffer=buffer;lowpass.type="lowpass";
+        lowpass.frequency.setValueAtTime(2900,start);
+        lowpass.frequency.exponentialRampToValueAtTime(450,start+.24);
+        gain.gain.setValueAtTime(.0001,start);
+        gain.gain.linearRampToValueAtTime(.12,start+.035);
+        gain.gain.exponentialRampToValueAtTime(.0001,start+.24);
+        source.connect(lowpass);lowpass.connect(gain);gain.connect(ctx.destination);
+        source.start(start);
+      } else if (kind === "hit") {
+        chirp(250,130,.17,0,.14,"triangle");
+        chirp(430,260,.09,.04,.055,"sine");
+      } else if (kind === "miss") {
+        chirp(310,170,.28,0,.09,"triangle");
+      } else if (kind === "correct") {
+        chirp(523,523,.13,0,.11);
+        chirp(659,659,.14,.13,.11);
+        chirp(784,850,.27,.28,.12);
+      } else if (kind === "wrong") {
+        chirp(320,245,.23,0,.085,"sine");
+      } else if (kind === "toggle") {
+        chirp(540,710,.14,0,.09);
+      }
+    } catch (_) { /* Ungeeignete Audio-Hardware darf das Spiel nie blockieren. */ }
+  }
+  function updateSoundButton() {
+    $("soundButton").setAttribute("aria-pressed",String(soundEnabled));
+    $("soundButton").setAttribute("aria-label",soundEnabled ? "Geräusche ausschalten" : "Geräusche einschalten");
+    $("soundButton").firstChild.textContent = soundEnabled ? "🔊 " : "🔇 ";
+    $("soundLabel").textContent = soundEnabled ? "Ton an" : "Ton aus";
+  }
+  function describeSettings(s) {
+    return (s.mode === "tens" ? "Zehnerzahlen" : "Gemischte Zahlen") +
+      " · Felder bis " + s.maxField + " · Rechnen bis " + s.maxTotal;
+  }
+  function updateActiveSettings() { $("activeSettings").textContent = "✏️ " + describeSettings(settings); }
+  function showSaveToast(persisted) {
+    const el = $("saveToast");
+    el.textContent = persisted
+      ? "✓ Einstellungen gespeichert! " + describeSettings(settings)
+      : "⚠️ Einstellungen übernommen, aber dein Browser verhindert das dauerhafte Speichern.";
+    el.hidden = false;
+    if (toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { el.hidden = true; }, 7000);
+  }
+
   let settings = Object.assign({}, L.DEFAULTS);
   try {
     const stored = JSON.parse(localStorage.getItem(storageKey) || "null");
@@ -34,15 +112,26 @@
   }
   function addBall(parent, x, y, latest) {
     const g = svg("g",{"class":"hit-marker" + (latest ? " new" : "")});
-    g.appendChild(svg("circle",{cx:x,cy:y,r:17,fill:"#d91d2b",stroke:"#fff","stroke-width":2.7}));
+    g.appendChild(svg("circle",{cx:x,cy:y,r:17,fill:"url(#zz-ball-shine)",stroke:"#fff","stroke-width":2.7}));
     g.appendChild(svg("path",{d:"M " + (x-12) + " " + (y-12) + " Q " + (x+5) + " " + (y-5) + " " + (x+11) + " " + (y+13),fill:"none",stroke:"#fff","stroke-width":7}));
     g.appendChild(svg("path",{d:"M " + (x-10) + " " + (y-5) + " Q " + x + " " + (y+9) + " " + (x+12) + " " + (y+7),fill:"none",stroke:"#fff0dd","stroke-width":3}));
     parent.appendChild(g);
   }
   function renderTarget() {
     target.replaceChildren();
+    const defs = svg("defs");
+    const gradient = svg("radialGradient",{id:"zz-ball-shine",cx:"28%",cy:"22%",r:"76%"});
+    for (const [stop,color] of [["0%","#ffb69c"],["42%","#ed2935"],["100%","#971628"]])
+      gradient.appendChild(svg("stop",{offset:stop,"stop-color":color}));
+    defs.appendChild(gradient);
+    const wood = svg("linearGradient",{id:"zz-wood-rim",x1:"0",x2:"1",y1:"0",y2:"1"});
+    for (const [stop,color] of [["0%","#f0b35e"],["45%","#915024"],["100%","#472513"]])
+      wood.appendChild(svg("stop",{offset:stop,"stop-color":color}));
+    defs.appendChild(wood);
+    target.appendChild(defs);
     target.appendChild(svg("rect",{x:219,y:448,width:60,height:44,rx:5,fill:"#915223",stroke:"#6c3517","stroke-width":5}));
-    target.appendChild(svg("circle",{cx:250,cy:250,r:237,fill:"#39271f",stroke:"#211d1b","stroke-width":6}));
+    target.appendChild(svg("circle",{cx:250,cy:250,r:240,fill:"url(#zz-wood-rim)",stroke:"#3b2213","stroke-width":6}));
+    target.appendChild(svg("circle",{cx:250,cy:250,r:234,fill:"#39271f",stroke:"#211d1b","stroke-width":4}));
     target.appendChild(svg("circle",{cx:250,cy:250,r:230,fill:"#fff"}));
     const bounds = [[228,174],[174,113],[113,42]];
     for (const c of cells) {
@@ -52,6 +141,7 @@
         fill:c.color,"class":"field"}));
     }
     target.appendChild(svg("circle",{cx:250,cy:250,r:41,fill:"#c20a63",stroke:"#fff","stroke-width":5}));
+    target.appendChild(svg("path",{d:"M 91 104 A 212 212 0 0 1 189 46",fill:"none",stroke:"#ffffff","stroke-opacity":".22","stroke-width":"8","stroke-linecap":"round"}));
     for (const c of cells) {
       const n = String(c.value).length;
       const fill = c.color === "#ffd523" ? "#ae251e" : "#fff";
@@ -136,12 +226,14 @@
   function throwBall() {
     if (phase !== "throw" || busy) return;
     const selected = L.chooseHit(settings,cells,throws,rand);
+    playSound("throw");
     const version = roundVersion;
     busy = true; monkey.disabled = true; setMonkeyEmotion("throw");
     $("instruction").textContent = "Der Ball fliegt …";
     throwTimer = setTimeout(() => {
       if (version !== roundVersion) return;
       throws.push(selected); busy = false; throwTimer = null;
+      playSound(selected.kind === "miss" ? "miss" : "hit");
       if (throws.length === 3) {
         phase = "answer";
         answerOptions = L.makeAnswers(settings,throws,rand);
@@ -166,8 +258,21 @@
     $("allowMisses").checked = s.allowMisses;
     updateHint();
   }
-  function updateHint() {
-    const s = settingsInForm();
+  function updateHint(event) {
+    let s = settingsInForm();
+    const notice = $("ruleNotice");
+    notice.textContent = "";
+    // Keine versteckte Blockade: unvereinbare Optionen werden direkt sinnvoll abgeglichen.
+    if (s.centerMode === "afterTwoMisses" && !s.allowMisses) {
+      if (event && event.target && event.target.name === "centerMode") {
+        $("allowMisses").checked = true;
+        notice.textContent = "✓ Nieten wurden aktiviert, damit die 100 nach zwei Nieten möglich bleibt.";
+      } else {
+        document.querySelector('input[name="centerMode"][value="never"]').checked = true;
+        notice.textContent = "✓ Ohne Nieten ist die Sonderregel nicht möglich. Die Mitte wurde deshalb gesperrt.";
+      }
+      s = settingsInForm();
+    }
     const error = L.validate(s);
     $("configError").hidden = !error;
     $("configError").textContent = error;
@@ -199,22 +304,34 @@
   function saveConfig(e) {
     e.preventDefault();
     const next = settingsInForm(), error = L.validate(next);
-    if (error) { updateHint(); $("configError").focus(); return; }
+    if (error) {
+      updateHint();
+      $("configError").setAttribute("tabindex","-1");
+      $("configError").focus();
+      $("configError").scrollIntoView({block:"nearest",behavior:"smooth"});
+      return;
+    }
     let persisted = true;
     try { localStorage.setItem(storageKey,JSON.stringify(next)); }
     catch (_) { persisted = false; }
     settings = next;
     closeConfig();
     startRound();
-    if (!persisted) {
-      $("instruction").textContent = "Einstellungen gelten jetzt. Dauerhaft speichern ist in diesem Browser nicht möglich.";
-    }
+    updateActiveSettings();
+    showSaveToast(persisted);
   }
   $("monkey").addEventListener("click",throwBall);
+  $("soundButton").addEventListener("click",() => {
+    soundEnabled = !soundEnabled;
+    try { localStorage.setItem(soundKey,soundEnabled ? "1" : "0"); } catch (_) {}
+    updateSoundButton();
+    if (soundEnabled) playSound("toggle");
+  });
   board.addEventListener("click",event => {
     const button = event.target.closest("[data-answer]");
     if (button && phase === "answer") {
       chosenAnswer = Number(button.dataset.answer);
+      playSound(chosenAnswer === sum() ? "correct" : "wrong");
       phase = "feedback";
       renderBoard();
     } else if (event.target.closest("#again")) startRound();
@@ -225,5 +342,7 @@
   $("resetConfig").addEventListener("click",() => fillForm(L.DEFAULTS));
   $("configForm").addEventListener("input",updateHint);
   $("configForm").addEventListener("submit",saveConfig);
+  updateSoundButton();
+  updateActiveSettings();
   startRound();
 })();
