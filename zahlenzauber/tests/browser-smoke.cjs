@@ -16,7 +16,8 @@ async function main() {
     try {
       const data = await fs.readFile(full);
       const ext=path.extname(full);
-      res.writeHead(200,{"Content-Type":ext===".js"?"text/javascript":ext===".css"?"text/css":"text/html; charset=utf-8"});
+      const contentType={".js":"text/javascript",".css":"text/css",".html":"text/html; charset=utf-8",".webp":"image/webp",".png":"image/png"}[ext] || "application/octet-stream";
+      res.writeHead(200,{"Content-Type":contentType});
       res.end(data);
     } catch (_) {res.writeHead(404).end();}
   });
