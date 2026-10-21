@@ -1296,3 +1296,21 @@ body::after {
     line-height: 1.25;
   }
 }
+
+/* Der Flamingo ist ein eigener Grid-Bereich. Ein kürzerer Sprechblasentext
+   darf den Automaten nicht in der vertikalen Ausrichtung verschieben. */
+.play-stage .machine-area { align-self: start; }
+.mascot-area .mascot-speech {
+  box-sizing: border-box;
+  height: 5rem;
+  min-height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@media (max-width: 480px) {
+  .mascot-area .mascot-speech {
+    height: 4.5rem;
+    min-height: 4.5rem;
+  }
+}
