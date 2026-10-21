@@ -29,3 +29,11 @@ Die unveränderte Originaldatei `fonts/Druckschrift_BY_WOK.ttf` wurde im lokalen
 - Schriftintegration: Metadaten, unveränderten SHA-256, Glyphenabdeckung und vollständige eingebettete Lizenzkopie wurden mit dem Python-Standardbibliotheksparser aus der Original-TTF geprüft. Browserprüfung auf Schriftladevorgang und Walzenbreiten steht noch aus.
 
 Die Spiel- und Einstellungslogik bleibt ohne Build-Abhängigkeiten in `logic.js`; Darstellung und Audio-Orchestrierung liegen in `app.js` und `styles.css`. Die Einstellungen für Walzenzahl, Buchstaben, individuelle Silben, Sterne, Ton und reduzierte Bewegung bleiben erhalten.
+
+## Serien-Redesign mit Lagune und Flamingo
+
+Silbenzauber teilt jetzt zentrale Oberflächenmerkmale mit Zahlenzauber: eine große, plastisch gesetzte Titeltafel, Holzknöpfe mit Lichtkante und Untertiefe sowie eine gemeinsame Position für die Seriennavigation. Die eigene Farbwelt bleibt türkis-grün mit Korallakzenten und einer tropischen Lagune. Die neue Corporate Identity und ihre Regeln für zukünftige Apps stehen in [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md).
+
+Lumi, der freigestellte Flamingo, begleitet den Ablauf mit ruhigen CSS-Bewegungen für den Bereitschafts-, Dreh-, Ergebnis- und Lesepausen-Zustand. Bei aktivierter Einstellung „Wenig Bewegung“ oder der entsprechenden Systemeinstellung werden die Maskottchenbewegungen deaktiviert. Die Spiel- und Zahlenzauber-Logik blieb unverändert. Die beiden lokalen WebP-Assets sind zusammen etwa 414 KB groß.
+
+**Visuelle Prüfung:** Die öffentliche Zahlenzauber-Referenz wurde im Browser geöffnet und als Gestaltungsgrundlage verglichen. Eine lokale Vorschau des neuen Silbenzauber konnte in dieser Umgebung nicht starten, weil der lokale HTTP-Server keinen Loopback-Socket öffnen durfte. Daher bleiben Browser-Screenshots und die visuelle Prüfung bei 320/375 Pixeln, Tablet und Desktop als offener Abnahmepunkt bestehen; automatisierte Tests und statische Prüfungen ersetzen diese Sichtprüfung nicht.
