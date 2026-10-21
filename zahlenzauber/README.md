@@ -66,3 +66,24 @@ node --check zahlenzauber/app.js
 ## Ausblick
 
 Optional: passwortgeschütztes Lehrkraft-Menü, bessere Zeichenillustrationen (Affen-PNG/SVG), Klang-Effekte, Schwierigkeitsprofile, visuelle Zugänglichkeitsprüfung auf realen Touchgeräten. Diese Punkte sind nicht Teil dieser ersten spielbaren Version.
+
+
+## Version 0.2: Lehrkraft-Speicherung, Ton und optische Überarbeitung
+
+- Die aktive Konfiguration steht sichtbar unter der Spielanweisung (Zahlenart, Feldgrenze, Summengrenze).
+- **Speichern** übernimmt die Werte und blendet eine ausdrückliche Meldung **„Einstellungen gespeichert!“** ein. Nach einem Neustart werden sie aus dem Browser-Speicher wiederhergestellt.
+- Die unvereinbare Kombination **„Nieten ausschalten“ + „100 erst nach zwei Nieten“** wird direkt aufgelöst: Beim Ausschalten der Nieten wird die Mitte auf **nie treffen** gesetzt. Wird die Spezialregel gewählt, werden Nieten wieder aktiviert. Ein Hinweis erklärt die Anpassung.
+- Fehlerhafte Zahleneingaben werden im Dialog erklärt; die Fehlermeldung wird in den sichtbaren Bereich gebracht.
+- Über **🔊 Ton an / 🔇 Ton aus** lassen sich Wurf-, Treffer-, Fehlwurf- und Jubelgeräusche aktivieren. Der Ton startet **standardmäßig ausgeschaltet**, die Auswahl wird lokal gespeichert. Die Klänge entstehen direkt über die Web-Audio-API; es werden keine fremden Audiodateien geladen.
+- Holztafeln, Affe, bunte Zielscheibe, Bälle, Dschungelhintergrund, Schatten und Feedback sind gestalterisch überarbeitet. Die Oberfläche bleibt mit CSS/SVG gebaut, ohne externe Grafiken.
+- Die bisherige Silbenzauber-App bleibt unverändert.
+
+### Browser-Smoke-Test
+
+Neben den Node-Logiktests enthält das Projekt einen **Playwright-Chromium-Test**, der auf der GitHub-Actions-Pipeline ausgeführt wird. Er prüft das Speichern über einen echten **Seiten-Reload**, den Formular-Konflikt, die Ton-Einstellung, drei Würfe, Summenfrage, Feedback sowie Mobile/Desktop-Screenshots.
+
+\`\`\`sh
+npm install --no-save playwright@1.56.1
+npx playwright install chromium
+node zahlenzauber/tests/browser-smoke.cjs
+\`\`\`
