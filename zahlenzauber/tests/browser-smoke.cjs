@@ -36,6 +36,8 @@ async function main() {
     await page.goto(origin+"/zahlenzauber/");
     await page.locator("#monkey").waitFor();
     assert.equal(await page.locator(".ball-slot.available").count(),3);
+    assert.equal(await page.locator(".board-throws").count(),1);
+    assert.equal(await page.locator("#target .score-tag").count(),0);
     await fs.mkdir(path.resolve(root,"zahlenzauber/tests/screenshots"),{recursive:true});
     await page.screenshot({path:"zahlenzauber/tests/screenshots/mobile-start.png",fullPage:true});
 
@@ -71,9 +73,11 @@ async function main() {
     for(let index=1;index<=3;index++) {
       await page.locator("#monkey").click();
       await page.waitForFunction(count => document.querySelectorAll(".hit-marker").length === count,index);
+      assert.equal(await page.locator("#target .score-tag").count(),index);
       if (index<3) assert.equal(await page.locator(".ball-slot.available").count(),3-index);
     }
     await page.locator(".answer-button").first().waitFor();
+    assert.equal(await page.locator(".board-math").count(),1);
     assert.equal(await page.locator(".answer-button").count(),3);
     const score=(await page.locator(".equation .number-chip").allTextContents()).map(Number).reduce((a,b)=>a+b,0);
     assert.ok(score<=100);
@@ -82,10 +86,28 @@ async function main() {
     assert.ok(values.includes(score));
     await page.locator('.answer-button[data-answer="'+score+'"]').click();
     assert.match(await page.locator(".feedback h2").textContent(),/Richtig/);
+    assert.equal(await page.locator(".board-feedback").count(),1);
+    assert.equal(await page.locator("#again").evaluate(el => document.activeElement === el),true);
     await page.waitForTimeout(400); // Feedback-Einblendung vor dem Screenshot vollständig anzeigen.
     await page.screenshot({path:"zahlenzauber/tests/screenshots/mobile-feedback.png",fullPage:true});
     await page.locator("#again").click();
     assert.equal(await page.locator(".ball-slot.available").count(),3);
+    assert.equal(await page.locator("#monkey").evaluate(el => document.activeElement === el),true);
+
+    // Typische Gerätebreiten plus schmale Telefonansicht:
+    // keine horizontal abgeschnittenen Antwortknöpfe oder Einstellungsbuttons.
+    for (const width of [320,360,390,768,1024,1280]) {
+      await page.setViewportSize({width,height:840});
+      const metrics = await page.evaluate(() => ({
+        width:document.documentElement.clientWidth,
+        scroll:document.documentElement.scrollWidth,
+        board:document.querySelector("#playBoard").getBoundingClientRect(),
+        firstAnswer:document.querySelector(".answer-button")
+      }));
+      assert.ok(metrics.scroll <= metrics.width + 2,
+        "Horizontales Scrollen bei " + width + "px: " + metrics.scroll + "/" + metrics.width);
+      assert.ok(metrics.board.width > 0);
+    }
 
     // Tablet/Desktop: Dialog erreichbar und beide Lernspiele verlinkt.
     await page.setViewportSize({width:1280,height:800});
