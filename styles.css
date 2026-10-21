@@ -811,3 +811,14 @@ button:focus-visible, input:focus-visible {
     scroll-behavior: auto !important;
   }
 }
+
+/* Zweites Lernspiel: Zahlenzauber – nur die Navigation ergänzen */
+.site-header { flex-wrap: wrap; padding: 10px 0; }
+.header-actions { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 9px; }
+.companion-link { text-decoration: none; }
+.companion-link:hover { background: #fff; }
+.companion-link:focus-visible { outline: 4px solid #1a7ee5; outline-offset: 3px; }
+@media (max-width: 570px) {
+  .header-actions { width: 100%; justify-content: center; }
+  .companion-link { flex: 1; justify-content: center; }
+}
