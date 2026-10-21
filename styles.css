@@ -1123,7 +1123,7 @@ body::after {
 .mini-toggle input { accent-color: #168e83; }
 
 @media (min-width: 1000px) {
-  .play-stage { grid-template-columns: minmax(0, 1fr) minmax(0, 900px) minmax(0, 1fr); }
+  .play-stage { grid-template-columns: minmax(0, 1fr) minmax(0, min(900px, calc(100% - 486px))) minmax(0, 1fr); }
   .mascot-area { grid-column: 1; }
   .machine-area { grid-column: 2; }
   .mascot-area { width: 100%; }
