@@ -19,6 +19,14 @@
   const reelsElement = $('#reels');
   const instructionElement = $('#instruction');
   const settingsDialog = $('#settingsDialog');
+  const mascotArea = $('#mascotArea');
+  const mascotMessage = $('#mascotMessage');
+
+  function setMascotState(state, message) {
+    if (!mascotArea || !mascotMessage) return;
+    mascotArea.dataset.state = state;
+    mascotMessage.textContent = message;
+  }
 
   function readConfig() {
     try {
@@ -186,6 +194,7 @@
     spinButton.classList.add('is-spinning');
     spinButtonText.textContent = 'DREHT …';
     instructionElement.textContent = 'Die Walzen drehen sich …';
+    setMascotState('spinning', 'Hui, sie drehen sich!');
 
     const target = Logic.drawResult(config, previousResult, Math.random, spinsWithoutStar);
     const reduced = config.reducedMotion || window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -232,6 +241,7 @@
           spinButton.classList.remove('is-spinning');
           spinButtonText.textContent = 'NOCH MAL!';
           instructionElement.textContent = Logic.resultInstruction(target);
+          setMascotState(target.includes('★') ? 'pause' : 'landed', target.includes('★') ? 'Zeit zum Lesen!' : 'Was steht dort?');
           sound(520, 0.10, 0.03, 0.01);
           sound(660, 0.13, 0.13, 0.01);
         }
@@ -357,7 +367,9 @@
         });
       }
 
-      card.append(header, caseSetting, toggleRow, info, chips);
+      // At one reel there is no pause field at all: reel 1 is always star-free.
+      if (pendingConfig.reelCount === 1) card.append(header, caseSetting, info, chips);
+      else card.append(header, caseSetting, toggleRow, info, chips);
       container.appendChild(card);
     }
   }

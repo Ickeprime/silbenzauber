@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#e9f7ef" />
+  <meta name="theme-color" content="#145b59" />
   <meta name="description" content="Silbenzauber: ein kindgerechter Lese-Automat für die Grundschule." />
   <title>Silbenzauber – Lesen mit Silben</title>
   <link rel="stylesheet" href="styles.css" />
@@ -21,36 +21,46 @@
         </span>
       </a>
       <div class="header-actions">
-        <a class="button-outline companion-link" href="zahlenzauber/" aria-label="Zahlenzauber, Mathe-Spiel öffnen">🎯 Zahlenzauber</a>
-      <button id="settingsOpen" class="settings-open button-outline" type="button" aria-label="Einstellungen öffnen" aria-haspopup="dialog">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.86l.07.07-2.12 2.12-.07-.07a1.7 1.7 0 0 0-1.86-.34 1.7 1.7 0 0 0-1.04 1.56V21h-3v-.8A1.7 1.7 0 0 0 10.7 18.6a1.7 1.7 0 0 0-1.86.34l-.07.07-2.12-2.12.07-.07A1.7 1.7 0 0 0 7.06 15a1.7 1.7 0 0 0-1.56-1.04H5v-3h.5a1.7 1.7 0 0 0 1.56-1.04 1.7 1.7 0 0 0-.34-1.86l-.07-.07 2.12-2.12.07.07a1.7 1.7 0 0 0 1.86.34A1.7 1.7 0 0 0 11.74 4.7V4h3v.7A1.7 1.7 0 0 0 15.78 6.3a1.7 1.7 0 0 0 1.86-.34l.07-.07 2.12 2.12-.07.07a1.7 1.7 0 0 0-.34 1.86 1.7 1.7 0 0 0 1.56 1.04H21v3h-.02A1.7 1.7 0 0 0 19.4 15Z"/></svg>
-        <span>Einstellungen</span>
-      </button>
+        <a class="button-outline companion-link" href="zahlenzauber/" aria-label="Zahlenzauber, Mathe-Spiel öffnen">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 8h8M8 12h8M8 16h8"/><path d="M10 8v8m4-8v8"/></svg>
+          <span>Zahlenzauber</span>
+        </a>
+        <button id="settingsOpen" class="settings-open button-outline" type="button" aria-label="Einstellungen öffnen" aria-haspopup="dialog">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.86l.07.07-2.12 2.12-.07-.07a1.7 1.7 0 0 0-1.86-.34 1.7 1.7 0 0 0-1.04 1.56V21h-3v-.8A1.7 1.7 0 0 0 10.7 18.6a1.7 1.7 0 0 0-1.86.34l-.07.07-2.12-2.12.07-.07A1.7 1.7 0 0 0 7.06 15a1.7 1.7 0 0 0-1.56-1.04H5v-3h.5a1.7 1.7 0 0 0 1.56-1.04 1.7 1.7 0 0 0-.34-1.86l-.07-.07 2.12-2.12.07.07a1.7 1.7 0 0 0 1.86.34A1.7 1.7 0 0 0 11.74 4.7V4h3v.7A1.7 1.7 0 0 0 15.78 6.3a1.7 1.7 0 0 0 1.86-.34l.07-.07 2.12 2.12-.07.07a1.7 1.7 0 0 0-.34 1.86 1.7 1.7 0 0 0 1.56 1.04H21v3h-.02A1.7 1.7 0 0 0 19.4 15Z"/></svg>
+          <span>Einstellungen</span>
+        </button>
       </div>
     </header>
 
     <main id="hauptinhalt">
-      <div class="intro">
-        <div class="eyebrow">Dein Lese-Automat für die Grundschule</div>
-        <h1>Drehen. Lesen. <span>Staunen.</span></h1>
+      <div class="intro wood-title">
+        <div class="eyebrow">Dein Lese-Abenteuer an der Lagune</div>
+        <h1 aria-label="Silbenzauber" data-title="Silbenzauber"><span>Silben</span><span>zauber</span></h1>
         <p>Drücke auf <strong>START</strong> und lies die Silben, die erscheinen.</p>
       </div>
 
-      <section class="machine-area" aria-label="Silbenautomat">
-        <div class="machine-frame">
-          <div class="machine-topline">DER SILBENZAUBER</div>
-          <div id="reels" class="reels" style="--reel-count:3" aria-label="Drei Silbenwalzen"></div>
-          <div class="machine-controls">
-            <button id="spinButton" class="spin-button" type="button">
-              <span class="button-symbol" aria-hidden="true">↻</span>
-              <span id="spinButtonText">START</span>
-              <span class="button-symbol" aria-hidden="true">↻</span>
-            </button>
-            <div id="instruction" class="instruction" role="status" aria-live="polite" aria-atomic="true">Drücke START und lies danach die Silben.</div>
+      <div class="play-stage" id="playStage">
+        <aside class="mascot-area" id="mascotArea" data-state="idle" aria-label="Lumi, der Flamingo">
+          <img class="mascot-art" src="assets/flamingo-mascot.webp" alt="" width="1280" height="1280" draggable="false" />
+          <p class="mascot-speech" id="mascotMessage" role="status" aria-live="polite">Hallo! Lies mit mir.</p>
+        </aside>
+
+        <section class="machine-area" aria-label="Silbenautomat">
+          <div class="machine-frame">
+            <div class="machine-topline">DER SILBENZAUBER</div>
+            <div id="reels" class="reels" style="--reel-count:3" aria-label="Drei Silbenwalzen"></div>
+            <div class="machine-controls">
+              <button id="spinButton" class="spin-button" type="button">
+                <span class="button-symbol" aria-hidden="true">↻</span>
+                <span id="spinButtonText">START</span>
+                <span class="button-symbol" aria-hidden="true">↻</span>
+              </button>
+              <div id="instruction" class="instruction" role="status" aria-live="polite" aria-atomic="true">Drücke START und lies danach die Silben.</div>
+            </div>
+            <div class="machine-foot" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
           </div>
-          <div class="machine-foot" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       <div class="below-machine">
         <div id="selectionSummary" class="selection-summary"></div>
@@ -62,7 +72,7 @@
 
       <aside class="learning-hint" aria-label="So geht es">
         <div class="hint-icon" aria-hidden="true">Aa</div>
-        <p><strong>So geht’s:</strong> Lies die Silben von links nach rechts. Die Schreibweise lässt sich für jede Walze einstellen. Sterne sind kleine Lesepausen und erscheinen nur auf Walzen ab Nummer 2.</p>
+        <p><strong>So geht’s:</strong> Lies die angezeigte Silbe oder die Silben von links nach rechts. Die Schreibweise lässt sich für jede Walze einstellen. Sterne sind kleine Lesepausen und erscheinen nur auf Walzen ab Nummer 2.</p>
       </aside>
     </main>
 
@@ -85,6 +95,7 @@
           <legend><span class="section-number">1</span> Anzahl der Walzen</legend>
           <p>Wie viele Silben erscheinen nebeneinander?</p>
           <div id="reelCountButtons" class="segmented-options" aria-label="Walzenanzahl">
+            <button type="button" class="segment" data-reel-count="1" aria-pressed="false">1 Walze</button>
             <button type="button" class="segment" data-reel-count="2" aria-pressed="false">2</button>
             <button type="button" class="segment" data-reel-count="3" aria-pressed="true">3</button>
             <button type="button" class="segment" data-reel-count="4" aria-pressed="false">4</button>

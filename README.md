@@ -13,9 +13,11 @@ Der **Silbenzauber** ist eine einfache Web-App, in der Kinder durch Drehen von W
 - Pro Walze eine eigene Silbenauswahl
 - Vertikale Walzenanimation, dezente Web-Audio-Geräusche und Zauberstab-Zeiger für Mausgeräte
 - Große Bedienflächen, ruhige grüne Maschine, Druckschrift und einstellbare Bewegung
+- Tropische Lagune und Flamingo-Maskottchen als Teil der Silbenzauber-Lernspielserie
 - Einstellungen bleiben im jeweiligen Browser gespeichert
 
 Details zu Version 0.3 stehen in [DESIGN_UPDATE.md](DESIGN_UPDATE.md).
+Die wiederverwendbaren Gestaltungsregeln der Lernspielserie stehen in [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md).
 
 > Aktueller Funktionsumfang: zweibuchstabige offene Silben (CV). Mehrbuchstabige Laute wie `sch`, `ch`, `au`, `ei` und `eu` oder geschlossene Silben sind noch nicht Teil dieser Version.
 
@@ -27,11 +29,15 @@ Silbenzauber/
 ├── styles.css
 ├── logic.js
 ├── app.js
+├── assets/
+│   ├── flamingo-mascot.webp
+│   └── lagoon-background.webp
 ├── tests/
 │   └── logic.test.js
 ├── README.md
 ├── AGENTS.md
 ├── CODEX_HANDOFF.md
+├── DESIGN_SYSTEM.md
 └── VEROEFFENTLICHUNG.md
 \`\`\`
 
