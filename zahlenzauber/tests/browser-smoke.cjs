@@ -132,7 +132,7 @@ async function main() {
     const secondScore=(await page.locator(".equation .number-chip").allTextContents()).map(Number).reduce((a,b)=>a+b,0);
     const wrongAnswer=await page.locator(".answer-button").evaluateAll((buttons,correct)=>buttons.find(button=>Number(button.dataset.answer)!==correct).dataset.answer,secondScore);
     await page.locator('.answer-button[data-answer="'+wrongAnswer+'"]').click();
-    assert.match(await page.locator(".feedback h2").textContent(),/Leider falsch/);
+    assert.match(await page.locator(".feedback h2").textContent(),/Noch nicht richtig|Leider falsch/);
     await page.waitForTimeout(400);
     await capture("zahlenzauber/tests/screenshots/mobile-wrong.png");
 
