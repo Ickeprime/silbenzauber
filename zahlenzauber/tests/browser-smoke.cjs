@@ -1,0 +1,97 @@
+/* Browser-E2E: echter Chromium statt nur Logiksimulation */
+"use strict";
+const assert = require("node:assert/strict");
+const {chromium} = require("playwright");
+const http = require("node:http");
+const fs = require("node:fs/promises");
+const path = require("node:path");
+
+const root = process.cwd();
+async function main() {
+  const server = http.createServer(async (req,res) => {
+    let pathname = decodeURIComponent(new URL(req.url,"http://localhost").pathname);
+    if (pathname.endsWith("/")) pathname += "index.html";
+    const full = path.resolve(root,"."+pathname);
+    if (!full.startsWith(root + path.sep)) {res.writeHead(403).end();return;}
+    try {
+      const data = await fs.readFile(full);
+      const ext=path.extname(full);
+      res.writeHead(200,{"Content-Type":ext===".js"?"text/javascript":ext===".css"?"text/css":"text/html; charset=utf-8"});
+      res.end(data);
+    } catch (_) {res.writeHead(404).end();}
+  });
+  await new Promise(resolve=>server.listen(0,"127.0.0.1",resolve));
+  const origin="http://127.0.0.1:"+server.address().port;
+  let browser;
+  const failures=[];
+  try {
+    browser = await chromium.launch({headless:true});
+    const ctx=await browser.newContext({viewport:{width:390,height:844}});
+    const page=await ctx.newPage();
+    page.on("pageerror",err=>failures.push(err.message));
+    await page.goto(origin+"/zahlenzauber/");
+    await page.locator("#monkey").waitFor();
+    assert.equal(await page.locator(".ball-slot.available").count(),3);
+    await fs.mkdir(path.resolve(root,"zahlenzauber/tests/screenshots"),{recursive:true});
+    await page.screenshot({path:"zahlenzauber/tests/screenshots/mobile-start.png",fullPage:true});
+
+    // Das vom Nutzer gemeldete Problem: Speichern inkl. Seiten-Reload.
+    await page.locator("#openConfig").click();
+    await page.locator('input[name="mode"][value="mixed"]').check();
+    await page.locator("#maxField").fill("85");
+    await page.locator("#maxTotal").fill("200");
+    await page.locator("#allowMisses").uncheck(); // 100 nach zwei Nieten muss automatisch zu "nie" wechseln.
+    assert.equal(await page.locator('input[name="centerMode"][value="never"]').isChecked(),true);
+    await page.screenshot({path:"zahlenzauber/tests/screenshots/mobile-settings.png",fullPage:true});
+    await page.locator(".save-button").click();
+    assert.equal(await page.locator("#settingsDialog").evaluate(el=>el.open),false);
+    assert.match(await page.locator("#saveToast").textContent(),/Einstellungen gespeichert/);
+    assert.match(await page.locator("#activeSettings").textContent(),/Gemischte Zahlen/);
+    await page.reload();
+    await page.locator("#openConfig").click();
+    assert.equal(await page.locator("#maxTotal").inputValue(),"200");
+    assert.equal(await page.locator("#maxField").inputValue(),"85");
+    assert.equal(await page.locator('input[name="mode"][value="mixed"]').isChecked(),true);
+    assert.equal(await page.locator("#allowMisses").isChecked(),false);
+    assert.equal(await page.locator('input[name="centerMode"][value="never"]').isChecked(),true);
+
+    // Erneut ändern und wirklich mit den neuen Einstellungen werfen.
+    await page.locator('input[name="mode"][value="tens"]').check();
+    await page.locator("#maxField").fill("100");
+    await page.locator("#maxTotal").fill("100");
+    await page.locator(".save-button").click();
+    await page.locator("#soundButton").click();
+    assert.equal(await page.locator("#soundButton").getAttribute("aria-pressed"),"true");
+    await page.reload();
+    assert.equal(await page.locator("#soundButton").getAttribute("aria-pressed"),"true");
+    for(let index=1;index<=3;index++) {
+      await page.locator("#monkey").click();
+      await page.waitForFunction(count => document.querySelectorAll(".hit-marker").length === count,index);
+      if (index<3) assert.equal(await page.locator(".ball-slot.available").count(),3-index);
+    }
+    await page.locator(".answer-button").first().waitFor();
+    assert.equal(await page.locator(".answer-button").count(),3);
+    const score=(await page.locator(".equation .number-chip").allTextContents()).map(Number).reduce((a,b)=>a+b,0);
+    assert.ok(score<=100);
+    const values=(await page.locator(".answer-button").allTextContents()).map(Number);
+    assert.equal(new Set(values).size,3);
+    assert.ok(values.includes(score));
+    await page.locator('.answer-button[data-answer="'+score+'"]').click();
+    assert.match(await page.locator(".feedback h2").textContent(),/Richtig/);
+    await page.screenshot({path:"zahlenzauber/tests/screenshots/mobile-feedback.png",fullPage:true});
+    await page.locator("#again").click();
+    assert.equal(await page.locator(".ball-slot.available").count(),3);
+
+    // Tablet/Desktop: Dialog erreichbar und beide Lernspiele verlinkt.
+    await page.setViewportSize({width:1280,height:800});
+    await page.screenshot({path:"zahlenzauber/tests/screenshots/desktop-start.png",fullPage:true});
+    assert.equal(await page.locator('a[href="../"]').count(),1);
+    assert.deepEqual(failures,[]);
+    console.log("Browsercheck OK: Speicherung über Reload, Konfliktauflösung, Audio, 3 Würfe, Rechnen, Feedback, responsive Darstellung");
+    await ctx.close();
+  } finally {
+    if(browser)await browser.close();
+    await new Promise(resolve=>server.close(resolve));
+  }
+}
+main().catch(err=>{console.error(err);process.exitCode=1;});
