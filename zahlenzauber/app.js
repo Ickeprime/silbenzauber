@@ -137,14 +137,20 @@
       gradient.appendChild(svg("stop",{offset:stop,"stop-color":color}));
     defs.appendChild(gradient);
     const wood = svg("linearGradient",{id:"zz-wood-rim",x1:"0",x2:"1",y1:"0",y2:"1"});
-    for (const [stop,color] of [["0%","#f0b35e"],["45%","#915024"],["100%","#472513"]])
+    for (const [stop,color] of [["0%","#f8cf81"],["18%","#bd7638"],["48%","#783d1e"],["72%","#cf8c47"],["100%","#4b2917"]])
       wood.appendChild(svg("stop",{offset:stop,"stop-color":color}));
     defs.appendChild(wood);
+    const grain = svg("pattern",{id:"zz-woodgrain",width:42,height:32,patternUnits:"userSpaceOnUse"});
+    grain.appendChild(svg("path",{d:"M -4 8 C 7 3 19 14 46 7 M -7 23 C 8 17 22 28 49 20 M 8 32 C 16 26 23 31 36 29",fill:"none",stroke:"#ffe0a0","stroke-width":2,opacity:.32}));
+    grain.appendChild(svg("path",{d:"M 3 12 C 15 9 21 16 37 13 M 14 27 C 22 23 30 28 42 25",fill:"none",stroke:"#4c2613","stroke-width":1.5,opacity:.22}));
+    defs.appendChild(grain);
     target.appendChild(defs);
-    target.appendChild(svg("rect",{x:219,y:448,width:60,height:44,rx:5,fill:"#915223",stroke:"#6c3517","stroke-width":5}));
-    target.appendChild(svg("circle",{cx:250,cy:250,r:240,fill:"url(#zz-wood-rim)",stroke:"#3b2213","stroke-width":6}));
-    target.appendChild(svg("circle",{cx:250,cy:250,r:234,fill:"#39271f",stroke:"#211d1b","stroke-width":4}));
-    target.appendChild(svg("circle",{cx:250,cy:250,r:230,fill:"#fff"}));
+    target.appendChild(svg("rect",{x:211,y:446,width:78,height:48,rx:6,fill:"url(#zz-wood-rim)",stroke:"#4c2916","stroke-width":7}));
+    target.appendChild(svg("rect",{x:216,y:449,width:68,height:10,rx:3,fill:"#fff1c3",opacity:.24}));
+    target.appendChild(svg("circle",{cx:250,cy:250,r:241,fill:"url(#zz-wood-rim)",stroke:"#482715","stroke-width":8}));
+    target.appendChild(svg("circle",{cx:250,cy:250,r:237,fill:"url(#zz-woodgrain)",stroke:"#f3c47b","stroke-width":2.5,opacity:.94}));
+    target.appendChild(svg("circle",{cx:250,cy:250,r:229,fill:"#382216",stroke:"#542b17","stroke-width":5}));
+    target.appendChild(svg("circle",{cx:250,cy:250,r:223,fill:"#fffdf4",stroke:"#f2d19a","stroke-width":3}));
     // Bevel und eingeritzte Linien machen den Ring erkennbar dreidimensional.
     target.appendChild(svg("circle",{cx:250,cy:250,r:232,fill:"none",stroke:"#fbe2a0","stroke-width":3,"stroke-opacity":".85"}));
     target.appendChild(svg("circle",{cx:250,cy:250,r:225,fill:"none",stroke:"#fff8d5","stroke-width":2,"stroke-opacity":".7"}));

@@ -32,6 +32,17 @@ async function main() {
     browser = await chromium.launch(launchOptions);
     const ctx=await browser.newContext({viewport:{width:390,height:844}});
     const page=await ctx.newPage();
+    const capture=async screenshotPath=>{
+      await page.evaluate(()=>{
+        document.documentElement.style.scrollBehavior="auto";
+        document.documentElement.scrollTop=0;
+        document.body.scrollTop=0;
+        window.scrollTo(0,0);
+      });
+      await page.waitForFunction(()=>window.scrollY===0);
+      await page.waitForTimeout(100);
+      await page.screenshot({path:screenshotPath,fullPage:true});
+    };
     page.on("pageerror",err=>failures.push(err.message));
     await page.goto(origin+"/zahlenzauber/");
     await page.locator("#monkey").waitFor();
@@ -39,7 +50,7 @@ async function main() {
     assert.equal(await page.locator(".board-throws").count(),1);
     assert.equal(await page.locator("#target .score-tag").count(),0);
     await fs.mkdir(path.resolve(root,"zahlenzauber/tests/screenshots"),{recursive:true});
-    await page.screenshot({path:"zahlenzauber/tests/screenshots/mobile-start.png",fullPage:true});
+    await capture("zahlenzauber/tests/screenshots/mobile-start.png");
 
     // Das vom Nutzer gemeldete Problem: Speichern inkl. Seiten-Reload.
     await page.locator("#openConfig").click();
@@ -48,7 +59,7 @@ async function main() {
     await page.locator("#maxTotal").fill("200");
     await page.locator("#allowMisses").uncheck(); // 100 nach zwei Nieten muss automatisch zu "nie" wechseln.
     assert.equal(await page.locator('input[name="centerMode"][value="never"]').isChecked(),true);
-    await page.screenshot({path:"zahlenzauber/tests/screenshots/mobile-settings.png",fullPage:true});
+    await capture("zahlenzauber/tests/screenshots/mobile-settings.png");
     await page.locator(".save-button").click();
     assert.equal(await page.locator("#settingsDialog").evaluate(el=>el.open),false);
     assert.match(await page.locator("#saveToast").textContent(),/Einstellungen gespeichert/);
@@ -86,10 +97,11 @@ async function main() {
     assert.ok(values.includes(score));
     await page.locator('.answer-button[data-answer="'+score+'"]').click();
     assert.match(await page.locator(".feedback h2").textContent(),/Richtig/);
+    assert.equal((await page.locator("#again").textContent()).trim(),"Nochmal");
     assert.equal(await page.locator(".board-feedback").count(),1);
     assert.equal(await page.locator("#again").evaluate(el => document.activeElement === el),true);
     await page.waitForTimeout(400); // Feedback-Einblendung vor dem Screenshot vollständig anzeigen.
-    await page.screenshot({path:"zahlenzauber/tests/screenshots/mobile-feedback.png",fullPage:true});
+    await capture("zahlenzauber/tests/screenshots/mobile-correct.png");
     await page.locator("#again").click();
     assert.equal(await page.locator(".ball-slot.available").count(),3);
     assert.equal(await page.locator("#monkey").evaluate(el => document.activeElement === el),true);
@@ -109,9 +121,28 @@ async function main() {
       assert.ok(metrics.board.width > 0);
     }
 
+    // Eigene Ansichten der Rechenfrage und der falschen Antwort.
+    await page.setViewportSize({width:390,height:844});
+    for(let index=1;index<=3;index++) {
+      await page.locator("#monkey").click();
+      await page.waitForFunction(count => document.querySelectorAll(".hit-marker").length === count,index);
+    }
+    assert.equal(await page.locator(".answer-button").count(),3);
+    await capture("zahlenzauber/tests/screenshots/mobile-question.png");
+    const secondScore=(await page.locator(".equation .number-chip").allTextContents()).map(Number).reduce((a,b)=>a+b,0);
+    const wrongAnswer=await page.locator(".answer-button").evaluateAll((buttons,correct)=>buttons.find(button=>Number(button.dataset.answer)!==correct).dataset.answer,secondScore);
+    await page.locator('.answer-button[data-answer="'+wrongAnswer+'"]').click();
+    assert.match(await page.locator(".feedback h2").textContent(),/Leider falsch/);
+    await page.waitForTimeout(400);
+    await capture("zahlenzauber/tests/screenshots/mobile-wrong.png");
+
     // Tablet/Desktop: Dialog erreichbar und beide Lernspiele verlinkt.
+    await page.reload();
     await page.setViewportSize({width:1280,height:800});
-    await page.screenshot({path:"zahlenzauber/tests/screenshots/desktop-start.png",fullPage:true});
+    await capture("zahlenzauber/tests/screenshots/desktop-start.png");
+    await page.locator("#openConfig").click();
+    await capture("zahlenzauber/tests/screenshots/desktop-settings.png");
+    await page.locator("#closeConfig").click();
     assert.equal(await page.locator('a[href="../"]').count(),1);
     assert.deepEqual(failures,[]);
     console.log("Browsercheck OK: Speicherung über Reload, Konfliktauflösung, Audio, 3 Würfe, Rechnen, Feedback, responsive Darstellung");
