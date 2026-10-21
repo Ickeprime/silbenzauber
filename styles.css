@@ -1226,3 +1226,37 @@ body::after {
   .header-actions { width: 100%; justify-content: center; }
   .companion-link { flex: 1; justify-content: center; }
 }
+
+/* Keep the indicator and reel area on the same shared machine grid. */
+.machine-frame {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+.machine-topline,
+.reels,
+.machine-controls,
+.machine-foot {
+  width: 100%;
+  min-width: 0;
+}
+.reels {
+  grid-template-columns: repeat(var(--reel-count), minmax(0, 1fr));
+  align-items: stretch;
+}
+.reels[data-count='1'] {
+  justify-content: center;
+}
+.reels[data-count='1'] > .reel {
+  width: min(100%, 330px);
+  justify-self: center;
+  height: clamp(150px, 22vw, 208px);
+}
+.reels[data-count='1'] .reel-symbol { font-size: clamp(3.8rem, 9vw, 5.5rem); }
+@media (max-width: 740px) {
+  .machine-frame { min-width: 0; }
+  .reels[data-count='1'] > .reel {
+    width: min(100%, 260px);
+    height: clamp(124px, 36vw, 164px);
+  }
+  .reels[data-count='1'] .reel-symbol { font-size: clamp(3.4rem, 16vw, 4.6rem); }
+}

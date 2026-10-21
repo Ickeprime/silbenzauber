@@ -367,7 +367,9 @@
         });
       }
 
-      card.append(header, caseSetting, toggleRow, info, chips);
+      // At one reel there is no pause field at all: reel 1 is always star-free.
+      if (pendingConfig.reelCount === 1) card.append(header, caseSetting, info, chips);
+      else card.append(header, caseSetting, toggleRow, info, chips);
       container.appendChild(card);
     }
   }

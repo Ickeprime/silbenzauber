@@ -34,6 +34,43 @@ test('alte gespeicherte Einstellungen erhalten neue Standard-Schreibweisen', () 
   assert.deepEqual(config.reelCases, ['initial', 'lower', 'lower', 'lower', 'lower']);
 });
 
+test('eine Walze ist eine gültige gespeicherte Konfiguration und bleibt sternfrei', () => {
+  const config = logic.normalizeConfig({
+    reelCount: 1,
+    vowels: ['A', 'Ä'],
+    consonants: ['M'],
+    reelStars: [true, true],
+    reelCases: ['upper', 'lower'],
+    reelSelections: [['ma'], ['ma']]
+  });
+
+  assert.equal(config.reelCount, 1);
+  assert.deepEqual(config.reelStars, [false]);
+  assert.deepEqual(config.reelCases, ['upper']);
+  assert.deepEqual(config.reelSelections, [['ma']]);
+  const savedAndReloaded = logic.normalizeConfig(JSON.parse(JSON.stringify(config)));
+  assert.deepEqual(savedAndReloaded, config);
+  assert.deepEqual(logic.drawResult(config, null, () => 0, 3), ['ma']);
+  assert.equal(logic.nextStarStreak(config, ['ma'], 3), 0);
+  assert.equal(logic.formatForReel('ma', 0, config.reelCases[0]), 'MA');
+});
+
+test('Ein-Walzen-Konfiguration behält Silben und Schreibweise beim Wechsel zurück zu fünf Walzen', () => {
+  const single = logic.normalizeConfig({
+    reelCount: 1,
+    vowels: ['A'],
+    consonants: ['M', 'L'],
+    reelSelections: [['ma']],
+    reelCases: ['lower']
+  });
+  const expanded = logic.normalizeConfig({ ...single, reelCount: 5 });
+
+  assert.deepEqual(expanded.reelSelections[0], ['ma']);
+  assert.deepEqual(expanded.reelCases, ['lower', 'lower', 'lower', 'lower', 'lower']);
+  assert.deepEqual(expanded.reelStars, [false, false, false, false, true]);
+  assert.equal(expanded.reelSelections.length, 5);
+});
+
 test('auf der ersten Walze erscheint niemals ein Stern', () => {
   const config = logic.normalizeConfig({
     reelCount: 4, vowels: ['A'], consonants: ['M'],

@@ -52,7 +52,7 @@
 
   function normalizeConfig(input) {
     const raw = input && typeof input === 'object' ? input : {};
-    const reelCount = [2, 3, 4, 5].includes(raw.reelCount) ? raw.reelCount : DEFAULT_CONFIG.reelCount;
+    const reelCount = [1, 2, 3, 4, 5].includes(raw.reelCount) ? raw.reelCount : DEFAULT_CONFIG.reelCount;
     const vowels = Array.isArray(raw.vowels) ? sanitizeLetters(raw.vowels, ALL_VOWELS) : [...DEFAULT_CONFIG.vowels];
     const consonants = Array.isArray(raw.consonants) ? sanitizeLetters(raw.consonants, ALL_CONSONANTS) : [...DEFAULT_CONFIG.consonants];
     const soundEnabled = typeof raw.soundEnabled === 'boolean' ? raw.soundEnabled : DEFAULT_CONFIG.soundEnabled;
