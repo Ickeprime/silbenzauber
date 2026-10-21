@@ -88,3 +88,28 @@ npm install --no-save playwright@1.56.1
 npx playwright install chromium
 node zahlenzauber/tests/browser-smoke.cjs
 \`\`\`
+
+
+## Design-Freigabe in vier Blöcken – Stand PR #5
+
+**Block 1 (vom Projektinhaber freigegeben):** Dschungel-/Wasserfallkulisse, Haupttitel, Bild-Affe und neue Holzschaltflächen. Diese Gestaltung wurde in Blöcken 2–4 nicht ausgetauscht.
+
+**Block 2 – Zielscheibe und Rechenbrett:**
+- Mehrstufiger Holzrahmen, Lichtkanten und dezente Nieten am Zielscheibenrand.
+- Glänzende, rot-weiße Trefferbälle mit kleinem Zahlenetikett: Punkte bleiben lesbar, auch wenn ein Ball die aufgedruckte Zahl verdeckt.
+- Drei noch verfügbare Bälle rot, verbrauchte Bälle grau; der bestehende Wechsel auf das Rechenbrett **erst nach Wurf 3** bleibt erhalten.
+- Gemeinsame Holzfläche für Bälle, Gleichung und drei große Antwortknöpfe mit kleinen Buchstaben A/B/C.
+
+**Block 3 – Affe und Feedback:**
+- Deutlichere Wurf- und Jubelbewegung, freundliche Reaktion bei Fehlern (🙈) und Sterne bei Erfolg.
+- Für falsche Antworten ermutigendes „Noch nicht richtig!“ statt einer abwertenden Formulierung; die richtige Summe wird gezeigt.
+- Neustartbutton heißt weiterhin exakt **„Nochmal“**.
+- Tastaturfokus wandert nach Auswertung zu „Nochmal“ und beim Neustart zurück zum Affen.
+
+**Block 4 – Feinschliff und Tests:**
+- Zusätzliche Regeln für 320/350/390/700-Pixel-Smartphones, kontrastreichere Spieltafeln und zugängliche Fokusmarkierungen.
+- Animationen werden bei aktivierter Systemeinstellung „Bewegung reduzieren“ deaktiviert.
+- Der automatisierte Chromium-Test kontrolliert die neue Punkteanzeige, den Zustand des Rechenbretts, Tastaturfokus und horizontale Überläufe bei sechs Bildschirmbreiten.
+- Lehrkraft-Speicherung, Sounds, alle drei Würfe und Summenbegrenzung sind unveränderte Spielfunktionen.
+
+**Noch nicht veröffentlicht:** Diese Änderungen liegen ausschließlich auf dem Feature-Branch und in PR #5. Die Veröffentlichung benötigt eine separate Freigabe.
