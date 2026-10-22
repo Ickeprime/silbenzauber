@@ -1,0 +1,299 @@
+/* Separate, CSS-only concept for the Silbenzauber branch preview. */
+body.silbenzauber-design-beta {
+  color: #293b32;
+  background-color: #f7f0e2;
+  background-image:
+    radial-gradient(circle at 17% 28%, #8d704018 0 .7px, transparent .9px),
+    radial-gradient(circle at 77% 71%, #92744a12 0 .8px, transparent 1px),
+    linear-gradient(135deg, #fbf7ed 0%, #f3ead9 52%, #faf5e9 100%);
+  background-size: 11px 11px, 13px 13px, 100% 100%;
+}
+body.silbenzauber-design-beta::before { background: radial-gradient(ellipse at 50% 18%, #fffdf7a6 0, transparent 68%); }
+body.silbenzauber-design-beta::after { background: none; }
+body.silbenzauber-design-beta .page-shell { position: relative; z-index: 1; isolation: isolate; }
+.silbenzauber-design-beta .paper-foliage {
+  position: fixed;
+  z-index: 0;
+  top: 12px;
+  width: clamp(110px, 14vw, 210px);
+  height: clamp(150px, 20vw, 265px);
+  background: url('./assets/paper-foliage.svg') center / contain no-repeat;
+  opacity: .66;
+  pointer-events: none;
+}
+.silbenzauber-design-beta .paper-foliage--left { left: -54px; }
+.silbenzauber-design-beta .paper-foliage--right { right: -54px; transform: scaleX(-1) rotate(-4deg); }
+.silbenzauber-design-beta .site-header { min-height: 82px; padding: 14px 0 6px; }
+.silbenzauber-design-beta .brand { color: #35513e; text-shadow: none; }
+.silbenzauber-design-beta .brand-mark {
+  border: 2px solid #779267;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #fff9e9, #e6edd5);
+  box-shadow: 0 3px 0 #cfc2a6, 0 6px 12px #49371b19;
+  color: #4c7955;
+}
+.silbenzauber-design-beta .brand-title { color: #33563d; text-shadow: none; }
+.silbenzauber-design-beta .brand-caption { color: #718068; text-shadow: none; }
+.silbenzauber-design-beta .button-outline {
+  min-height: 46px;
+  border: 1px solid #d7c9ad;
+  border-radius: 13px;
+  color: #3d5944;
+  background: #fffaf0;
+  box-shadow: 0 3px 0 #d5c5a7, 0 6px 13px #58432712;
+  text-decoration: none;
+}
+.silbenzauber-design-beta .button-outline:hover { background: #fffdf7; }
+.silbenzauber-design-beta .intro.wood-title {
+  width: min(980px, 100%);
+  margin: 10px auto 26px;
+  padding: clamp(18px, 3vw, 32px) clamp(16px, 4vw, 40px) 24px;
+  border: 1px solid #e6d9c0;
+  border-radius: 9px 15px 10px 13px;
+  background:
+    radial-gradient(circle at 12% 30%, #98794a12 0 .7px, transparent .9px),
+    radial-gradient(circle at 74% 70%, #98794a10 0 .7px, transparent .9px),
+    #fffaf0;
+  background-size: 9px 9px, 13px 13px, auto;
+  box-shadow: 0 2px 0 #fffdf7, 0 10px 24px #62503515;
+  transform: rotate(-.15deg);
+  animation: none;
+}
+.silbenzauber-design-beta .intro.wood-title::before,
+.silbenzauber-design-beta .intro.wood-title::after { content: none; }
+.silbenzauber-design-beta .eyebrow {
+  padding: 6px 13px;
+  border: 1px solid #d9dfc7;
+  border-radius: 4px 9px 4px 8px;
+  color: #55734d;
+  background: #eef0d9;
+  box-shadow: 1px 2px 0 #d8d1b8;
+  font-size: clamp(.7rem, 1.4vw, .86rem);
+  letter-spacing: .1em;
+}
+.silbenzauber-design-beta .intro h1 {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  margin: 13px 0 7px;
+  color: #31563b;
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  -webkit-text-stroke: 0;
+  font-family: 'Trebuchet MS', 'Arial Rounded MT Bold', Arial, sans-serif;
+  font-size: clamp(2rem, 7.2vw, 5.2rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -.065em;
+  text-shadow: none;
+  white-space: nowrap;
+  animation: none;
+}
+.silbenzauber-design-beta .intro h1::after { content: none; animation: none; }
+.silbenzauber-design-beta .intro h1 span {
+  display: inline-block;
+  color: var(--letter-color, #28765b);
+  -webkit-text-fill-color: currentColor;
+  text-shadow: 1px 2px 0 #fffdf5, 2px 4px 0 #d8cbb0;
+}
+.silbenzauber-design-beta .intro h1 span:nth-child(6n + 1) { --letter-color: #18729b; transform: rotate(-3deg); }
+.silbenzauber-design-beta .intro h1 span:nth-child(6n + 2) { --letter-color: #397a51; transform: rotate(2deg); }
+.silbenzauber-design-beta .intro h1 span:nth-child(6n + 3) { --letter-color: #dc5260; transform: rotate(-2deg); }
+.silbenzauber-design-beta .intro h1 span:nth-child(6n + 4) { --letter-color: #d29525; transform: rotate(3deg); }
+.silbenzauber-design-beta .intro h1 span:nth-child(6n + 5) { --letter-color: #1590b3; transform: rotate(-1deg); }
+.silbenzauber-design-beta .intro h1 span:nth-child(6n) { --letter-color: #80559c; transform: rotate(2deg); }
+.silbenzauber-design-beta .intro p {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: #405b50;
+  background: none;
+  box-shadow: none;
+  font-size: clamp(.92rem, 1.8vw, 1.12rem);
+  font-weight: 500;
+}
+.silbenzauber-design-beta .intro p strong { color: #c8564c; }
+.silbenzauber-design-beta .play-stage { gap: clamp(12px, 2vw, 28px); }
+.silbenzauber-design-beta .mascot-area { filter: drop-shadow(0 5px 5px #55492c20); }
+.silbenzauber-design-beta .mascot-speech {
+  border: 1px solid #d4c29e;
+  border-radius: 7px 12px 8px 10px;
+  color: #465747;
+  background: #fff8e9;
+  box-shadow: 0 3px 0 #dac9a9, 0 7px 14px #55432718;
+  font-weight: 700;
+  text-shadow: none;
+  transform: rotate(-.7deg);
+}
+.silbenzauber-design-beta .machine-frame {
+  border: 5px solid #708c68;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 20% 18%, #ffffff35 0 1px, transparent 1.5px),
+    linear-gradient(145deg, #b9d0a5 0%, #a4c39a 55%, #91b385 100%);
+  background-size: 10px 10px, auto;
+  box-shadow: inset 0 0 0 3px #eef1d4, inset 0 0 0 5px #789267, 0 5px 0 #8d8064, 0 12px 22px #58492f20;
+}
+.silbenzauber-design-beta .machine-frame::before { inset: 7px; border: 1px dashed #66855f88; border-radius: 15px; }
+.silbenzauber-design-beta .reel {
+  border: 4px solid #b3a182;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #d9edf0 0 31%, #fff2d0 31% 68%, #f2dcd3 68% 100%);
+  box-shadow: inset 0 0 0 2px #fff8e7, 0 3px 0 #95836a, 0 6px 9px #51493620;
+}
+.silbenzauber-design-beta .reel::before,
+.silbenzauber-design-beta .reel::after {
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 0;
+  background: #ad9c7b35;
+}
+.silbenzauber-design-beta .reel::before { top: 31%; }
+.silbenzauber-design-beta .reel::after { bottom: 31%; transform: none; }
+.silbenzauber-design-beta .reel-symbol { color: #243e34; text-shadow: 0 1px #fffdf4; }
+.silbenzauber-design-beta .spin-button {
+  width: min(460px, 100%);
+  min-height: 78px;
+  border: 2px solid #f0f2d5;
+  border-radius: 999px;
+  color: #fffdf2;
+  background: linear-gradient(180deg, #61a763, #337849);
+  box-shadow: 0 4px 0 #285d3f, 0 8px 14px #33543820, inset 0 2px 0 #ffffff70;
+  font-size: 1.8rem;
+  text-shadow: 0 1px 1px #24493055;
+}
+.silbenzauber-design-beta .button-symbol { display: none; }
+.silbenzauber-design-beta .machine-controls { display: flex; flex-direction: column; align-items: center; }
+.silbenzauber-design-beta .instruction {
+  width: 100%;
+  max-width: 560px;
+  min-height: 44px;
+  margin: 12px auto 0;
+  padding: 8px 12px;
+  border: 0;
+  color: #566353;
+  background: transparent;
+  box-shadow: none;
+  font-size: .94rem;
+  font-weight: 600;
+  text-shadow: none;
+}
+.silbenzauber-design-beta .machine-foot { gap: 12px; margin-top: 10px; }
+.silbenzauber-design-beta .machine-foot span {
+  width: 12px;
+  height: 12px;
+  border: 1px solid #82956f;
+  background: #d9e0bd;
+  box-shadow: 0 1px 0 #fff9e7;
+}
+.silbenzauber-design-beta .machine-foot span:nth-child(3) { background: #e5c86d; }
+.silbenzauber-design-beta .below-machine {
+  width: min(900px, calc(100% - 20px));
+  min-height: 56px;
+  margin-top: 12px;
+  padding: 7px 52px 7px 12px;
+  border: 1px solid #e1d3b7;
+  border-radius: 7px 12px 8px 10px;
+  background: #fff9ec;
+  box-shadow: 0 3px 0 #d9caad, 0 7px 14px #55432711;
+}
+.silbenzauber-design-beta .selection-summary { color: #596451; background: transparent; text-shadow: none; }
+.silbenzauber-design-beta .selection-summary strong { color: #344a3b; }
+.silbenzauber-design-beta .selection-dot { background: #71965b; box-shadow: none; }
+.silbenzauber-design-beta .sound-button {
+  width: 44px;
+  height: 44px;
+  border: 1px solid #d4c29e;
+  color: #496048;
+  background: #f2ead7;
+  box-shadow: 0 2px 0 #d4c29e;
+}
+.silbenzauber-design-beta .sound-button.enabled { color: #fffdf2; background: #4f8d58; }
+.silbenzauber-design-beta .learning-hint {
+  width: min(930px, 100%);
+  padding: 14px 17px;
+  border: 1px solid #e2d3b5;
+  border-radius: 7px 12px 8px 10px;
+  color: #4d5e4c;
+  background: #fff8e9;
+  box-shadow: 0 3px 0 #d9caad, 0 7px 15px #55432712;
+}
+.silbenzauber-design-beta .hint-icon { border-radius: 50%; color: #4a7151; background: #dbe8cb; box-shadow: 0 2px 0 #bbc9a8; }
+.silbenzauber-design-beta .learning-hint p { color: #596451; }
+.silbenzauber-design-beta .learning-hint strong { color: #344a3b; }
+.silbenzauber-design-beta .site-footer { color: #6e7661; font-weight: 600; text-shadow: none; }
+.silbenzauber-design-beta .settings-dialog {
+  border: 1px solid #d7c8aa;
+  border-radius: 13px;
+  background: #fff9eb;
+  box-shadow: 0 12px 0 #d5c5a6, 0 24px 60px #40352145;
+}
+.silbenzauber-design-beta .settings-dialog::backdrop { background: #39483d70; backdrop-filter: blur(3px); }
+.silbenzauber-design-beta .modal-header {
+  color: #304a39;
+  background: #f1ead8;
+  box-shadow: none;
+  border-bottom: 1px dashed #d6c9ad;
+}
+.silbenzauber-design-beta .modal-header h2 { color: #344f3b; text-shadow: none; }
+.silbenzauber-design-beta .modal-header p { color: #65705f; }
+.silbenzauber-design-beta .modal-kicker { color: #71894d; }
+.silbenzauber-design-beta .close-button,
+.silbenzauber-design-beta .segment,
+.silbenzauber-design-beta .letter-chip,
+.silbenzauber-design-beta .syllable-chip,
+.silbenzauber-design-beta .mini-action,
+.silbenzauber-design-beta .case-option {
+  border-color: #dbceb4;
+  border-radius: 9px;
+  color: #435541;
+  background: #fffdf6;
+  box-shadow: 0 2px 0 #e1d5be;
+}
+.silbenzauber-design-beta .segment[aria-pressed='true'],
+.silbenzauber-design-beta .letter-chip[aria-pressed='true'],
+.silbenzauber-design-beta .syllable-chip[aria-pressed='true'],
+.silbenzauber-design-beta .case-option[aria-pressed='true'] {
+  border-color: #739363;
+  color: #31553c;
+  background: #e6edcf;
+  box-shadow: 0 2px 0 #c3d0a7;
+}
+.silbenzauber-design-beta .settings-section,
+.silbenzauber-design-beta .preview-section,
+.silbenzauber-design-beta .reel-settings-card {
+  border-color: #e2d6bf;
+  border-radius: 9px;
+  background: #fffdf7;
+}
+.silbenzauber-design-beta .section-number { border-radius: 50%; background: #e3edcd; color: #4c704d; }
+.silbenzauber-design-beta .reel-settings-card { box-shadow: 0 2px 0 #eee4d1; }
+@media (min-width: 741px) and (max-width: 1200px) {
+  .silbenzauber-design-beta .paper-foliage { width: 105px; opacity: .42; }
+}
+@media (max-width: 740px) {
+  .silbenzauber-design-beta .paper-foliage { display: none; }
+  .silbenzauber-design-beta .site-header { min-height: 68px; padding: 8px 0 4px; }
+  .silbenzauber-design-beta .intro.wood-title { margin: 8px auto 15px; padding: 15px 10px 17px; }
+  .silbenzauber-design-beta .intro h1 { font-size: clamp(2rem, 8.3vw, 3.2rem); }
+  .silbenzauber-design-beta .intro p { font-size: .9rem; }
+  .silbenzauber-design-beta .machine-frame { padding: 14px 11px 13px; border-width: 4px; border-radius: 19px; }
+  .silbenzauber-design-beta .machine-frame::before { inset: 5px; border-radius: 12px; }
+  .silbenzauber-design-beta .reel { border-width: 3px; }
+  .silbenzauber-design-beta .spin-button { min-height: 62px; font-size: 1.45rem; }
+  .silbenzauber-design-beta .below-machine { margin-top: 9px; padding-right: 48px; }
+  .silbenzauber-design-beta .learning-hint { margin-top: 15px; }
+}
+@media (max-width: 375px) {
+  .silbenzauber-design-beta .header-actions { flex: 1 0 100%; justify-content: flex-end; }
+  .silbenzauber-design-beta .intro h1 { font-size: clamp(1.85rem, 8vw, 2.6rem); }
+  .silbenzauber-design-beta .intro p { max-width: 260px; }
+  .silbenzauber-design-beta .below-machine { width: 100%; padding-left: 7px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .silbenzauber-design-beta .intro h1 span { transform: none !important; }
+}
