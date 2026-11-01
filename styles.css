@@ -1355,3 +1355,97 @@ html,body,button,input,select,textarea,dialog, .page-shell, .page-shell *, .scen
     font-size: clamp(1.8rem, 8.6vw, 2.8rem);
   }
 }
+
+
+/* Zauberwelt-CI: dieselbe ruhige türkisfarbene Gestaltung wie das
+   zentrale Zauberwelt-Menü. Betrifft nur die rot markierten Bedienelemente
+   und die nicht interaktive Flamingo-Sprechblase. */
+:root {
+  --zw-control-bg: #08677a;
+  --zw-control-hover: #0b8294;
+  --zw-control-border: #b4e6dd;
+  --zw-control-text: #fffef0;
+  --zw-control-shadow: 0 3px 8px #073c4440;
+}
+.site-header .brand {
+  min-height: 48px;
+  max-width: 100%;
+  padding: 4px 14px 4px 6px;
+  gap: 9px;
+  border: 2px solid var(--zw-control-border);
+  border-radius: 13px;
+  color: var(--zw-control-text);
+  background: var(--zw-control-bg);
+  box-shadow: var(--zw-control-shadow);
+  text-shadow: none;
+}
+.site-header .brand:hover,
+.site-header .brand:focus-visible { background: var(--zw-control-hover); }
+.site-header .brand-mark {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  border: 1px solid #b4e6dd;
+  border-radius: 9px;
+  background: #0b8294;
+  color: #fffef0;
+  box-shadow: inset 0 1px 0 #ffffff36;
+}
+.site-header .brand-mark span:first-child { left: 8px; top: 5px; font-size: 23px; }
+.site-header .brand-mark span:last-child { right: 7px; bottom: 6px; font-size: 15px; }
+.site-header .brand-title {
+  color: var(--zw-control-text);
+  text-shadow: none;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.site-header .brand-caption {
+  color: #daf5f2;
+  text-shadow: none;
+  font-weight: 400;
+  letter-spacing: .09em;
+}
+.site-header .settings-open {
+  min-height: 48px;
+  padding: 9px 12px;
+  gap: 7px;
+  border: 2px solid var(--zw-control-border);
+  border-radius: 13px;
+  color: var(--zw-control-text);
+  background: var(--zw-control-bg);
+  box-shadow: var(--zw-control-shadow);
+  font-weight: 400;
+  text-shadow: none;
+  transform: none;
+}
+.site-header .settings-open:hover,
+.site-header .settings-open:focus-visible {
+  background: var(--zw-control-hover);
+  filter: none;
+  transform: none;
+}
+.site-header .settings-open:active {
+  background: #07566a;
+  transform: none;
+  box-shadow: 0 2px 5px #073c4460;
+}
+.mascot-area .mascot-speech {
+  border: 2px solid var(--zw-control-border);
+  border-radius: 13px;
+  color: var(--zw-control-text);
+  background: var(--zw-control-bg);
+  box-shadow: var(--zw-control-shadow);
+  font-weight: 400;
+  text-shadow: none;
+  transform: none;
+  cursor: default;
+}
+@media (max-width: 480px) {
+  .site-header .brand { min-height: 44px; padding: 4px 8px 4px 5px; gap: 6px; }
+  .site-header .brand-mark { width: 36px; height: 36px; flex-basis: 36px; }
+  .site-header .brand-mark span:first-child { left: 7px; top: 4px; font-size: 21px; }
+  .site-header .brand-mark span:last-child { right: 6px; bottom: 5px; font-size: 13px; }
+  .site-header .brand-title { font-size: 1.08rem; }
+  .site-header .brand-caption { font-size: .5rem; letter-spacing: .06em; }
+  .site-header .settings-open { min-height: 44px; padding: 7px 9px; }
+}
