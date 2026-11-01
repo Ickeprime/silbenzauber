@@ -541,26 +541,62 @@ html, body {
   .footer-art p {font-size:.61rem;line-height:1.15;margin:0 13px;max-width:92%;}
 }
 
+/* Release 1.0 – gemeinsame, zugängliche Zauberwelt-Navigation. */
+.top-nav { overflow:visible; }
+.world-links {position:relative; flex:0 0 auto; margin:0 5px 0 0; font-size:.95rem; z-index:30;}
+.world-links summary {list-style:none; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; padding:9px 12px; border:1px solid #c2eff0aa; border-radius:12px; color:#fff9db; background:#ffffff18; user-select:none; white-space:nowrap;}
+.world-links summary::-webkit-details-marker {display:none;}
+.world-links summary:hover,.world-links[open] summary {background:#ffffff30;}
+.world-links summary:focus-visible {outline:3px solid #ffbd3d; outline-offset:3px;}
+.world-chevron {font-size:.8em; transform-origin:center; transition:transform .15s ease;}
+.world-links[open] .world-chevron {transform:rotate(180deg);}
+.world-links-panel {position:absolute; right:0; top:calc(100% + 8px); min-width:208px; padding:10px; border:2px solid #e6d5b1; border-radius:16px; background:#fff8e8; box-shadow:0 10px 25px #16404a55; display:grid; gap:5px; color:#134d55;}
+.world-links-heading {font-size:.88rem; color:#41666c; padding:3px 8px 7px;}
+.world-links-panel a {color:#064c56; display:block; padding:10px; border-radius:9px; text-decoration:none; font-size:1rem;}
+.world-links-panel a:hover,.world-links-panel a:focus-visible {background:#bee9e4; text-decoration:underline;}
+.footer-art p {max-width:96%; text-align:center; line-height:1.5;}
+.footer-art strong {font-weight:400; color:#27636b;}
+.footer-links a {color:#0a6373; text-decoration:underline; text-underline-offset:3px;}
+.footer-links a:focus-visible {outline:2px solid #0a6373; outline-offset:3px;}
+@media(max-width:640px) {
+  .top-nav {gap:4px;}
+  .world-links {font-size:.73rem; margin-right:0;}
+  .world-links summary {padding:7px 6px; gap:3px;}
+  .world-links-panel {right:-2px; min-width:190px;}
+  .footer-art {min-height:87px; height:auto; padding:10px 12px 48px;}
+  .footer-art p {font-size:.72rem;}
+}
+@media(max-width:355px) {
+  .top-nav {gap:2px;}
+  .active-tab {min-width:0;}
+  .world-links {font-size:.68rem;}
+  .world-links summary {padding:7px 3px; gap:2px;}
+  .world-chevron {display:none;}
+  .nav-settings {padding:7px 3px;}
+}
 
-.top-nav{overflow:visible}
-.world-links{position:relative;flex:0 0 auto;margin:0 5px 0 0;font-size:.95rem;z-index:30}
-.world-links summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;padding:9px 12px;border:1px solid #c2eff0aa;border-radius:12px;color:#fff9db;background:#ffffff18;user-select:none;white-space:nowrap}
-.world-links summary::-webkit-details-marker{display:none}
-.world-links summary:hover,.world-links[open] summary{background:#ffffff30}
-.world-links summary:focus-visible{outline:3px solid #ffbd3d;outline-offset:3px}
-.world-chevron{font-size:.8em;transform-origin:center;transition:transform .15s ease}
-.world-links[open] .world-chevron{transform:rotate(180deg)}
-.world-links-panel{position:absolute;right:0;top:calc(100% + 8px);min-width:208px;padding:10px;border:2px solid #e6d5b1;border-radius:16px;background:#fff8e8;box-shadow:0 10px 25px #16404a55;display:grid;gap:5px;color:#134d55}
-.world-links-heading{font-size:.88rem;color:#41666c;padding:3px 8px 7px}
-.world-links-panel a{color:#064c56;display:block;padding:10px;border-radius:9px;text-decoration:none;font-size:1rem}
-.world-links-panel a:hover,.world-links-panel a:focus-visible{background:#bee9e4;text-decoration:underline}
-.footer-art p{max-width:96%;text-align:center;line-height:1.5}
-.footer-art strong{font-weight:400;color:#27636b}
-.footer-links a{color:#0a6373;text-decoration:underline;text-underline-offset:3px}
-.footer-links a:focus-visible{outline:2px solid #0a6373;outline-offset:3px}
-@media(max-width:640px){.top-nav{gap:4px}.world-links{font-size:.73rem;margin-right:0}.world-links summary{padding:7px 6px;gap:3px}.world-links-panel{right:-2px;min-width:190px}.footer-art{min-height:87px;height:auto;padding:10px 12px 48px}.footer-art p{font-size:.72rem}}
-@media(max-width:355px){.top-nav{gap:2px}.active-tab{min-width:0}.world-links{font-size:.68rem}.world-links summary{padding:7px 3px;gap:2px}.world-chevron{display:none}.nav-settings{padding:7px 3px}}
+/* Feldgröße: 100 (10×10) oder 20 (2×10), weiterhin echte Kreise. */
+.field-size-picker{position:relative;z-index:110;flex:0 0 auto}
+.field-size-picker summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:7px;padding:10px 18px;background:#ffe29b;color:#063f4b;border-radius:12px;border:2px solid #fff5cf;box-shadow:0 3px 6px #12495344;font-size:1.05rem;white-space:nowrap}
+.field-size-picker summary::-webkit-details-marker{display:none}
+.field-size-picker summary:hover{background:#ffedb7}
+.field-size-picker summary:focus-visible,.field-size-options button:focus-visible{outline:3px solid #f4a927;outline-offset:3px}
+.field-size-options{position:absolute;left:0;top:calc(100% + 6px);min-width:230px;background:#fff9ea;border:2px solid #e4cb9a;border-radius:14px;display:grid;gap:5px;padding:8px;box-shadow:0 12px 25px #173a474a;z-index:111}
+.field-size-options button{border:0;background:transparent;border-radius:9px;color:#15434a;padding:12px 10px;text-align:left;font-size:.95rem;white-space:nowrap}
+.field-size-options button:hover,.field-size-options button[aria-pressed="true"]{background:#d6f1e5}
+.board.twenty{aspect-ratio:4.3 / 1;grid-template-rows:repeat(2,minmax(0,1fr));row-gap:20px;}
+.board.twenty::before{height:calc(100% - 12px)}
+.board.twenty::after{width:calc(100% - 12px);height:3px;top:calc(50% - 1px)}
+.board.twenty .number-cell{font-size:clamp(1rem,2vw,2rem)!important}
+.board.twenty .number-cell::before{width:min(95%,97%);}
+.board.twenty .number-cell[hidden]{display:none!important}
+.zw-footer-links{position:relative;z-index:3;font-family:inherit;font-size:.72rem;text-align:center;color:#164a54}
+.zw-footer-links a{font-family:inherit;color:#066678}
+@media(max-width:640px){.field-size-picker summary{font-size:.73rem;padding:7px 5px;gap:3px}.field-size-options{min-width:200px;left:0}.board.twenty{--cross-gap:14px;row-gap:12px}.board.twenty .number-cell{font-size:clamp(.76rem,3.5vw,1.25rem)!important}.footer-art{flex-direction:column;align-items:center;padding-top:7px}.zw-footer-links{font-size:.62rem}}
+@media(max-width:355px){.field-size-picker summary{font-size:.69rem;padding:7px 3px}.field-size-options{left:-3px}}
+
 </style>
+
 
 
 </head>
@@ -575,11 +611,11 @@ html, body {
     </div>
   </header>
   <nav class="top-nav" aria-label="Hauptnavigation">
-    <span class="active-tab" aria-current="page"><span aria-hidden="true">▦</span> Hunderterfeld</span>
+    <details class="field-size-picker" id="fieldSizePicker"><summary id="fieldSizeToggle" aria-label="Feldgröße auswählen">▦ Feldgröße <span aria-hidden="true">▾</span></summary><div class="field-size-options" role="group" aria-label="Feldgröße"><button type="button" data-field-count="100" aria-pressed="true">100er-Feld · 10 × 10</button><button type="button" data-field-count="20" aria-pressed="false">20er-Feld · 2 × 10</button></div></details>
     <button class="nav-help" type="button" id="helpButton" aria-haspopup="dialog"><span aria-hidden="true">?</span> Hilfe &amp; Tipps</button>
     <button class="nav-settings" type="button" id="settingsButton" aria-haspopup="dialog" aria-controls="settingsDialog"><span aria-hidden="true">⚙</span> Einstellungen</button>
-    <details class="world-links" id="worldLinks"><summary aria-label="Weitere Apps der Zauberwelt anzeigen"><span aria-hidden="true">✦</span> Zauberwelt <span class="world-chevron" aria-hidden="true">▾</span></summary><div class="world-links-panel"><span class="world-links-heading">Entdecke die Zauberwelt</span><a href="https://silbenzauber.lessqq.de/" target="_blank" rel="noopener noreferrer">Silbenzauber</a><a href="https://silbenzauber.pages.dev/zahlenzauber/" target="_blank" rel="noopener noreferrer">Zahlenzauber</a></div></details>
-  </nav>
+    <span data-zauberwelt-nav data-app="hunderterfeldzauber"></span>
+</nav>
   <main class="main-layout">
     <section class="okapi-guide" aria-label="So geht es – Tipp vom Okapi im Banner">
       <div class="guide-bubble"><strong>So geht's</strong><span>Einmal tippen: Feld markieren.</span><span>Zweimal tippen: Zahl auflösen.</span></div>
@@ -598,7 +634,7 @@ html, body {
 
     <section class="board-area" aria-label="Hunderterfeld spielen">
       <div class="board-paper" id="boardPaper">
-        <div class="board" id="board" role="group" aria-label="Hunderterfeld mit 100 Feldern, von links oben 1 bis rechts unten 100"></div>
+        <div class="board" id="board" role="group" aria-label="Zahlenfeld, von links oben nach rechts unten"></div>
         <div class="speech-bubble hidden" id="speechBubble" role="status" aria-label="Aufgelöste Zahl">
           <span class="bubble-number" id="bubbleNumber"></span>
         </div>
@@ -628,7 +664,7 @@ html, body {
         <p class="voice-note" id="voiceNote">Die verfügbaren Stimmen hängen vom Browser und Gerät ab.</p>
       </section>
     </dialog>
-  <footer class="footer-art" aria-label="Apps der Zauberwelt"><p>Mit Liebe für den Mathematikunterricht gestaltet · <strong>Eine App der Zauberwelt</strong><span class="footer-links"> · <a href="https://silbenzauber.lessqq.de/" target="_blank" rel="noopener noreferrer">Silbenzauber</a> · <a href="https://silbenzauber.pages.dev/zahlenzauber/" target="_blank" rel="noopener noreferrer">Zahlenzauber</a></span></p><div class="wave wave-back"></div><div class="wave wave-front"></div></footer>
+  <footer class="footer-art" aria-label="Apps der Zauberwelt"><p>Mit Liebe für den Mathematikunterricht gestaltet · </p><span data-zauberwelt-footer class="zw-footer-links"></span><div class="wave wave-back"></div><div class="wave wave-front"></div></footer>
 </div>
 <dialog id="helpDialog" class="help-dialog" aria-labelledby="helpTitle">
   <div class="help-inner">
@@ -702,6 +738,7 @@ html, body {
   let revealed = null;
   let availableVoices = [];
   let settings = loadSettings();
+  let fieldCount = 100;
   const buttons = [];
 
   function loadSettings() {
@@ -766,6 +803,7 @@ html, body {
     button.dataset.color = color;
     button.classList.toggle('is-selected', selected === n);
     const visible = state === 2 && settings.showInField;
+    button.hidden = n > fieldCount;
     button.textContent = visible ? formatNumber(n) : '';
     const position = 'Zeile ' + (Math.floor((n - 1) / 10) + 1) + ', Spalte ' + ((n - 1) % 10 + 1);
     button.setAttribute('aria-label', 'Feld ' + position + ', ' + (state === 0 ? 'verdeckt' : state === 1 ? 'markiert, Zahl verborgen' : 'Zahl ' + n + ' aufgelöst'));
@@ -859,8 +897,7 @@ html, body {
     const bubbleWasVisible = !bubble.classList.contains('hidden');
     if (field || bubbleWasVisible) event.preventDefault();
     if (field && boardElement.contains(field)) {
-      const n = Number(field.dataset.number);
-      board = Model.resetOne(board, n);
+      const n = Number(field.dataset.number);      board = Model.resetOne(board, n);
       if (selected === n) selected = null;
       setStatus('Feld ' + n + ' ist wieder verdeckt.');
       render();
@@ -892,8 +929,27 @@ html, body {
       boardElement.classList.remove('board-reset-flash');
       void boardElement.offsetWidth;
       if (settings.animationEnabled) boardElement.classList.add('board-reset-flash');
-    } else setStatus('Alle Markierungen sind gelöscht. Die 100 Zahlen sind wieder versteckt.');
+    } else setStatus('Alle Markierungen sind gelöscht. Die ' + fieldCount + ' Zahlen sind wieder versteckt.');
   }
+  // Wechsel der Feldgröße verändert keine Spielregeln; alle Markierungen werden bewusst zurückgesetzt.
+  const picker = document.getElementById('fieldSizePicker');
+  document.querySelectorAll('[data-field-count]').forEach(choice => {
+    choice.addEventListener('click', () => {
+      const next = Number(choice.dataset.fieldCount);
+      if (![20, 100].includes(next)) return;
+      fieldCount = next;
+      boardElement.classList.toggle('twenty', next === 20);
+      boardElement.setAttribute('aria-label', next === 20
+        ? 'Zwanzigerfeld: zwei Reihen mit je zehn Zahlen von 1 bis 20'
+        : 'Hunderterfeld: zehn Reihen mit je zehn Zahlen von 1 bis 100');
+      document.querySelectorAll('[data-field-count]').forEach(button => {
+        button.setAttribute('aria-pressed', String(Number(button.dataset.fieldCount) === next));
+      });
+      picker.open = false;
+      clearBoard(false);
+      setStatus(next === 20 ? '20er-Feld mit zwei Reihen: alle Zahlen sind verdeckt.' : '100er-Feld: alle Zahlen sind verdeckt.');
+    });
+  });
   document.getElementById('clearAll').addEventListener('click', () => clearBoard(false));
   document.getElementById('newTask').addEventListener('click', () => clearBoard(true));
   for (const key of ['showInField','speechEnabled','speechOnly','animationEnabled','legendEnabled']) {
@@ -940,5 +996,6 @@ html, body {
 })();
 
 </script>
+<script src="/zauberwelt-nav.js" defer></script>
 </body>
 </html>
