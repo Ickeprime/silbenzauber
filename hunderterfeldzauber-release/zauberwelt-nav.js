@@ -28,7 +28,7 @@
     #zauberweltMenu a{display:block;color:#114c54;padding:10px 9px;text-decoration:none;font:inherit;font-size:.99rem;border-radius:9px;white-space:normal}
     #zauberweltMenu a:hover{background:#d7efdf;text-decoration:underline}
     .zw-footer{font:inherit;font-size:clamp(.78rem,1.1vw,.94rem);text-align:center;padding:12px 12px 18px;line-height:1.6;color:#416469;background:#fff9e9aa}
-    .zw-footer a{color:#076579;text-decoration:underline;text-underline-offset:3px;margin:0 6px}
+    .companion-link[hidden]{display:none!important}\n    .zw-footer-links a{margin:0 7px;text-decoration:underline;text-underline-offset:3px}\n    .zw-footer a{color:#076579;text-decoration:underline;text-underline-offset:3px;margin:0 6px}
     .zw-footer a:focus-visible{outline:2px solid #076579;outline-offset:3px}
     @media(max-width:400px){#zauberweltMenu summary{padding:8px 6px;font-size:.75rem;gap:3px}#zauberweltMenu .zw-list{right:-3px;min-width:190px}}
   `;
