@@ -1322,3 +1322,36 @@ html,body,button,input,select,textarea,dialog, .page-shell, .page-shell *, .scen
   font-synthesis:none;
 }
 .target .target-number, .target .score-tag { font-family:"Druckschrift BH",Arial,sans-serif!important; font-weight:400!important; letter-spacing:0; }
+
+/* Silbenzauber: Holzbanner mit drei mittig übereinanderliegenden Zeilen.
+   Reines Layout-Fix: keine Änderung an Spielregeln oder Einstellungen. */
+.intro.wood-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: clamp(7px, 1vw, 12px);
+}
+.intro.wood-title > .eyebrow,
+.intro.wood-title > h1,
+.intro.wood-title > p {
+  margin: 0;
+  max-width: 100%;
+  text-align: center;
+  align-self: center;
+}
+.intro.wood-title > h1 {
+  display: block;
+  width: max-content;
+}
+.intro.wood-title > p {
+  display: block;
+  width: max-content;
+  max-width: min(100%, 560px);
+}
+@media (max-width: 480px) {
+  .intro.wood-title { row-gap: 6px; }
+  .intro.wood-title > h1 {
+    font-size: clamp(1.8rem, 8.6vw, 2.8rem);
+  }
+}
