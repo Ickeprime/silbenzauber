@@ -686,3 +686,78 @@ html,body,button,input,select,textarea,dialog, .page-shell, .page-shell *, .scen
   font-synthesis:none;
 }
 .target .target-number, .target .score-tag { font-family:"Druckschrift BH",Arial,sans-serif!important; font-weight:400!important; letter-spacing:0; }
+
+
+/* Zauberwelt-CI: Home, Ton und Einstellungen erhalten exakt dieselbe
+   türkisfarbene Grundgestaltung wie das zentrale Zauberwelt-Menü.
+   Der Affen-Hinweis bleibt ein nicht interaktives Sprechfeld. */
+:root {
+  --zw-control-bg: #08677a;
+  --zw-control-hover: #0b8294;
+  --zw-control-border: #b4e6dd;
+  --zw-control-text: #fffef0;
+  --zw-control-shadow: 0 3px 8px #073c4440;
+}
+.top-nav .nav-link,
+.top-nav .teacher-button,
+.top-nav .sound-button {
+  min-height: 48px;
+  padding: 9px 12px;
+  border: 2px solid var(--zw-control-border);
+  border-radius: 13px;
+  color: var(--zw-control-text);
+  background: var(--zw-control-bg);
+  box-shadow: var(--zw-control-shadow);
+  font-weight: 400;
+  text-shadow: none;
+  transform: none;
+}
+.top-nav .nav-link:hover,
+.top-nav .teacher-button:hover,
+.top-nav .sound-button:hover,
+.top-nav .nav-link:focus-visible,
+.top-nav .teacher-button:focus-visible,
+.top-nav .sound-button:focus-visible {
+  background: var(--zw-control-hover);
+  filter: none;
+  transform: none;
+}
+.top-nav .nav-link:active,
+.top-nav .teacher-button:active,
+.top-nav .sound-button:active {
+  background: #07566a;
+  box-shadow: 0 2px 5px #073c4460;
+  transform: none;
+}
+.top-nav .sound-button[aria-pressed="false"] { background: var(--zw-control-bg); }
+.top-nav .sound-button[aria-pressed="true"] {
+  color: var(--zw-control-text);
+  background: var(--zw-control-hover);
+  border-color: #c7f4d1;
+  box-shadow: 0 3px 8px #073c4440, inset 0 0 0 1px #a3eec4;
+}
+.monkey-area .wood-sign {
+  border: 2px solid var(--zw-control-border);
+  border-radius: 13px;
+  color: var(--zw-control-text);
+  background: var(--zw-control-bg);
+  box-shadow: var(--zw-control-shadow);
+  font-weight: 400;
+  text-shadow: none;
+  transform: none;
+  cursor: default;
+}
+@media (max-width: 700px) {
+  .top-nav { flex-wrap: wrap; }
+  .top-nav .nav-right { flex-wrap: wrap; justify-content: flex-end; }
+  .top-nav .nav-link,
+  .top-nav .teacher-button,
+  .top-nav .sound-button { min-height: 44px; padding: 7px 9px; }
+}
+@media (max-width: 390px) {
+  .top-nav { gap: 7px; }
+  .top-nav .nav-right { gap: 6px; flex: 1 1 auto; }
+  .top-nav .nav-link,
+  .top-nav .teacher-button,
+  .top-nav .sound-button { padding: 7px; }
+}
