@@ -1,0 +1,217 @@
+
+/*
+ * Papier & Lagune — reine Designschicht (Beta)
+ * Bestehende Walzenlogik, Einstellungen, Sternregeln und Speicherung bleiben in
+ * app.js / logic.js unverändert. Kein neuer Codepfad für die Spiellogik.
+ */
+:root {
+  --page: #f6ebd6;
+  --panel: #fff7e8;
+  --ink: #493a29;
+  --subtle: #6f6352;
+  --cream: #fff8e9;
+  --outline: #5b785b;
+  --shadow: rgba(93, 65, 37, .15);
+}
+html, body { background: #f6ebd6; }
+body {
+  background-image: url("./assets/papier-lagune-scene.svg");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+  color: #493a29;
+}
+.page-shell {
+  width: min(1260px, 100%);
+  min-height: 100dvh;
+  padding: 0 clamp(12px, 2.6vw, 32px) 34px;
+}
+.site-header { min-height: 76px; position: relative; z-index: 3; }
+.site-header .brand, .site-header .settings-open, .site-header .companion-link {
+  background: #8b5a35;
+  border: 2px solid #efd3a5;
+  border-radius: 16px;
+  box-shadow: inset 0 2px 0 #ffffff33, 0 4px 0 #633e27, 0 9px 13px #5d42252b;
+  color: #fff6e4;
+  text-shadow: 0 1px 1px #4f311e99;
+}
+.site-header .brand:hover, .site-header .settings-open:hover, .site-header .companion-link:hover {
+  background: #9c6a3e;
+}
+.site-header .brand-mark { border-color: #f4d59d; background: #6d9b65; }
+.site-header .brand-caption { color: #fff3db; }
+.intro.wood-title {
+  margin: 2px auto 28px;
+  padding: 12px 18px 14px;
+  width: min(100%, 980px);
+  border: none;
+  border-radius: 22px;
+  background: #fff1d1bb;
+  box-shadow: 0 8px 22px #765e3920;
+  transform: none;
+  animation: none;
+  row-gap: 7px;
+}
+.intro.wood-title::before, .intro.wood-title::after { display: none; }
+.intro.wood-title > h1 {
+  order: 0;
+  font-size: clamp(2.5rem, 7vw, 5.4rem);
+  line-height: 1.12;
+  letter-spacing: -.028em;
+  text-shadow: none;
+  -webkit-text-stroke: 0;
+  background: repeating-linear-gradient(115deg, #28688e 0 6%, #368c5d 6% 13%, #c84652 13% 20%, #e08a38 20% 26%, #ad486f 26% 31%, #0c84a0 31% 38%, #5b9852 38% 45%, #cb4232 45% 52%, #dfa12b 52% 59%, #2778a0 59% 66%, #995aa0 66% 73%, #3d935c 73% 82%, #cb6536 82% 90%, #2a7b9d 90% 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.intro.wood-title > h1 span {
+  color: transparent;
+  background: inherit;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+}
+.intro.wood-title > p {
+  order: 1;
+  color: #214f63;
+  font-size: clamp(.97rem, 1.5vw, 1.2rem);
+}
+.intro.wood-title > .eyebrow {
+  order: 2;
+  padding: 0;
+  border: none;
+  background: none;
+  color: #496e62;
+  font-size: .77rem;
+  letter-spacing: .025em;
+  text-transform: none;
+}
+.play-stage {
+  width: min(1130px, 100%);
+  grid-template-columns: minmax(0, 3.05fr) minmax(180px, .95fr);
+  gap: clamp(8px, 2vw, 24px);
+  align-items: center;
+}
+.play-stage .machine-area { order: 1; align-self: center; }
+.play-stage .mascot-area {
+  order: 2;
+  margin: 0;
+  align-self: end;
+  filter: drop-shadow(0 10px 7px #6c5e3d24);
+}
+.mascot-art {
+  width: min(100%, 245px);
+  filter: saturate(.83);
+}
+.mascot-area .mascot-speech {
+  margin: -26px auto 0;
+  width: min(100%, 210px);
+  min-height: 58px;
+  height: 58px;
+  background: #f9edcf;
+  color: #5c3a24;
+  border: 2px solid #cfa87a;
+  box-shadow: 0 6px 13px #6c4e2d20;
+  border-radius: 17px;
+}
+.machine-frame {
+  border: 8px solid #f3e4c7;
+  border-radius: 39px;
+  background: #f6e7c9;
+  box-shadow: 0 14px 26px #634b2f2b, inset 0 1px 0 #ffffffb7;
+  padding: clamp(11px, 2.7vw, 26px);
+}
+.machine-frame::before {
+  inset: 7px;
+  border: 2px dashed #bba17b65;
+  border-radius: 30px;
+}
+.reels { gap: clamp(5px, 1vw, 13px); }
+.reel {
+  border: 4px solid #aa9a7a;
+  border-radius: 18px;
+  background: linear-gradient(180deg,#b9dce6 0 33%,#fff8e9 33% 67%,#d7e1d7 67% 100%);
+  box-shadow: inset 5px 1px 8px #5f533027, inset -5px -2px 8px #5f533027, 0 4px 8px #654a2e18;
+}
+.reel:nth-child(2) {
+  background: linear-gradient(180deg,#ffdf92 0 33%,#fff9e9 33% 67%,#e8deca 67% 100%);
+}
+.reel:nth-child(3) {
+  background: linear-gradient(180deg,#efbfc0 0 33%,#fff9e9 33% 67%,#edc8c6 67% 100%);
+}
+.reel:nth-child(4) { background: linear-gradient(180deg,#b8dbc5 0 33%,#fff9e9 33% 67%,#c7ddc9 67% 100%); }
+.reel:nth-child(5) { background: linear-gradient(180deg,#cfc5e0 0 33%,#fff9e9 33% 67%,#dcd0e5 67% 100%); }
+.reel-symbol { color: #4a3527; text-shadow: none; }
+.reel-symbol.symbol-star { color: #a66c31; }
+.machine-controls { margin-top: 16px; }
+.machine-controls .spin-button {
+  width: min(100%, 360px);
+  min-height: 75px;
+  margin-inline: auto;
+  display: flex;
+  border: 3px solid #d4e6bc;
+  border-radius: 40px;
+  background: #39865d;
+  box-shadow: 0 7px 0 #2a6047, 0 10px 15px #3a59372a;
+  text-shadow: none;
+}
+.machine-controls .spin-button:hover { background: #459767; }
+.machine-controls .instruction {
+  margin-top: 16px;
+  color: #55412c;
+  border: 1px solid #e0c59d;
+  border-radius: 15px;
+  background: #fff8e8;
+  box-shadow: none;
+}
+.machine-foot { opacity: .6; }
+.below-machine, .learning-hint, .site-footer {
+  background: #fff7e8d9;
+  border-radius: 16px;
+  color: #53442e;
+}
+.learning-hint {
+  border-color: #e5caa2;
+  box-shadow: 0 8px 18px #6b513519;
+}
+.settings-dialog {
+  color: #493a29;
+  background: #fff8eb;
+  border: 3px solid #d7bb94;
+  box-shadow: 0 24px 66px #473c2f57;
+}
+.settings-dialog .modal-header,
+.settings-dialog .settings-content,
+.settings-dialog .settings-section { background-color: #fff9ef; }
+.settings-dialog .save-button { background: #3d8b60; }
+@media (max-width: 740px) {
+  body { background-size: auto 100%; background-position: 50% top; }
+  .play-stage {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 9px;
+  }
+  .play-stage .machine-area { order: 1; grid-column: 1; }
+  .play-stage .mascot-area {
+    order: 2;
+    grid-column: 1;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0 auto 8px;
+    width: min(100%, 350px);
+  }
+  .mascot-art { max-width: 115px; }
+  .mascot-area .mascot-speech { margin: 0 0 0 -8px; width: min(190px,60%); }
+  .intro.wood-title { margin-top: 12px; padding: 13px 10px; }
+}
+@media (max-width: 390px) {
+  .page-shell { padding-inline: 9px; }
+  .intro.wood-title > h1 { font-size: clamp(2rem, 10vw, 2.9rem); }
+  .machine-frame { border-width: 5px; padding: 9px 7px 12px; border-radius: 25px; }
+  .reels { gap: 4px; }
+  .reel { border-width: 2px; border-radius: 9px; }
+  .machine-controls .spin-button { min-height: 61px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mascot-art { animation: none; }
+}
