@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 435"><defs>
+ <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#a9d9e7"/><stop offset=".55" stop-color="#d7edf0"/><stop offset="1" stop-color="#f6ecd7"/></linearGradient>
+ <linearGradient id="water" x2="0" y2="1"><stop stop-color="#4eacbb"/><stop offset=".48" stop-color="#6ac0c8"/><stop offset="1" stop-color="#b5d5c4"/></linearGradient>
+ <linearGradient id="sand" x2="0" y2="1"><stop stop-color="#eed7aa"/><stop offset="1" stop-color="#dfbc80"/></linearGradient>
+ <filter id="rough" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence baseFrequency=".018" numOctaves="2" seed="8" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="7"/></filter>
+ <filter id="grain" x="0" y="0" width="100%" height="100%"><feTurbulence baseFrequency=".63" numOctaves="3" seed="12" stitchTiles="stitch"/></filter>
+ </defs>
+<ellipse cx="218" cy="396" rx="175" ry="20" fill="#766f57" opacity=".2"/>
+<path d="M85 319 Q70 266 110 247 Q126 213 184 228 Q232 221 280 240 Q322 250 342 286 L334 333 Q252 355 150 338Z" fill="#527d55" stroke="#315c50" stroke-width="7"/>
+<path d="M113 272 Q178 155 287 220 Q352 241 347 299 Q287 319 216 310 L136 312Z" fill="#6a9468" stroke="#3a6655" stroke-width="8"/>
+<path d="M170 237 L226 214 L269 243 L249 287 L190 293Z" fill="#8fa76b" stroke="#356653" stroke-width="5"/>
+<path d="M269 243 L315 269 L292 302 L249 287Z" fill="#659168" stroke="#356653" stroke-width="5"/>
+<path d="M141 261 L170 237 L190 293 L152 304Z" fill="#78a06a" stroke="#356653" stroke-width="5"/>
+<path d="M108 314 Q98 361 137 366 L172 337 Q152 310 108 314Z" fill="#91ac66" stroke="#5a8654" stroke-width="5"/>
+<path d="M291 318 Q309 375 344 366 Q361 348 330 313Z" fill="#83a75e" stroke="#5c854f" stroke-width="5"/>
+<path d="M312 238 Q350 225 352 193 Q357 135 330 111 Q301 89 268 112 Q245 135 247 175 Q252 210 281 226Z" fill="#92ae6b" stroke="#698c54" stroke-width="6"/>
+<ellipse cx="292" cy="154" rx="21" ry="26" fill="#fffbeb"/><circle cx="295" cy="153" r="10" fill="#342c21"/>
+<path d="M319 191 Q336 204 348 189" stroke="#456c4d" stroke-width="6" fill="none" stroke-linecap="round"/>
+<g fill="#5b9a61" opacity=".55"><circle cx="270" cy="196" r="9"/><circle cx="315" cy="216" r="10"/><circle cx="119" cy="331" r="6"/><circle cx="328" cy="334" r="6"/></g>
+<rect width="450" height="435" filter="url(#grain)" opacity=".10"/>
+</svg>
