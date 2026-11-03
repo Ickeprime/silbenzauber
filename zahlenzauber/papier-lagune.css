@@ -231,3 +231,13 @@ html,body {background:#f2e8d5;}
  font-weight:900 !important;
  font-synthesis:weight !important;
 }
+/* The original game updates the monkey img dynamically for throw/success states.
+   Keep it in the DOM and paint the collage mascot on the real button instead. */
+.monkey-button { isolation:isolate; }
+.monkey-button .monkey-drawing {opacity:0;}
+.monkey-button::after {
+ content:""; position:absolute; z-index:1; inset:0;
+ pointer-events:none;
+ background:url("./assets/papier-affe.svg") center center/contain no-repeat;
+ filter:drop-shadow(0 4px 4px #5d40292f);
+}
