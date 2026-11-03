@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 550" role="img" aria-label="Fröhlicher Affe mit Wurfball">
+<defs>
+  <filter id="paper"><feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="3" seed="6" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="6"/></filter>
+  <filter id="texture"><feTurbulence type="fractalNoise" baseFrequency=".37" numOctaves="3" seed="8"/><feColorMatrix type="saturate" values=".25"/></filter>
+  <pattern id="bark" width="19" height="43" patternUnits="userSpaceOnUse" patternTransform="rotate(23)"><path d="M3-4V48M11-8V46" stroke="#763d29" opacity=".2" stroke-width="2"/></pattern>
+  <linearGradient id="brown" x1="0" x2=".8" y1="0" y2="1"><stop stop-color="#b26535"/><stop offset=".55" stop-color="#934b31"/><stop offset="1" stop-color="#76432e"/></linearGradient>
+  <linearGradient id="tan" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f5d3a2"/><stop offset=".5" stop-color="#e2a96f"/><stop offset="1" stop-color="#ce935d"/></linearGradient>
+  <radialGradient id="white" cx=".35" cy=".3"><stop stop-color="#fffaf0"/><stop offset="1" stop-color="#ddd2b8"/></radialGradient>
+  <clipPath id="monkeyclip"><path d="M60 110H375V510H60Z"/></clipPath>
+</defs>
+<ellipse cx="227" cy="520" rx="155" ry="17" fill="#745d37" opacity=".18"/>
+<!-- tail -->
+<path d="M176 418 Q109 496 63 441 Q32 411 67 375 Q97 355 112 384 Q130 413 105 427" fill="none" stroke="#82452d" stroke-width="39" stroke-linecap="round"/>
+<path d="M176 418 Q109 496 63 441 Q32 411 67 375 Q97 355 112 384 Q130 413 105 427" fill="none" stroke="#b16a3d" stroke-width="24" stroke-linecap="round"/>
+<!-- legs -->
+<path d="M198 405 Q195 459 169 483 Q145 503 171 515 Q220 530 240 488 L267 443Z" fill="#995131" stroke="#6d4028" stroke-width="6" stroke-linejoin="round"/>
+<path d="M246 411 Q280 465 285 488 Q290 516 322 514 Q343 497 323 476 L296 408Z" fill="#9d5737" stroke="#75412c" stroke-width="6" stroke-linejoin="round"/>
+<!-- feet -->
+<path d="M169 482 Q122 489 116 512 Q141 532 177 520 L216 507Z" fill="#e9b17a" stroke="#85542f" stroke-width="5"/>
+<path d="M285 492 Q325 483 351 505 Q344 531 304 522 L276 510Z" fill="#e9b17a" stroke="#85542f" stroke-width="5"/>
+<path d="M139 505Q144 510 138 520 M162 501Q166 511 163 523 M327 501Q321 511 330 522" fill="none" stroke="#b7764c" stroke-width="4"/>
+<!-- body -->
+<path d="M182 284 Q225 261 284 296 Q317 342 311 413 Q273 463 205 446 Q158 414 167 354Z" fill="url(#brown)" stroke="#7a432c" stroke-width="7"/>
+<path d="M207 313 Q257 298 283 330 Q306 382 278 421 Q235 442 207 405 Q191 363 207 313Z" fill="url(#tan)" stroke="#ab7544" stroke-width="5"/>
+<path d="M217 335Q243 330 264 345 M211 364Q248 353 278 367" stroke="#f8ddb2" stroke-width="7" opacity=".35"/>
+<!-- raised left arm -->
+<path d="M179 336 Q134 296 106 245 L85 197" fill="none" stroke="#894a31" stroke-width="44" stroke-linecap="round"/>
+<path d="M179 336 Q134 296 106 245 L85 197" fill="none" stroke="#b3683e" stroke-width="29" stroke-linecap="round"/>
+<path d="M85 192 Q70 176 57 178 Q50 184 57 197 L66 213 Q81 221 94 214 Q107 200 101 190Z" fill="#e7b17c" stroke="#915c39" stroke-width="5"/>
+<!-- ball -->
+<g transform="translate(83 148) rotate(-16)">
+<circle r="42" fill="url(#white)" stroke="#b86846" stroke-width="3"/>
+<path d="M-30-25 Q-5 -43 16 -34 Q-7 0 -8 39 Q-27 30 -40 15Z" fill="#d9433a"/>
+<path d="M28-30 Q51-8 36 20 Q15 3 7-30Z" fill="#dc4d41"/>
+<path d="M-10-33 Q7-31 14-19" stroke="#fdf7ee" stroke-width="6" fill="none"/>
+</g>
+<!-- resting arm -->
+<path d="M290 332 Q322 368 339 401" fill="none" stroke="#874a32" stroke-width="40" stroke-linecap="round"/>
+<path d="M290 332 Q322 368 339 401" fill="none" stroke="#b76943" stroke-width="27" stroke-linecap="round"/>
+<path d="M337 396 Q355 395 362 410 L365 435 Q363 456 348 449 L332 435 Q320 423 337 396Z" fill="#efba82" stroke="#986543" stroke-width="5"/>
+<!-- ears -->
+<circle cx="143" cy="237" r="45" fill="#ad643b" stroke="#73402a" stroke-width="6"/>
+<circle cx="143" cy="237" r="29" fill="#e8af76" stroke="#a8754b" stroke-width="4"/>
+<circle cx="310" cy="237" r="44" fill="#ad643b" stroke="#73402a" stroke-width="6"/>
+<circle cx="310" cy="237" r="28" fill="#e8af76" stroke="#a8754b" stroke-width="4"/>
+<!-- head -->
+<path d="M157 150 Q184 113 230 126 Q287 115 307 172 Q326 239 279 295 Q221 319 166 285 Q132 247 157 150Z" fill="url(#brown)" stroke="#75442f" stroke-width="7" filter="url(#paper)"/>
+<!-- fringe -->
+<path d="M171 158 Q174 116 198 100 Q209 128 224 134 Q223 104 253 100 Q253 127 246 143 Q278 122 295 146 L278 169 Q240 157 214 172Z" fill="#86452e" stroke="#6d3928" stroke-width="6" stroke-linejoin="round"/>
+<!-- face -->
+<path d="M161 208 Q169 173 200 173 Q218 184 229 197 Q246 173 274 175 Q299 188 298 217 Q314 260 281 285 Q226 313 178 283 Q146 249 161 208Z" fill="url(#tan)" stroke="#b1784b" stroke-width="4"/>
+<!-- eye whites -->
+<ellipse cx="198" cy="209" rx="25" ry="33" fill="#fffbea" stroke="#9d6c44" stroke-width="3"/>
+<ellipse cx="260" cy="209" rx="25" ry="33" fill="#fffbea" stroke="#9d6c44" stroke-width="3"/>
+<ellipse cx="205" cy="211" rx="11" ry="17" fill="#543f2c"/>
+<ellipse cx="254" cy="210" rx="11" ry="17" fill="#543f2c"/>
+<circle cx="209" cy="204" r="4" fill="#fff"/>
+<circle cx="258" cy="203" r="4" fill="#fff"/>
+<!-- nose and mouth -->
+<path d="M214 246 Q229 237 248 246 L242 259 Q222 263 214 246Z" fill="#c68159"/>
+<path d="M190 265 Q228 298 266 262 Q256 302 228 303 Q199 300 190 265Z" fill="#652e2c" stroke="#7f3b2f" stroke-width="4"/>
+<path d="M203 278Q227 293 251 280" stroke="#fff9e7" stroke-width="8" fill="none" stroke-linecap="round"/>
+<ellipse cx="168" cy="255" rx="13" ry="9" fill="#d69271" opacity=".85"/>
+<ellipse cx="295" cy="255" rx="13" ry="9" fill="#d69271" opacity=".85"/>
+<!-- translucent hand-painted flecks, clipped to animal body region -->
+<g clip-path="url(#monkeyclip)" opacity=".15" fill="#d3a46c">
+<path d="M170 325l25 7-7 20zM234 312l23 5-8 23zM271 390l22 8-16 18zM148 205l15-4-4 20zM282 181l15 14-13 12zM198 427l22 3-8 9z"/>
+</g>
+<rect x="55" y="100" width="320" height="420" filter="url(#texture)" opacity=".045"/>
+</svg>
