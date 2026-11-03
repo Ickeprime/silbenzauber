@@ -64,6 +64,8 @@ body::after {
   font-size:clamp(2.9rem,8.1vw,7.2rem);
   line-height:1.1;
   font-weight:900;
+  font-family:'Trebuchet MS',Arial,sans-serif !important;
+  font-synthesis:weight;
   text-align:center;
   letter-spacing:-.035em;
   -webkit-text-stroke:0;
