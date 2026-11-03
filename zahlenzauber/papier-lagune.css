@@ -57,6 +57,8 @@ html,body {background:#f2e8d5;}
  font-size:clamp(2.4rem,6.6vw,5.15rem);
  line-height:1.03;
  font-weight:900;
+ font-family:'Trebuchet MS',Arial,sans-serif !important;
+ font-synthesis:weight;
  letter-spacing:-.035em;
  background:none;
  -webkit-background-clip:initial;
